@@ -3,15 +3,15 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
 
-class HomeScreen(Screen):
+class HomeProcuracaoScreen(Screen):
     def __init__(self, **kwargs):
-        super(HomeScreen, self).__init__(**kwargs)
+        super(HomeProcuracaoScreen, self).__init__(**kwargs)
 
         layout = BoxLayout(orientation='vertical', padding=50, spacing=20)
 
         # Adiciona um título à tela inicial
         titulo = Label(
-            text="Tela Inicial",
+            text="Tipos de procuração",
             font_size=30,
             size_hint=(None, None),
             size=(200, 50),
@@ -21,7 +21,7 @@ class HomeScreen(Screen):
 
         # Campo clicável para navegar até a tela de Procuracao
         btn_procuracao = Button(
-            text="Ir para Procuração",
+            text="Ir para Procuração Criminal",
             size_hint=(None, None),
             size=(200, 50),
             pos_hint={"center_x": 0.5, "top": 0.6},  # Ajuste na posição do botão
@@ -31,7 +31,7 @@ class HomeScreen(Screen):
 
         # Campo clicável para navegar até a tela de Processo
         btn_processo = Button(
-            text="Ir para Processo",
+            text="Ir para Procuração Queixa Crime",
             size_hint=(None, None),
             size=(200, 50),
             pos_hint={"center_x": 0.5, "top": 0.4},  # Ajuste na posição do botão

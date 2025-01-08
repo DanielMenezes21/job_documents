@@ -8,8 +8,8 @@ from kivy.uix.popup import Popup
 from kivy.uix.widget import Widget
 from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Ellipse, Color
-from telas.procuracao.texto_poderes import TEXTOS_PODERES, ADVOGADO_OAB
-from telas.procuracao.funcoes_poderes import *
+from telas.procuracao.procuracao_criminal.texto_poderes import TEXTOS_PODERES, ADVOGADO_OAB
+from telas.procuracao.procuracao_criminal.funcoes_poderes_cmn import *
 from docx import Document
 import os
 

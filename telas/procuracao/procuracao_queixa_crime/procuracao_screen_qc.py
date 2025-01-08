@@ -8,7 +8,7 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.filechooser import FileChooserListView
 from kivy.uix.spinner import Spinner
-from telas.procuracao.funcoes_procuracao import on_nacionalidade_change, ir_para_poderes, ir_para_homepage
+from telas.procuracao.procuracao_queixa_crime.funcoes_procuracao_qc import on_nacionalidade_change, ir_para_poderes, ir_para_homepage
 
 class ProcuracaoScreen(Screen):
     def __init__(self, **kwargs):
@@ -21,6 +21,18 @@ class ProcuracaoScreen(Screen):
 
         self.cpf = TextInput(hint_text="Digite o CPF do outorgante", multiline=False, size_hint_y=0.18)
         layout.add_widget(self.cpf)
+        
+        self.rg = TextInput(hint_text="Digite o RG do outorgante", multiline=False, size_hint_y=0.18)
+        layout.add_widget(self.rg)
+        
+        self.endereco = TextInput(hint_text="Digite o endereco do outorgante", multiline=False, size_hint_y=0.18)
+        layout.add_widget(self.endereco)
+        
+        self.cep = TextInput(hint_text="Digite o cep do endereco do outorgante", multiline=False, size_hint_y=0.18)
+        layout.add_widget(self.cep)
+        
+        self.estado_civil = TextInput(hint_text="Digite o estado civil do do outorgante", multiline=False, size_hint_y=0.18)
+        layout.add_widget(self.estado_civil)
 
         self.cidade_outorgante_input = TextInput(hint_text="Digite a cidade do outorgante", multiline=False, size_hint_y=0.18)
         layout.add_widget(self.cidade_outorgante_input)

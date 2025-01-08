@@ -39,7 +39,7 @@ def substituir_com_formatacao(paragrafo, placeholders):
 
 def processar_documento(caminho_modelo, nome_outorgante, cpf, cidade_outorgante, 
                         sigla_estado_outorgante, inscrita_o, nacionalidade, poderes, 
-                        nome_arquivo, advogado_oab):
+                        nome_arquivo, advogado_oab, endereço, cep, estado_civil, rg):
     # Abrir o arquivo modelo
     document = Document(caminho_modelo)
 
@@ -59,7 +59,11 @@ def processar_documento(caminho_modelo, nome_outorgante, cpf, cidade_outorgante,
         "#INSCRITA(O)": inscrita_o,
         "#NACIONALIDADE": nacionalidade,
         "#PODERES": poderes,
-        "#ADVOGADO_OAB": advogado_oab
+        "#ADVOGADO_OAB": advogado_oab,
+        "#RG_OUTORGANTE": rg,
+        "#ENDERECO": endereço,
+        "#CEP": cep,
+        "#ESTADO_CIVIL": estado_civil
     }
 
     for placeholder in placeholders:

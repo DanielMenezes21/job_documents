@@ -1,5 +1,5 @@
-from telas.processo.funcoes_contrato_s1 import *
-from telas.processo.extracao_contrato import *
+from telas.contrato_hono.funcoes_contrato_s1 import *
+from telas.contrato_hono.extracao_contrato import *
 from datetime import datetime
 from telas.homepage.home_screen import HomeScreen
 

@@ -1,6 +1,6 @@
 # funcoes_procuracao.py
-from telas.procuracao.funcoes_poderes import *
-from telas.procuracao.poderes_screen import PoderesScreen
+from telas.procuracao.procuracao_queixa_crime.funcoes_poderes_qc import *
+from telas.procuracao.procuracao_queixa_crime.poderes_screen_qc import PoderesScreen
 from datetime import datetime
 
 def on_nacionalidade_change(screen_instance, spinner, text):
@@ -37,12 +37,16 @@ def obter_dados(screen_instance):
             "caminho_modelo": caminho_modelo,
             "nome_outorgante": screen_instance.nome_outorgante.text,
             "cpf": screen_instance.cpf.text,
+            "rg": screen_instance.rg.text,
             "cidade_outorgante": screen_instance.cidade_outorgante_input.text,
             "sigla_estado_outorgante": screen_instance.sigla_estado_outorgante_input.text,
             "inscrita_o": screen_instance.inscrita_o_spinner.text,
             "nacionalidade": screen_instance.nacionalidade_input.text,
             "nome_arquivo": screen_instance.nome_arquivo_input.text,
-            "data_agora": data_agora,  # Incluindo a data corretamente
+            "endereco": screen_instance.endereco.text,
+            "estado_civil": screen_instance.estado_civil.text,
+            "cep": screen_instance.cep.text,
+            "data_agora": data_agora,
         }
 
         print(f"Dados coletados: {dados}")  # Verificar todos os dados coletados
