@@ -19,7 +19,7 @@ def voltar(self, instance):
     """
  Função para voltar para a tela anterior ou a tela principal.
     """
-    self.manager.current = "procuracao_criminal_screen"
+    self.manager.current = "procuracao_criminal_pj_screen"
 
 def atualizar_dados(screen_instance, dados):
     """
@@ -66,6 +66,10 @@ def salvar_texto(screen_instance, _):
     # Dicionário de placeholders com o texto editado
     placeholders = {
         "#PODERES": texto_editado,
+        "#NOME_EMPRESA": screen_instance.dados.get("nome_empresa"),
+        "#CNPJ":screen_instance.dados.get("cnpj"),
+        "#END_EMPRESA": screen_instance.dados.get("end_empresa"),
+        "#CP_EMPRESA": screen_instance.dados.get("cep_empresa"),
         "#NOME_OUTORGANTE": screen_instance.dados.get("nome_outorgante"),
         "#OUTORGANTE_CPF": screen_instance.dados.get("cpf"),
         "#CIDADE_OUTORGANTE": screen_instance.dados.get("cidade_outorgante"),

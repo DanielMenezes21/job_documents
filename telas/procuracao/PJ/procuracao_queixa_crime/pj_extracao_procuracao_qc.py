@@ -39,7 +39,8 @@ def substituir_com_formatacao(paragrafo, placeholders):
 
 def processar_documento(caminho_modelo, nome_outorgante, cpf, cidade_outorgante, 
                         sigla_estado_outorgante, inscrita_o, nacionalidade, poderes, 
-                        nome_arquivo, advogado_oab, endereço, cep, estado_civil, rg):
+                        nome_arquivo, advogado_oab, endereço, cep, estado_civil, rg, nome_empresa, 
+                        cnpj, end_empresa, cep_empresa):
     # Abrir o arquivo modelo
     document = Document(caminho_modelo)
 
@@ -52,6 +53,10 @@ def processar_documento(caminho_modelo, nome_outorgante, cpf, cidade_outorgante,
     # Dicionário com os marcadores e seus valores correspondentes
     placeholders = {
         "#NOME_OUTORGANTE": nome_outorgante,
+        "#CNPJ": cnpj,
+        "#NOME_EMPRESA": nome_empresa,
+        "#END_EMPRESA":end_empresa,
+        "#CP_EMPRESA": cep_empresa,
         "#OUTORGANTE_CPF": cpf,
         "#CIDADE_OUTORGANTE": cidade_outorgante,
         "#SIGLA_ESTADO_OUTORGANTE": sigla_estado_outorgante,

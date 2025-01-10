@@ -21,28 +21,6 @@ def ir_para_procuracao(self, instance):
     
     self.manager.current =  "home_procuracao_screen"
 
-def handle_key_down(screen_instance, window, key, scancode, codepoint, modifiers):
-    print(f"Tecla pressionada: {key} (scancode: {scancode}, codepoint: {codepoint}, modifiers: {modifiers})")
-    
-    for i, widget in enumerate(screen_instance.inputs):
-        focused = " (Focado)" if widget.focus else ""
-        print(f"Input {i}: {widget.hint_text}{focused}")
-    
-    if key == 9:  # Código para a tecla TAB
-        focused_widget = next(
-            (widget for widget in screen_instance.inputs if widget.focus), None
-        )
-        if focused_widget:
-            current_index = screen_instance.inputs.index(focused_widget)
-            next_index = (current_index + 1) % len(screen_instance.inputs)
-            print(f"Alterando foco: {current_index} -> {next_index}")
-            screen_instance.inputs[next_index].focus = True
-        else:
-            print("Nenhum widget está focado. Definindo foco inicial.")
-            screen_instance.inputs[0].focus = True  # Define o foco no primeiro campo
-        return True
-    return False
-
 def obter_dados(screen_instance):
     try:
         caminho_modelo = os.path.join(os.path.dirname(__file__), "11_PROCURACAO_TESTE.docx")

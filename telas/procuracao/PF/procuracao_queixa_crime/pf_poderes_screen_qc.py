@@ -48,7 +48,7 @@ class PFPoderesQCScreen(Screen):
 
         # Título
         titulo = Label(
-            text="Editar Poderes",
+            text="Editar Poderes Queixa Crime PF",
             font_size=20,
             size_hint=(None, None),
             size=(200, 50),

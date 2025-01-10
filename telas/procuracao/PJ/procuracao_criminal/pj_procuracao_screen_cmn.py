@@ -6,38 +6,112 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.spinner import Spinner
+from kivy.uix.label import Label
 from telas.procuracao.PJ.procuracao_criminal.pj_funcoes_procuracao_cmn import on_nacionalidade_change, ir_para_poderes, ir_para_procuracao
-
+from logic_tab import FocusSwitchingTextInput
 class ProcuracaoCriminalPJScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+        # Area layout
         layout = BoxLayout(orientation="vertical", spacing=10, padding=10)
+        cnpj_layout=BoxLayout(orientation="horizontal", size_hint_y=0.18)
+        cpf_rg_layout = BoxLayout(orientation="horizontal", size_hint_y=0.18)
+        cep_end_layout = BoxLayout(orientation="horizontal", size_hint_y=0.18)
+        empresa_layout = BoxLayout(orientation="horizontal", size_hint_y=0.18)
+        cidade_estado_layout = BoxLayout(orientation="horizontal", size_hint_y=0.18)
+        
+        titulo = Label(
+            text="Procuração Criminal PJ",
+            font_size=20,
+            size_hint=(None, None),
+            size=(200, 50),
+            pos_hint={"center_x": 0.5, "center_y": 0.3}  # Centraliza o título
+        )
+        layout.add_widget(titulo)
 
-        self.nome_outorgante = TextInput(hint_text="Digite o nome do outorgante", multiline=False, size_hint_y=0.18)
+        # Criação dos campos de entrada com a função auxiliar
+        self.nome_outorgante = FocusSwitchingTextInput(hint_text="Digite o nome do outorgante", 
+                                         multiline=False,
+                                         size_hint_y=0.18)
         layout.add_widget(self.nome_outorgante)
+        
+        self.nome_empresa = FocusSwitchingTextInput(hint_text="Digite o nome da empresa",
+                                      multiline=False,
+                                      size_hint_y=1,
+                                      size_hint_x=1)
+        cnpj_layout.add_widget(self.nome_empresa)
+        
+        self.cnpj = TextInput(hint_text="Digite o CNPJ da empresa",
+                                      multiline=False,
+                                      size_hint_y=1,
+                                      size_hint_x=1)
+        cnpj_layout.add_widget(self.cnpj)
+        
+        layout.add_widget(cnpj_layout)
+        
+        self.end_empresa = TextInput(hint_text = "Informe o endereço da empresa",
+                                     multiline=False,
+                                     size_hint_y=1,
+                                     size_hint_x=1)
+        empresa_layout.add_widget(self.end_empresa)
+        
+        self.cep_empresa = TextInput(hint_text="Informe o CEP da empresa",
+                                     multiline=False,
+                                     size_hint_y=1,
+                                     size_hint_x=1)
+        empresa_layout.add_widget(self.cep_empresa)
+        
+        layout.add_widget(empresa_layout)
 
-        self.cpf = TextInput(hint_text="Digite o CPF do outorgante", multiline=False, size_hint_y=0.18)
-        layout.add_widget(self.cpf)
+        self.cpf = TextInput(hint_text="Digite o CPF do outorgante",
+                             multiline=False,
+                             size_hint_y=1,
+                             size_hint_x=1,)
+        cpf_rg_layout.add_widget(self.cpf)
         
-        self.rg = TextInput(hint_text="Digite o RG do outorgante", multiline=False, size_hint_y=0.18)
-        layout.add_widget(self.rg)
+        self.rg = TextInput(hint_text="Digite o RG do outorgante",
+                            multiline=False,
+                            size_hint_y=1,
+                            size_hint_x=0.6,)
+        cpf_rg_layout.add_widget(self.rg)
         
-        self.endereco = TextInput(hint_text="Digite o endereco do outorgante", multiline=False, size_hint_y=0.18)
-        layout.add_widget(self.endereco)
+        # Adiciona o cpf_rg_layout
+        layout.add_widget(cpf_rg_layout)
         
-        self.cep = TextInput(hint_text="Digite o cep do endereco do outorgante", multiline=False, size_hint_y=0.18)
-        layout.add_widget(self.cep)
+        self.endereco = TextInput(hint_text="Digite o endereco do outorgante",
+                                  multiline=False, 
+                                  size_hint_y=1,
+                                  size_hint_x=1)
+        cep_end_layout.add_widget(self.endereco)
         
-        self.estado_civil = TextInput(hint_text="Digite o estado civil do do outorgante", multiline=False, size_hint_y=0.18)
+        self.cep = TextInput(hint_text="Digite o cep do endereco do outorgante",
+                             multiline=False, 
+                             size_hint_y=1,
+                             size_hint_x=0.7)
+        cep_end_layout.add_widget(self.cep)
+        
+        layout.add_widget(cep_end_layout)
+        
+        self.cidade_outorgante_input = TextInput(hint_text="Digite a cidade do outorgante",
+                             multiline=False, 
+                             size_hint_y=1,
+                             size_hint_x=1)
+        cidade_estado_layout.add_widget(self.cidade_outorgante_input)
+        
+        self.sigla_estado_outorgante_input= TextInput(hint_text="Digite a sigla do estado do outorgante",
+                             multiline=False, 
+                             size_hint_y=1,
+                             size_hint_x=1)
+        cidade_estado_layout.add_widget(self.sigla_estado_outorgante_input)
+        
+        layout.add_widget(cidade_estado_layout)
+        
+        self.estado_civil= TextInput(hint_text="Digite o estado civil",
+                             multiline=False, 
+                             size_hint_y=0.18)
         layout.add_widget(self.estado_civil)
-
-        self.cidade_outorgante_input = TextInput(hint_text="Digite a cidade do outorgante", multiline=False, size_hint_y=0.18)
-        layout.add_widget(self.cidade_outorgante_input)
-
-        self.sigla_estado_outorgante_input = TextInput(hint_text="Digite a sigla do estado do outorgante", multiline=False, size_hint_y=0.18)
-        layout.add_widget(self.sigla_estado_outorgante_input)
-
+        
         self.nacionalidade_spinner = Spinner(
             text="Selecione a Nacionalidade",
             values=("Brasileiro", "Outro"),

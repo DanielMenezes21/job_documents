@@ -21,6 +21,8 @@ class MyApp(ScreenManager):
         super().__init__(**kwargs)
         # Adiciona as telas ao ScreenManager
         self.add_widget(HomeScreen(name="home_screen"))
+        self.add_widget(HomeProcuracaoPFScreen(name="home_procuracao_screen_PF"))
+        self.add_widget(HomeProcuracaoPJScreen(name="home_procuracao_screen_PJ"))
         self.add_widget(PFPoderesQCScreen(name="poderes_queixa_crime_screen_PF"))
         self.add_widget(ProcessoScreen(name="contrato_screen1"))
         self.add_widget(Processo2Screen(name="contrato_screen2"))
@@ -28,8 +30,6 @@ class MyApp(ScreenManager):
         self.add_widget(PFProcuracaoCriminalScreen(name="procuracao_criminal_screen_PF"))
         self.add_widget(PFPoderesCriminalScreen(name="poderes_criminal_screen_PF"))
         self.add_widget(HomeProcuracaoScreen(name="home_procuracao_screen"))
-        self.add_widget(HomeProcuracaoPFScreen(name="home_procuracao_screen_PF"))
-        self.add_widget(HomeProcuracaoPJScreen(name="home_procuracao_screen_PJ"))
         self.add_widget(ProcuracaoQCPJScreen(name="procuracao_queixa_crime_pj_screen"))
         self.add_widget(PoderesQCPJScreen(name="poderes_queixa_crime_pj_screen"))
         self.add_widget(ProcuracaoCriminalPJScreen(name="procuracao_criminal_pj_screen"))

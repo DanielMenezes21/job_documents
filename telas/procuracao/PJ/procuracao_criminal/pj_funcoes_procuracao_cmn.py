@@ -36,6 +36,10 @@ def obter_dados(screen_instance):
         dados = {
             "caminho_modelo": caminho_modelo,
             "nome_outorgante": screen_instance.nome_outorgante.text,
+            "nome_empresa": screen_instance.nome_empresa.text,
+            "cnpj": screen_instance.cnpj.text,
+            "end_empresa": screen_instance.end_empresa.text,
+            "cep_empresa": screen_instance.cep_empresa.text,
             "cpf": screen_instance.cpf.text,
             "rg": screen_instance.rg.text,
             "cidade_outorgante": screen_instance.cidade_outorgante_input.text,
@@ -62,7 +66,7 @@ def ir_para_poderes(screen_instance, instance):
     """
     dados = obter_dados(screen_instance)
     if dados:
-        poderes_screen = screen_instance.manager.get_screen("poderes_criminal_screen_PF")
+        poderes_screen = screen_instance.manager.get_screen("poderes_criminal_pj_screen")
         poderes_screen.poderes_atualizar_dados(dados)  # Certifique-se de que o nome corresponde
-        screen_instance.manager.current = "poderes_criminal_screen_PF"
+        screen_instance.manager.current = "poderes_criminal_pj_screen"
 

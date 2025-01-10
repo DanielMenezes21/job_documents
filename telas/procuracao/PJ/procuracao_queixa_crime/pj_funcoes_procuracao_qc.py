@@ -3,6 +3,25 @@ from telas.procuracao.PJ.procuracao_queixa_crime.pj_funcoes_poderes_qc import *
 from telas.procuracao.PJ.procuracao_queixa_crime.pj_poderes_screen_qc import PoderesQCPJScreen
 from datetime import datetime
 
+def switch_focus(instance, layout):
+    """
+    Alterna o foco para o próximo TextInput ignorando aqueles com readonly=True.
+    
+    :param instance: O widget atual (TextInput).
+    :param layout: O layout que contém os widgets.
+    """
+    # Reverte a ordem para corresponder ao fluxo visual
+    text_inputs = [w for w in reversed(layout.children) if isinstance(w, TextInput)]
+    
+    # Encontra o índice do widget atual
+    current_index = text_inputs.index(instance)
+
+    # Procura o próximo widget focável
+    for next_widget in text_inputs[current_index + 1:]:
+        if not next_widget.readonly:  # Ignora widgets readonly
+            next_widget.focus = True
+            return
+
 def on_nacionalidade_change(screen_instance, spinner, text):
     if text == "Outro":
         screen_instance.nacionalidade_input.text = ""
@@ -21,31 +40,9 @@ def ir_para_procuracao(self, instance):
     
     self.manager.current =  "home_procuracao_screen"
 
-def handle_key_down(screen_instance, window, key, scancode, codepoint, modifiers):
-    print(f"Tecla pressionada: {key} (scancode: {scancode}, codepoint: {codepoint}, modifiers: {modifiers})")
-    
-    for i, widget in enumerate(screen_instance.inputs):
-        focused = " (Focado)" if widget.focus else ""
-        print(f"Input {i}: {widget.hint_text}{focused}")
-    
-    if key == 9:  # Código para a tecla TAB
-        focused_widget = next(
-            (widget for widget in screen_instance.inputs if widget.focus), None
-        )
-        if focused_widget:
-            current_index = screen_instance.inputs.index(focused_widget)
-            next_index = (current_index + 1) % len(screen_instance.inputs)
-            print(f"Alterando foco: {current_index} -> {next_index}")
-            screen_instance.inputs[next_index].focus = True
-        else:
-            print("Nenhum widget está focado. Definindo foco inicial.")
-            screen_instance.inputs[0].focus = True  # Define o foco no primeiro campo
-        return True
-    return False
-
 def obter_dados(screen_instance):
     try:
-        caminho_modelo = os.path.join(os.path.dirname(__file__), "11_PROCURACAO_PJ_QC_TESTE.docx")
+        caminho_modelo = os.path.join(os.path.dirname(__file__), "11_PROCURACAO_PJ_CQ_TESTE.docx")
         
         if not os.path.exists(caminho_modelo):
             raise FileNotFoundError(f"Arquivo modelo não encontrado em: {caminho_modelo}")
@@ -58,6 +55,10 @@ def obter_dados(screen_instance):
         dados = {
             "caminho_modelo": caminho_modelo,
             "nome_outorgante": screen_instance.nome_outorgante.text,
+            "nome_empresa": screen_instance.nome_empresa.text,
+            "cnpj": screen_instance.cnpj.text,
+            "end_empresa": screen_instance.end_empresa.text,
+            "cep_empresa": screen_instance.cep_empresa.text,
             "cpf": screen_instance.cpf.text,
             "rg": screen_instance.rg.text,
             "cidade_outorgante": screen_instance.cidade_outorgante_input.text,

@@ -11,7 +11,7 @@ class HomeProcuracaoScreen(Screen):
 
         # Adiciona um título à tela inicial
         titulo = Label(
-            text="Tipos de procuração",
+            text="Escolher entre PF e PJ",
             font_size=30,
             size_hint=(None, None),
             size=(200, 50),

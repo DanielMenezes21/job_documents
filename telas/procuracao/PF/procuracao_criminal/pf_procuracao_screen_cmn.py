@@ -6,6 +6,7 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.spinner import Spinner
+from kivy.uix.label import Label
 from telas.procuracao.PF.procuracao_criminal.pf_funcoes_procuracao_cmn import on_nacionalidade_change, ir_para_poderes, ir_para_procuracao
 
 class PFProcuracaoCriminalScreen(Screen):
@@ -13,7 +14,17 @@ class PFProcuracaoCriminalScreen(Screen):
         super().__init__(**kwargs)
 
         layout = BoxLayout(orientation="vertical", spacing=10, padding=10)
-
+        
+        titulo = Label(
+                    text="Procuração Criminal PF",
+                    font_size=20,
+                    size_hint=(None, None),
+                    size=(200, 50),
+                    pos_hint={"center_x": 0.5, "center_y": 0.3}  # Centraliza o título
+                )
+                
+        layout.add_widget(titulo)
+        
         self.nome_outorgante = TextInput(hint_text="Digite o nome do outorgante", multiline=False, size_hint_y=0.18)
         layout.add_widget(self.nome_outorgante)
 

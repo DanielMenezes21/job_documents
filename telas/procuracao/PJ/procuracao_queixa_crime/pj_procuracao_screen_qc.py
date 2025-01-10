@@ -7,66 +7,112 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.spinner import Spinner
 from kivy.core.window import Window
-from telas.procuracao.PF.procuracao_queixa_crime.pf_funcoes_procuracao_qc import on_nacionalidade_change, ir_para_poderes, ir_para_procuracao, handle_key_down
+from kivy.uix.label import Label
+from telas.procuracao.PJ.procuracao_queixa_crime.pj_funcoes_procuracao_qc import on_nacionalidade_change, ir_para_poderes, ir_para_procuracao, switch_focus
 
 class ProcuracaoQCPJScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
+        
+         # Area layout
         layout = BoxLayout(orientation="vertical", spacing=10, padding=10)
-
-        self.inputs = []
+        cnpj_layout=BoxLayout(orientation="horizontal", size_hint_y=0.18)
+        cpf_rg_layout = BoxLayout(orientation="horizontal", size_hint_y=0.18)
+        cep_end_layout = BoxLayout(orientation="horizontal", size_hint_y=0.18)
+        empresa_layout = BoxLayout(orientation="horizontal", size_hint_y=0.18)
+        cidade_estado_layout = BoxLayout(orientation="horizontal", size_hint_y=0.18)
         
-        print("Lista inicial de inputs:")
-        for i, input_field in enumerate(self.inputs):
-            print(f"Input {i}: {input_field.hint_text}")
-
-        Window.bind(on_key_down=lambda window, key, scancode, codepoint, modifiers: handle_key_down(self, window, key, scancode, codepoint, modifiers))
-        
-        def create_text_input(hint_text):
-            input_field = TextInput(
-                hint_text=hint_text,
-                multiline=False,
-                size_hint_y=0.18
-            )
-
-            # Capturar eventos de tecla pressionada para este campo
-            def on_key_down(window, key, scancode, codepoint, modifiers):
-                if key == 9:  # Código da tecla TAB
-                    return True  # Bloqueia a inserção do caractere no campo
-                return False
-
-            # Vincula o evento ao TextInput
-            input_field.bind(on_key_down=on_key_down)
-
-            self.inputs.append(input_field)  # Adiciona à lista de campos
-            return input_field
+        titulo = Label(
+            text="Procuração Criminal PJ",
+            font_size=20,
+            size_hint=(None, None),
+            size=(200, 50),
+            pos_hint={"center_x": 0.5, "center_y": 0.3}  # Centraliza o título
+        )
+        layout.add_widget(titulo)
 
         # Criação dos campos de entrada com a função auxiliar
-        self.nome_outorgante = create_text_input("Digite o nome do outorgante")
+        self.nome_outorgante = TextInput(hint_text="Digite o nome do outorgante", 
+                                         multiline=False,
+                                         size_hint_y=0.18)
         layout.add_widget(self.nome_outorgante)
+        
+        self.nome_empresa = TextInput(hint_text="Digite o nome da empresa",
+                                      multiline=False,
+                                      size_hint_y=1,
+                                      size_hint_x=1)
+        cnpj_layout.add_widget(self.nome_empresa)
+        
+        self.cnpj = TextInput(hint_text="Digite o CNPJ da empresa",
+                                      multiline=False,
+                                      size_hint_y=1,
+                                      size_hint_x=1)
+        cnpj_layout.add_widget(self.cnpj)
+        
+        layout.add_widget(cnpj_layout)
+        
+        self.end_empresa = TextInput(hint_text = "Informe o endereço da empresa",
+                                     multiline=False,
+                                     size_hint_y=1,
+                                     size_hint_x=1)
+        empresa_layout.add_widget(self.end_empresa)
+        
+        self.cep_empresa = TextInput(hint_text="Informe o CEP da empresa",
+                                     multiline=False,
+                                     size_hint_y=1,
+                                     size_hint_x=1)
+        empresa_layout.add_widget(self.cep_empresa)
+        
+        layout.add_widget(empresa_layout)
 
-        self.cpf = create_text_input("Digite o CPF do outorgante")
-        layout.add_widget(self.cpf)
-
-        self.rg = create_text_input("Digite o RG do outorgante")
-        layout.add_widget(self.rg)
-
-        self.endereco = create_text_input("Digite o endereço do outorgante")
-        layout.add_widget(self.endereco)
-
-        self.cep = create_text_input("Digite o CEP do endereço do outorgante")
-        layout.add_widget(self.cep)
-
-        self.estado_civil = create_text_input("Digite o estado civil do outorgante")
+        self.cpf = TextInput(hint_text="Digite o CPF do outorgante",
+                             multiline=False,
+                             size_hint_y=1,
+                             size_hint_x=1,)
+        cpf_rg_layout.add_widget(self.cpf)
+        
+        self.rg = TextInput(hint_text="Digite o RG do outorgante",
+                            multiline=False,
+                            size_hint_y=1,
+                            size_hint_x=0.6,)
+        cpf_rg_layout.add_widget(self.rg)
+        
+        # Adiciona o cpf_rg_layout
+        layout.add_widget(cpf_rg_layout)
+        
+        self.endereco = TextInput(hint_text="Digite o endereco do outorgante",
+                                  multiline=False, 
+                                  size_hint_y=1,
+                                  size_hint_x=1)
+        cep_end_layout.add_widget(self.endereco)
+        
+        self.cep = TextInput(hint_text="Digite o cep do endereco do outorgante",
+                             multiline=False, 
+                             size_hint_y=1,
+                             size_hint_x=0.7)
+        cep_end_layout.add_widget(self.cep)
+        
+        layout.add_widget(cep_end_layout)
+        
+        self.cidade_outorgante_input = TextInput(hint_text="Digite a cidade do outorgante",
+                             multiline=False, 
+                             size_hint_y=1,
+                             size_hint_x=1)
+        cidade_estado_layout.add_widget(self.cidade_outorgante_input)
+        
+        self.sigla_estado_outorgante_input= TextInput(hint_text="Digite a sigla do estado do outorgante",
+                             multiline=False, 
+                             size_hint_y=1,
+                             size_hint_x=1)
+        cidade_estado_layout.add_widget(self.sigla_estado_outorgante_input)
+        
+        layout.add_widget(cidade_estado_layout)
+        
+        self.estado_civil= TextInput(hint_text="Digite o estado civil",
+                             multiline=False, 
+                             size_hint_y=0.18)
         layout.add_widget(self.estado_civil)
-
-        self.cidade_outorgante_input = create_text_input("Digite a cidade do outorgante")
-        layout.add_widget(self.cidade_outorgante_input)
-
-        self.sigla_estado_outorgante_input = create_text_input("Digite a sigla do estado do outorgante")
-        layout.add_widget(self.sigla_estado_outorgante_input)
-
+        
         self.nacionalidade_spinner = Spinner(
             text="Selecione a Nacionalidade",
             values=("Brasileiro", "Outro"),
@@ -76,7 +122,7 @@ class ProcuracaoQCPJScreen(Screen):
             text=lambda spinner, text: on_nacionalidade_change(self, spinner, text)
         )
         layout.add_widget(self.nacionalidade_spinner)
-
+        
         self.inscrita_o_spinner = Spinner(
             text='Selecione o Gênero',
             values=('Masculino', 'Feminino'),
@@ -84,13 +130,17 @@ class ProcuracaoQCPJScreen(Screen):
         )
         layout.add_widget(self.inscrita_o_spinner)
 
-        self.nacionalidade_input = create_text_input("Digite a nacionalidade")
-        self.nacionalidade_input.readonly = True
+        self.nacionalidade_input = TextInput(
+            hint_text="Digite a nacionalidade",
+            multiline=False,
+            readonly=True,
+            size_hint_y=0.18
+        )
         layout.add_widget(self.nacionalidade_input)
-
-        self.nome_arquivo_input = create_text_input("Digite o nome do arquivo")
+        
+        self.nome_arquivo_input = TextInput(hint_text="Digite o nome do arquivo", multiline=False, size_hint_y=0.18)
         layout.add_widget(self.nome_arquivo_input)
-
+        
         button_layout = FloatLayout(size_hint_y=0.2)
 
         # Botão para editar poderes (canto inferior direito)
@@ -105,7 +155,7 @@ class ProcuracaoQCPJScreen(Screen):
 
         # Botão para voltar para a homepage (canto inferior esquerdo)
         btn_homepage = Button(
-            text="Voltar para procuracao",
+            text="Voltar para procuração",
             size_hint=(None, None),
             size=(150, 50),
             pos_hint={"x": 0.05, "y": 0.1}
@@ -113,13 +163,15 @@ class ProcuracaoQCPJScreen(Screen):
         btn_homepage.bind(on_press=lambda instance: ir_para_procuracao(self, instance))
         button_layout.add_widget(btn_homepage)
         
+        for widget in layout.children:
+            if isinstance(widget, TextInput):
+                widget.bind(on_text_validate=lambda instance: switch_focus(instance, layout))
+
         # Adiciona o layout dos botões ao layout principal
         layout.add_widget(button_layout)
-        
-        if self.inputs:
-            self.inputs[0].focus = True
 
         # Adiciona tudo ao widget principal
         self.add_widget(layout)
+
             
         

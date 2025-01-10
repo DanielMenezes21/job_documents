@@ -67,6 +67,10 @@ def salvar_texto(screen_instance, _):
     # Dicionário de placeholders com o texto editado
     placeholders = {
         "#PODERES": texto_editado,
+        "#NOME_EMPRESA": screen_instance.dados.get("nome_empresa"),
+        "#CNPJ":screen_instance.dados.get("cnpj"),
+        "#END_EMPRESA": screen_instance.dados.get("end_empresa"),
+        "#CP_EMPRESA": screen_instance.dados.get("cep_empresa"),
         "#NOME_OUTORGANTE": screen_instance.dados.get("nome_outorgante"),
         "#OUTORGANTE_CPF": screen_instance.dados.get("cpf"),
         "#CIDADE_OUTORGANTE": screen_instance.dados.get("cidade_outorgante"),
@@ -98,7 +102,6 @@ def salvar_texto(screen_instance, _):
     # Substituir os placeholders no documento
     for paragraph in document.paragraphs:
         substituir_com_formatacao(paragraph, placeholders)
-        print(f"substituindo {placeholders} no documento")
 
     # Substituir nas tabelas
     for tabela in document.tables:
