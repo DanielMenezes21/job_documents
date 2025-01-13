@@ -15,7 +15,9 @@ class FocusSwitchingTextInput(TextInput):
             if next_widget:
                 next_widget.focus = True  # Define o próximo widget como focado
             return True  # Impede o processamento padrão do evento
+
         return super().keyboard_on_key_down(window, keycode, text, modifiers)
+
 
     def get_next_focusable(self):
         """
@@ -27,60 +29,54 @@ class FocusSwitchingTextInput(TextInput):
             next_widget = next_widget.get_focus_next()  # Busca o próximo na sequência
         return next_widget  # Retorna o próximo widget válido ou None
     
-    def aplicar_mascara_cnpj(cnpj_text):
+class MaskedFocusSwitchingTextInput(FocusSwitchingTextInput):
+    def __init__(self, max_length, mask, **kwargs):
         """
-        Aplica a máscara de CNPJ ao texto inserido.
-        Formato: XX.XXX.XXX/XXXX-XX
+        Inicializa o TextInput com tamanho máximo e máscara.
+        :param max_length: Quantidade máxima de dígitos permitidos (exemplo: 11 para CPF).
+        :param mask: Máscara a ser aplicada após preencher o campo.
         """
-        numeros = ''.join(filter(str.isdigit, cnpj_text))  # Remove caracteres não numéricos
-        if len(numeros) > 14:
-            numeros = numeros[:14]  # Limita o CNPJ a 14 dígitos
+        super().__init__(**kwargs)
+        self.max_length = max_length
+        self.mask = mask
+        self.bind(text=self._on_text)
 
-        # Aplica a máscara conforme a quantidade de números
-        if len(numeros) >= 12:
-            return f"{numeros[:2]}.{numeros[2:5]}.{numeros[5:8]}/{numeros[8:12]}-{numeros[12:14]}"
-        elif len(numeros) >= 8:
-            return f"{numeros[:2]}.{numeros[2:5]}.{numeros[5:8]}/{numeros[8:]}"
-        elif len(numeros) >= 5:
-            return f"{numeros[:2]}.{numeros[2:5]}.{numeros[5:]}"
-        elif len(numeros) >= 2:
-            return f"{numeros[:2]}.{numeros[2:]}"
-        return numeros
-
-
-    def aplicar_mascara_cpf(cpf_text):
+    def _on_text(self, instance, value):
         """
-        Aplica a máscara de CPF ao texto inserido.
-        Formato: XXX.XXX.XXX-XX
+        Verifica o comprimento do texto e aplica a máscara ao completá-lo.
         """
-        numeros = ''.join(filter(str.isdigit, cpf_text))  # Remove caracteres não numéricos
-        if len(numeros) > 11:
-            numeros = numeros[:11]  # Limita o CPF a 11 dígitos
+        digits = ''.join(filter(str.isdigit, value))  # Filtra apenas números
+        if len(digits) == self.max_length:  # Quando o campo está completo
+            self.text = self._apply_mask(digits)
+            self.focus = False  # Remove o foco do campo atual
+            next_widget = self.get_next_focusable()  # Obtém o próximo widget focável
+            if next_widget:
+                next_widget.focus = True  # Move o foco para o próximo widget
 
-        # Aplica a máscara conforme a quantidade de números
-        if len(numeros) >= 9:
-            return f"{numeros[:3]}.{numeros[3:6]}.{numeros[6:9]}-{numeros[9:11]}"
-        elif len(numeros) >= 6:
-            return f"{numeros[:3]}.{numeros[3:6]}.{numeros[6:]}"
-        elif len(numeros) >= 3:
-            return f"{numeros[:3]}.{numeros[3:]}"
-        return numeros
-
-
-    def aplicar_mascara_cep(cep_text):
+    def insert_text(self, substring, from_undo=False):
         """
-        Aplica a máscara de CEP ao texto inserido.
-        Formato: XXXXX-XXX
+        Insere texto respeitando apenas números e o limite máximo de caracteres.
         """
-        numeros = ''.join(filter(str.isdigit, cep_text))  # Remove caracteres não numéricos
-        if len(numeros) > 8:
-            numeros = numeros[:8]  # Limita o CEP a 8 dígitos
+        if len(self.text) >= self.max_length and not self.text.isdigit():
+            return  # Impede inserções além do limite
+        substring = ''.join(filter(str.isdigit, substring))  # Permite apenas números
+        if len(''.join(filter(str.isdigit, self.text))) + len(substring) > self.max_length:
+            substring = substring[: self.max_length - len(self.text)]  # Limita ao máximo
+        return super().insert_text(substring, from_undo)
 
-        # Aplica a máscara conforme a quantidade de números
-        if len(numeros) >= 5:
-            return f"{numeros[:5]}-{numeros[5:]}"
-        return numeros
+    def _apply_mask(self, digits):
+        """
+        Aplica a máscara ao texto.
+        """
+        masked_text = list(self.mask)
+        digit_index = 0
 
+        for i, char in enumerate(masked_text):
+            if char == ' ' and digit_index < len(digits):
+                masked_text[i] = digits[digit_index]
+                digit_index += 1
+
+        return ''.join(masked_text)
 
 
 
@@ -94,12 +90,16 @@ class FocusSwitchingTextInput(TextInput):
         # Primeiro BoxLayout com campos de entrada
         box1 = BoxLayout(orientation="horizontal", spacing=10)
         box1.add_widget(FocusSwitchingTextInput(hint_text="Nome"))  # Campo de texto normal
-        box1.add_widget(FocusSwitchingTextInput(hint_text="Sobrenome", readonly=True))  # Campo readonly
+        box1.add_widget(FocusSwitchingTextInput(hint_text="Sobrenome"))  # Campo readonly
 
         # Segundo BoxLayout com campos de entrada
         box2 = BoxLayout(orientation="horizontal", spacing=10)
-        box2.add_widget(FocusSwitchingTextInput(hint_text="RG"))  # Campo de texto normal
-        box2.add_widget(FocusSwitchingTextInput(hint_text="CPF", readonly=True))  # Campo readonly
+        box2.add_widget(MaskedFocusSwitchingTextInput(
+            hint_text="CPF", max_length=11, mask="   .   .   -  "))
+
+        # Campo de texto para CNPJ (14 dígitos)
+        box2.add_widget(MaskedFocusSwitchingTextInput(
+            hint_text="CNPJ", max_length=14, mask="  .   .   /    -  ")) 
 
         # Adiciona os BoxLayouts no GridLayout principal
         root.add_widget(box1)

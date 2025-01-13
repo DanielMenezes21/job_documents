@@ -2,6 +2,7 @@
 from telas.procuracao.PF.procuracao_queixa_crime.pf_funcoes_poderes_qc import *
 from telas.procuracao.PF.procuracao_queixa_crime.pf_poderes_screen_qc import PFPoderesQCScreen
 from datetime import datetime
+from logic_tab import FocusSwitchingTextInput
 
 def on_nacionalidade_change(screen_instance, spinner, text):
     if text == "Outro":
@@ -16,7 +17,35 @@ def on_nacionalidade_change(screen_instance, spinner, text):
             screen_instance.nacionalidade_input.text = "brasileiro"
             screen_instance.inscrita_o_spinner.text = "inscrito"
         screen_instance.nacionalidade_input.readonly = True
+        
+def on_cpf_change(self, instance, value):
+    if getattr(self, "_updating_cpf", False):
+        return
 
+    self._updating_cpf = True
+    try:
+        texto_mascarado = FocusSwitchingTextInput.aplicar_mascara_cpf(value)
+        if texto_mascarado != instance.text:
+            instance.text = texto_mascarado
+            # Move o cursor para o final
+            instance.cursor = (len(texto_mascarado), 0)
+    finally:
+        self._updating_cpf = False
+
+def on_cep_change(self, instance, value):
+    if getattr(self, "_updating_cep", False):
+        return
+
+    self._updating_cep = True
+    try:
+        texto_mascarado = FocusSwitchingTextInput.aplicar_mascara_cep(value)
+        if texto_mascarado != instance.text:
+            instance.text = texto_mascarado
+            # Move o cursor para o final
+            instance.cursor = (len(texto_mascarado), 0)
+    finally:
+        self._updating_cep = False
+        
 def ir_para_procuracao(self, instance):
     
     self.manager.current =  "home_procuracao_screen"
@@ -36,6 +65,7 @@ def obter_dados(screen_instance):
         dados = {
             "caminho_modelo": caminho_modelo,
             "nome_outorgante": screen_instance.nome_outorgante.text,
+            "profissao":screen_instance.profissao.text,
             "cpf": screen_instance.cpf.text,
             "rg": screen_instance.rg.text,
             "cidade_outorgante": screen_instance.cidade_outorgante_input.text,

@@ -2,6 +2,7 @@
 from telas.procuracao.PJ.procuracao_criminal.pj_funcoes_poderes_cmn import *
 from telas.procuracao.PJ.procuracao_criminal.pj_poderes_screen_cmn import PoderesCriminalPJScreen
 from datetime import datetime
+from logic_tab import FocusSwitchingTextInput
 
 def on_nacionalidade_change(screen_instance, spinner, text):
     if text == "Outro":
@@ -16,6 +17,50 @@ def on_nacionalidade_change(screen_instance, spinner, text):
             screen_instance.nacionalidade_input.text = "brasileiro"
             screen_instance.inscrita_o_spinner.text = "inscrito"
         screen_instance.nacionalidade_input.readonly = True
+        
+def on_cnpj_change(self, instance, value):
+    if getattr(self, "_updating_cnpj", False):
+        return
+
+    self._updating_cnpj = True
+    try:
+        # Aplica a máscara
+        texto_mascarado = FocusSwitchingTextInput.aplicar_mascara_cnpj(value)
+        if texto_mascarado != instance.text:
+            instance.text = texto_mascarado
+            # Move o cursor para o final
+            instance.cursor = (len(texto_mascarado), 0)
+    finally:
+        self._updating_cnpj = False
+
+def on_cpf_change(self, instance, value):
+    if getattr(self, "_updating_cpf", False):
+        return
+
+    self._updating_cpf = True
+    try:
+        texto_mascarado = FocusSwitchingTextInput.aplicar_mascara_cpf(value)
+        if texto_mascarado != instance.text:
+            instance.text = texto_mascarado
+            # Move o cursor para o final
+            instance.cursor = (len(texto_mascarado), 0)
+    finally:
+        self._updating_cpf = False
+
+def on_cep_change(self, instance, value):
+    if getattr(self, "_updating_cep", False):
+        return
+
+    self._updating_cep = True
+    try:
+        texto_mascarado = FocusSwitchingTextInput.aplicar_mascara_cep(value)
+        if texto_mascarado != instance.text:
+            instance.text = texto_mascarado
+            # Move o cursor para o final
+            instance.cursor = (len(texto_mascarado), 0)
+    finally:
+        self._updating_cep = False
+
 
 def ir_para_procuracao(self, instance):
     

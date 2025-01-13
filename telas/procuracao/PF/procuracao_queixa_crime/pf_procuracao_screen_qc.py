@@ -8,13 +8,15 @@ from kivy.uix.button import Button
 from kivy.uix.spinner import Spinner
 from kivy.core.window import Window
 from kivy.uix.label import Label
-from telas.procuracao.PF.procuracao_queixa_crime.pf_funcoes_procuracao_qc import on_nacionalidade_change, ir_para_poderes, ir_para_procuracao
-from logic_tab import FocusSwitchingTextInput
+from telas.procuracao.PF.procuracao_queixa_crime.pf_funcoes_procuracao_qc import *
+from logic_tab import FocusSwitchingTextInput, MaskedFocusSwitchingTextInput
 class PFProcuracaoQCScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
         layout = BoxLayout(orientation="vertical", spacing=10, padding=10)
+        cpf_rg_layout = BoxLayout(orientation="horizontal", size_hint_y=0.18)
+        end_cep_layout = BoxLayout(orientation = "horizontal", size_hint_y=0.18)
         
         titulo = Label(
             text="Procuração Queixa Crime PF",
@@ -27,18 +29,37 @@ class PFProcuracaoQCScreen(Screen):
 
         self.nome_outorgante = FocusSwitchingTextInput(hint_text="Digite o nome do outorgante", multiline=False, size_hint_y=0.18)
         layout.add_widget(self.nome_outorgante)
+        
+        self.profissao = FocusSwitchingTextInput(hint_text="Digite a profissão do outorgante", multiline=False, size_hint_y=0.18)
+        layout.add_widget(self.profissao)
 
-        self.cpf = FocusSwitchingTextInput(hint_text="Digite o CPF do outorgante", multiline=False, size_hint_y=0.18)
-        layout.add_widget(self.cpf)
+        self.cpf = MaskedFocusSwitchingTextInput(
+            mask="   .   .   -  ",
+            max_length=11,
+            hint_text="Digite o CPF do outorgante",
+            multiline=False,
+            size_hint_y=1,
+            size_hint_x=0.6
+        )
+        cpf_rg_layout.add_widget(self.cpf)
+
+        self.rg = FocusSwitchingTextInput(hint_text="Digite o RG do outorgante", multiline=False, size_hint_y=1, size_hint_x=0.4)
+        cpf_rg_layout.add_widget(self.rg)
         
-        self.rg = FocusSwitchingTextInput(hint_text="Digite o RG do outorgante", multiline=False, size_hint_y=0.18)
-        layout.add_widget(self.rg)
+        layout.add_widget(cpf_rg_layout)
         
-        self.endereco = FocusSwitchingTextInput(hint_text="Digite o endereco do outorgante", multiline=False, size_hint_y=0.18)
-        layout.add_widget(self.endereco)
+        self.endereco = FocusSwitchingTextInput(hint_text="Digite o endereco do outorgante", multiline=False, size_hint_y=1, size_hint_x=0.7)
+        end_cep_layout.add_widget(self.endereco)
         
-        self.cep = FocusSwitchingTextInput(hint_text="Digite o cep do endereco do outorgante", multiline=False, size_hint_y=0.18)
-        layout.add_widget(self.cep)
+        self.cep = MaskedFocusSwitchingTextInput(hint_text="Digite o cep do outorgante",
+                                                 max_length=8,
+                                                 mask="     -   ",
+                                                 multiline=False,
+                                                 size_hint_y=1,
+                                                 size_hint_x=0.3)
+        end_cep_layout.add_widget(self.cep)
+        
+        layout.add_widget(end_cep_layout)
         
         self.estado_civil = FocusSwitchingTextInput(hint_text="Digite o estado civil do do outorgante", multiline=False, size_hint_y=0.18)
         layout.add_widget(self.estado_civil)

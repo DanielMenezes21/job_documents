@@ -8,8 +8,8 @@ from kivy.uix.button import Button
 from kivy.uix.spinner import Spinner
 from kivy.core.window import Window
 from kivy.uix.label import Label
-from telas.procuracao.PJ.procuracao_queixa_crime.pj_funcoes_procuracao_qc import on_nacionalidade_change, ir_para_poderes, ir_para_procuracao, on_cnpj_change, on_cep_change, on_cpf_change
-from logic_tab import FocusSwitchingTextInput
+from telas.procuracao.PJ.procuracao_queixa_crime.pj_funcoes_procuracao_qc import *
+from logic_tab import FocusSwitchingTextInput, MaskedFocusSwitchingTextInput
 class ProcuracaoQCPJScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -43,11 +43,14 @@ class ProcuracaoQCPJScreen(Screen):
                                       size_hint_x=1)
         cnpj_layout.add_widget(self.nome_empresa)
         
-        self.cnpj = FocusSwitchingTextInput(hint_text="Digite o CNPJ da empresa",
-                                      multiline=False,
-                                      size_hint_y=1,
-                                      size_hint_x=1)
-        self.cnpj.bind(text=lambda instance, value: on_cnpj_change(self, instance, value))
+        self.cnpj = MaskedFocusSwitchingTextInput(
+            mask="  .   .   /    -  ",  
+            max_length=14,
+            hint_text="Digite o CNPJ da empresa",
+            multiline=False,
+            size_hint_y=1,
+            size_hint_x=1,
+        )
         cnpj_layout.add_widget(self.cnpj)
         
         layout.add_widget(cnpj_layout)
@@ -58,20 +61,24 @@ class ProcuracaoQCPJScreen(Screen):
                                      size_hint_x=1)
         empresa_layout.add_widget(self.end_empresa)
         
-        self.cep_empresa = FocusSwitchingTextInput(hint_text="Informe o CEP da empresa",
-                                     multiline=False,
-                                     size_hint_y=1,
-                                     size_hint_x=1)
-        self.cep_empresa.bind(text=lambda instance, value: on_cep_change(self, instance, value))
+        self.cep_empresa = MaskedFocusSwitchingTextInput(hint_text="Informe o CEP da empresa",
+                                                         max_length=8,
+                                                         multiline=False,
+                                                         size_hint_y=1,
+                                                         size_hint_x=1,
+                                                         mask="     -   ")
         empresa_layout.add_widget(self.cep_empresa)
         
         layout.add_widget(empresa_layout)
 
-        self.cpf = FocusSwitchingTextInput(hint_text="Digite o CPF do outorgante",
-                             multiline=False,
-                             size_hint_y=1,
-                             size_hint_x=1,)
-        self.cpf.bind(text=lambda instance, value: on_cpf_change(self, instance, value))
+        self.cpf = MaskedFocusSwitchingTextInput(
+            mask="   .   .   -  ",
+            max_length=11,
+            hint_text="Digite o CPF do outorgante",
+            multiline=False,
+            size_hint_y=1,
+            size_hint_x=1,
+        )
         cpf_rg_layout.add_widget(self.cpf)
         
         self.rg = FocusSwitchingTextInput(hint_text="Digite o RG do outorgante",
@@ -89,11 +96,12 @@ class ProcuracaoQCPJScreen(Screen):
                                   size_hint_x=1)
         cep_end_layout.add_widget(self.endereco)
         
-        self.cep = FocusSwitchingTextInput(hint_text="Digite o cep do endereco do outorgante",
-                             multiline=False, 
-                             size_hint_y=1,
-                             size_hint_x=0.7)
-        self.cep.bind(text=lambda instance, value: on_cep_change(self, instance, value))
+        self.cep = MaskedFocusSwitchingTextInput(hint_text="Digite o cep do outorgante",
+                                                 max_length=8,
+                                                 mask="     -   ",
+                                                 multiline=False,
+                                                 size_hint_y=1,
+                                                 size_hint_x=0.7,)
         cep_end_layout.add_widget(self.cep)
         
         layout.add_widget(cep_end_layout)

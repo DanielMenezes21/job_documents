@@ -68,6 +68,7 @@ def salvar_texto(screen_instance, _):
     placeholders = {
         "#PODERES": texto_editado,
         "#NOME_OUTORGANTE": screen_instance.dados.get("nome_outorgante"),
+        "#PROFISSAO": screen_instance.dados.get("profissao"),
         "#OUTORGANTE_CPF": screen_instance.dados.get("cpf"),
         "#CIDADE_OUTORGANTE": screen_instance.dados.get("cidade_outorgante"),
         "#SIGLA_ESTADO_OUTORGANTE": screen_instance.dados.get("sigla_estado_outorgante"),
