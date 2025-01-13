@@ -53,7 +53,7 @@ def processar_documento(caminho_modelo, nome_outorgante, cpf, cidade_outorgante,
     # Dicionário com os marcadores e seus valores correspondentes
     placeholders = {
         "#NOME_OUTORGANTE": nome_outorgante,
-        "#CNPJ": cnpj,
+        "#CNPJ1": cnpj,
         "#NOME_EMPRESA": nome_empresa,
         "#END_EMPRESA":end_empresa,
         "#CP_EMPRESA": cep_empresa,

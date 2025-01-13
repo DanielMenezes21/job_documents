@@ -2,25 +2,7 @@
 from telas.procuracao.PJ.procuracao_queixa_crime.pj_funcoes_poderes_qc import *
 from telas.procuracao.PJ.procuracao_queixa_crime.pj_poderes_screen_qc import PoderesQCPJScreen
 from datetime import datetime
-
-def switch_focus(instance, layout):
-    """
-    Alterna o foco para o próximo TextInput ignorando aqueles com readonly=True.
-    
-    :param instance: O widget atual (TextInput).
-    :param layout: O layout que contém os widgets.
-    """
-    # Reverte a ordem para corresponder ao fluxo visual
-    text_inputs = [w for w in reversed(layout.children) if isinstance(w, TextInput)]
-    
-    # Encontra o índice do widget atual
-    current_index = text_inputs.index(instance)
-
-    # Procura o próximo widget focável
-    for next_widget in text_inputs[current_index + 1:]:
-        if not next_widget.readonly:  # Ignora widgets readonly
-            next_widget.focus = True
-            return
+from logic_tab import FocusSwitchingTextInput
 
 def on_nacionalidade_change(screen_instance, spinner, text):
     if text == "Outro":
@@ -35,6 +17,51 @@ def on_nacionalidade_change(screen_instance, spinner, text):
             screen_instance.nacionalidade_input.text = "brasileiro"
             screen_instance.inscrita_o_spinner.text = "inscrito"
         screen_instance.nacionalidade_input.readonly = True
+        
+# Adicione um atributo de controle ao objeto da tela
+def on_cnpj_change(self, instance, value):
+    if getattr(self, "_updating_cnpj", False):
+        return
+
+    self._updating_cnpj = True
+    try:
+        # Aplica a máscara
+        texto_mascarado = FocusSwitchingTextInput.aplicar_mascara_cnpj(value)
+        if texto_mascarado != instance.text:
+            instance.text = texto_mascarado
+            # Move o cursor para o final
+            instance.cursor = (len(texto_mascarado), 1)
+    finally:
+        self._updating_cnpj = False
+
+def on_cpf_change(self, instance, value):
+    if getattr(self, "_updating_cpf", False):
+        return
+
+    self._updating_cpf = True
+    try:
+        texto_mascarado = FocusSwitchingTextInput.aplicar_mascara_cpf(value)
+        if texto_mascarado != instance.text:
+            instance.text = texto_mascarado
+            # Move o cursor para o final
+            instance.cursor = (len(texto_mascarado), 0)
+    finally:
+        self._updating_cpf = False
+
+def on_cep_change(self, instance, value):
+    if getattr(self, "_updating_cep", False):
+        return
+
+    self._updating_cep = True
+    try:
+        texto_mascarado = FocusSwitchingTextInput.aplicar_mascara_cep(value)
+        if texto_mascarado != instance.text:
+            instance.text = texto_mascarado
+            # Move o cursor para o final
+            instance.cursor = (len(texto_mascarado), 0)
+    finally:
+        self._updating_cep = False
+
 
 def ir_para_procuracao(self, instance):
     

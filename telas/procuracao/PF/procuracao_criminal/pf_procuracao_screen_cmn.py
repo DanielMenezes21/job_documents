@@ -8,7 +8,7 @@ from kivy.uix.button import Button
 from kivy.uix.spinner import Spinner
 from kivy.uix.label import Label
 from telas.procuracao.PF.procuracao_criminal.pf_funcoes_procuracao_cmn import on_nacionalidade_change, ir_para_poderes, ir_para_procuracao
-
+from logic_tab import FocusSwitchingTextInput
 class PFProcuracaoCriminalScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -25,28 +25,28 @@ class PFProcuracaoCriminalScreen(Screen):
                 
         layout.add_widget(titulo)
         
-        self.nome_outorgante = TextInput(hint_text="Digite o nome do outorgante", multiline=False, size_hint_y=0.18)
+        self.nome_outorgante = FocusSwitchingTextInput(hint_text="Digite o nome do outorgante", multiline=False, size_hint_y=0.18)
         layout.add_widget(self.nome_outorgante)
 
-        self.cpf = TextInput(hint_text="Digite o CPF do outorgante", multiline=False, size_hint_y=0.18)
+        self.cpf = FocusSwitchingTextInput(hint_text="Digite o CPF do outorgante", multiline=False, size_hint_y=0.18)
         layout.add_widget(self.cpf)
         
-        self.rg = TextInput(hint_text="Digite o RG do outorgante", multiline=False, size_hint_y=0.18)
+        self.rg = FocusSwitchingTextInput(hint_text="Digite o RG do outorgante", multiline=False, size_hint_y=0.18)
         layout.add_widget(self.rg)
         
-        self.endereco = TextInput(hint_text="Digite o endereco do outorgante", multiline=False, size_hint_y=0.18)
+        self.endereco = FocusSwitchingTextInput(hint_text="Digite o endereco do outorgante", multiline=False, size_hint_y=0.18)
         layout.add_widget(self.endereco)
         
-        self.cep = TextInput(hint_text="Digite o cep do endereco do outorgante", multiline=False, size_hint_y=0.18)
+        self.cep = FocusSwitchingTextInput(hint_text="Digite o cep do endereco do outorgante", multiline=False, size_hint_y=0.18)
         layout.add_widget(self.cep)
         
-        self.estado_civil = TextInput(hint_text="Digite o estado civil do do outorgante", multiline=False, size_hint_y=0.18)
+        self.estado_civil = FocusSwitchingTextInput(hint_text="Digite o estado civil do do outorgante", multiline=False, size_hint_y=0.18)
         layout.add_widget(self.estado_civil)
 
-        self.cidade_outorgante_input = TextInput(hint_text="Digite a cidade do outorgante", multiline=False, size_hint_y=0.18)
+        self.cidade_outorgante_input = FocusSwitchingTextInput(hint_text="Digite a cidade do outorgante", multiline=False, size_hint_y=0.18)
         layout.add_widget(self.cidade_outorgante_input)
 
-        self.sigla_estado_outorgante_input = TextInput(hint_text="Digite a sigla do estado do outorgante", multiline=False, size_hint_y=0.18)
+        self.sigla_estado_outorgante_input = FocusSwitchingTextInput(hint_text="Digite a sigla do estado do outorgante", multiline=False, size_hint_y=0.18)
         layout.add_widget(self.sigla_estado_outorgante_input)
 
         self.nacionalidade_spinner = Spinner(
@@ -66,7 +66,7 @@ class PFProcuracaoCriminalScreen(Screen):
         )
         layout.add_widget(self.inscrita_o_spinner)
 
-        self.nacionalidade_input = TextInput(
+        self.nacionalidade_input = FocusSwitchingTextInput(
             hint_text="Digite a nacionalidade",
             multiline=False,
             readonly=True,
@@ -74,7 +74,7 @@ class PFProcuracaoCriminalScreen(Screen):
         )
         layout.add_widget(self.nacionalidade_input)
         
-        self.nome_arquivo_input = TextInput(hint_text="Digite o nome do arquivo", multiline=False, size_hint_y=0.18)
+        self.nome_arquivo_input = FocusSwitchingTextInput(hint_text="Digite o nome do arquivo", multiline=False, size_hint_y=0.18)
         layout.add_widget(self.nome_arquivo_input)
         
         button_layout = FloatLayout(size_hint_y=0.2)

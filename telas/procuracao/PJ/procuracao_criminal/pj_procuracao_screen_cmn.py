@@ -42,7 +42,7 @@ class ProcuracaoCriminalPJScreen(Screen):
                                       size_hint_x=1)
         cnpj_layout.add_widget(self.nome_empresa)
         
-        self.cnpj = TextInput(hint_text="Digite o CNPJ da empresa",
+        self.cnpj = FocusSwitchingTextInput(hint_text="Digite o CNPJ da empresa",
                                       multiline=False,
                                       size_hint_y=1,
                                       size_hint_x=1)
@@ -50,13 +50,13 @@ class ProcuracaoCriminalPJScreen(Screen):
         
         layout.add_widget(cnpj_layout)
         
-        self.end_empresa = TextInput(hint_text = "Informe o endereço da empresa",
+        self.end_empresa = FocusSwitchingTextInput(hint_text = "Informe o endereço da empresa",
                                      multiline=False,
                                      size_hint_y=1,
                                      size_hint_x=1)
         empresa_layout.add_widget(self.end_empresa)
         
-        self.cep_empresa = TextInput(hint_text="Informe o CEP da empresa",
+        self.cep_empresa = FocusSwitchingTextInput(hint_text="Informe o CEP da empresa",
                                      multiline=False,
                                      size_hint_y=1,
                                      size_hint_x=1)
@@ -64,13 +64,13 @@ class ProcuracaoCriminalPJScreen(Screen):
         
         layout.add_widget(empresa_layout)
 
-        self.cpf = TextInput(hint_text="Digite o CPF do outorgante",
+        self.cpf = FocusSwitchingTextInput(hint_text="Digite o CPF do outorgante",
                              multiline=False,
                              size_hint_y=1,
                              size_hint_x=1,)
         cpf_rg_layout.add_widget(self.cpf)
         
-        self.rg = TextInput(hint_text="Digite o RG do outorgante",
+        self.rg = FocusSwitchingTextInput(hint_text="Digite o RG do outorgante",
                             multiline=False,
                             size_hint_y=1,
                             size_hint_x=0.6,)
@@ -79,13 +79,13 @@ class ProcuracaoCriminalPJScreen(Screen):
         # Adiciona o cpf_rg_layout
         layout.add_widget(cpf_rg_layout)
         
-        self.endereco = TextInput(hint_text="Digite o endereco do outorgante",
+        self.endereco = FocusSwitchingTextInput(hint_text="Digite o endereco do outorgante",
                                   multiline=False, 
                                   size_hint_y=1,
                                   size_hint_x=1)
         cep_end_layout.add_widget(self.endereco)
         
-        self.cep = TextInput(hint_text="Digite o cep do endereco do outorgante",
+        self.cep = FocusSwitchingTextInput(hint_text="Digite o cep do endereco do outorgante",
                              multiline=False, 
                              size_hint_y=1,
                              size_hint_x=0.7)
@@ -93,13 +93,13 @@ class ProcuracaoCriminalPJScreen(Screen):
         
         layout.add_widget(cep_end_layout)
         
-        self.cidade_outorgante_input = TextInput(hint_text="Digite a cidade do outorgante",
+        self.cidade_outorgante_input = FocusSwitchingTextInput(hint_text="Digite a cidade do outorgante",
                              multiline=False, 
                              size_hint_y=1,
                              size_hint_x=1)
         cidade_estado_layout.add_widget(self.cidade_outorgante_input)
         
-        self.sigla_estado_outorgante_input= TextInput(hint_text="Digite a sigla do estado do outorgante",
+        self.sigla_estado_outorgante_input= FocusSwitchingTextInput(hint_text="Digite a sigla do estado do outorgante",
                              multiline=False, 
                              size_hint_y=1,
                              size_hint_x=1)
@@ -107,7 +107,7 @@ class ProcuracaoCriminalPJScreen(Screen):
         
         layout.add_widget(cidade_estado_layout)
         
-        self.estado_civil= TextInput(hint_text="Digite o estado civil",
+        self.estado_civil= FocusSwitchingTextInput(hint_text="Digite o estado civil",
                              multiline=False, 
                              size_hint_y=0.18)
         layout.add_widget(self.estado_civil)
@@ -129,7 +129,7 @@ class ProcuracaoCriminalPJScreen(Screen):
         )
         layout.add_widget(self.inscrita_o_spinner)
 
-        self.nacionalidade_input = TextInput(
+        self.nacionalidade_input = FocusSwitchingTextInput(
             hint_text="Digite a nacionalidade",
             multiline=False,
             readonly=True,
@@ -137,7 +137,7 @@ class ProcuracaoCriminalPJScreen(Screen):
         )
         layout.add_widget(self.nacionalidade_input)
         
-        self.nome_arquivo_input = TextInput(hint_text="Digite o nome do arquivo", multiline=False, size_hint_y=0.18)
+        self.nome_arquivo_input = FocusSwitchingTextInput(hint_text="Digite o nome do arquivo", multiline=False, size_hint_y=0.18)
         layout.add_widget(self.nome_arquivo_input)
         
         button_layout = FloatLayout(size_hint_y=0.2)

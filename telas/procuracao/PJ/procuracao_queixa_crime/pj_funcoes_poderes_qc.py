@@ -68,7 +68,7 @@ def salvar_texto(screen_instance, _):
     placeholders = {
         "#PODERES": texto_editado,
         "#NOME_EMPRESA": screen_instance.dados.get("nome_empresa"),
-        "#CNPJ":screen_instance.dados.get("cnpj"),
+        "#CNPJ1":screen_instance.dados.get("cnpj"),
         "#END_EMPRESA": screen_instance.dados.get("end_empresa"),
         "#CP_EMPRESA": screen_instance.dados.get("cep_empresa"),
         "#NOME_OUTORGANTE": screen_instance.dados.get("nome_outorgante"),
@@ -115,6 +115,7 @@ def salvar_texto(screen_instance, _):
     caminho_salvamento = f"{nome_arquivo}.docx"
     document.save(caminho_salvamento)
     mostrar_popup(screen_instance, "Sucesso", f"Documento salvo em {caminho_salvamento}")
+    os.startfile(caminho_salvamento)
 
 def mostrar_popup(screen_instance, titulo, mensagem):
     """

@@ -114,6 +114,7 @@ def salvar_texto(screen_instance, _):
     nome_arquivo = screen_instance.dados.get("nome_arquivo", "documento_final")  # Usar nome_arquivo, se disponível
     caminho_salvamento = f"{nome_arquivo}.docx"
     document.save(caminho_salvamento)
+    os.startfile(caminho_salvamento)
     mostrar_popup(screen_instance, "Sucesso", f"Documento salvo em {caminho_salvamento}")
 
 def mostrar_popup(screen_instance, titulo, mensagem):

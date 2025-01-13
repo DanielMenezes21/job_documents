@@ -86,6 +86,7 @@ def salvar_texto(screen_instance, _):
         substituir_palavras_documento(screen_instance.caminho_modelo,placeholders, nome_arquivo)
     
         mostrar_popup(screen_instance, "Sucesso", "Documento salvo com sucesso!")
+        os.startfile(caminho_modelo)
         
     except Exception as e:
         print(f"Erro ao obter dados: {e}")

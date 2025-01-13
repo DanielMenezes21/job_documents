@@ -26,9 +26,65 @@ class FocusSwitchingTextInput(TextInput):
         while next_widget and isinstance(next_widget, TextInput) and next_widget.readonly:
             next_widget = next_widget.get_focus_next()  # Busca o próximo na sequência
         return next_widget  # Retorna o próximo widget válido ou None
+    
+    def aplicar_mascara_cnpj(cnpj_text):
+        """
+        Aplica a máscara de CNPJ ao texto inserido.
+        Formato: XX.XXX.XXX/XXXX-XX
+        """
+        numeros = ''.join(filter(str.isdigit, cnpj_text))  # Remove caracteres não numéricos
+        if len(numeros) > 14:
+            numeros = numeros[:14]  # Limita o CNPJ a 14 dígitos
+
+        # Aplica a máscara conforme a quantidade de números
+        if len(numeros) >= 12:
+            return f"{numeros[:2]}.{numeros[2:5]}.{numeros[5:8]}/{numeros[8:12]}-{numeros[12:14]}"
+        elif len(numeros) >= 8:
+            return f"{numeros[:2]}.{numeros[2:5]}.{numeros[5:8]}/{numeros[8:]}"
+        elif len(numeros) >= 5:
+            return f"{numeros[:2]}.{numeros[2:5]}.{numeros[5:]}"
+        elif len(numeros) >= 2:
+            return f"{numeros[:2]}.{numeros[2:]}"
+        return numeros
 
 
-class MyApp(App):
+    def aplicar_mascara_cpf(cpf_text):
+        """
+        Aplica a máscara de CPF ao texto inserido.
+        Formato: XXX.XXX.XXX-XX
+        """
+        numeros = ''.join(filter(str.isdigit, cpf_text))  # Remove caracteres não numéricos
+        if len(numeros) > 11:
+            numeros = numeros[:11]  # Limita o CPF a 11 dígitos
+
+        # Aplica a máscara conforme a quantidade de números
+        if len(numeros) >= 9:
+            return f"{numeros[:3]}.{numeros[3:6]}.{numeros[6:9]}-{numeros[9:11]}"
+        elif len(numeros) >= 6:
+            return f"{numeros[:3]}.{numeros[3:6]}.{numeros[6:]}"
+        elif len(numeros) >= 3:
+            return f"{numeros[:3]}.{numeros[3:]}"
+        return numeros
+
+
+    def aplicar_mascara_cep(cep_text):
+        """
+        Aplica a máscara de CEP ao texto inserido.
+        Formato: XXXXX-XXX
+        """
+        numeros = ''.join(filter(str.isdigit, cep_text))  # Remove caracteres não numéricos
+        if len(numeros) > 8:
+            numeros = numeros[:8]  # Limita o CEP a 8 dígitos
+
+        # Aplica a máscara conforme a quantidade de números
+        if len(numeros) >= 5:
+            return f"{numeros[:5]}-{numeros[5:]}"
+        return numeros
+
+
+
+
+'''class MyApp(App):
     def build(self):
         """
         Cria a interface do aplicativo usando um GridLayout contendo BoxLayouts.
@@ -54,3 +110,4 @@ class MyApp(App):
 
 if __name__ == "__main__":
     MyApp().run()
+'''

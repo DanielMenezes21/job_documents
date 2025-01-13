@@ -10,7 +10,7 @@ from kivy.uix.spinner import Spinner
 from telas.contrato_hono.contrato_screen2 import Processo2Screen
 from datetime import datetime
 from telas.contrato_hono.funcoes_contrato_s2 import on_nacionalidade_change, on_sec_rg_change, ir_para_processo2, ir_para_homepage
-
+from logic_tab import FocusSwitchingTextInput
 class ProcessoScreen(Screen):
     def __init__(self, **kwargs):
         super(ProcessoScreen, self).__init__(**kwargs)
@@ -21,19 +21,19 @@ class ProcessoScreen(Screen):
         layout = BoxLayout(orientation="vertical", spacing=10, padding=10)
 
         # Campos para entrada de dados
-        self.nome_contratante = TextInput(hint_text="Digite o nome do contratante", multiline=False, size_hint_y=0.1)
+        self.nome_contratante = FocusSwitchingTextInput(hint_text="Digite o nome do contratante", multiline=False, size_hint_y=0.1)
         layout.add_widget(self.nome_contratante)
         
-        self.rg = TextInput(hint_text="Digite o Registro Geral do contratante", multiline=False, size_hint_y=0.1)
+        self.rg = FocusSwitchingTextInput(hint_text="Digite o Registro Geral do contratante", multiline=False, size_hint_y=0.1)
         layout.add_widget(self.rg)
 
-        self.contratante_cpf = TextInput(hint_text="Digite o CPF do contratante", multiline=False, size_hint_y=0.1)
+        self.contratante_cpf = FocusSwitchingTextInput(hint_text="Digite o CPF do contratante", multiline=False, size_hint_y=0.1)
         layout.add_widget(self.contratante_cpf)
 
-        self.cidade_contratante = TextInput(hint_text="Digite a cidade do contratante", multiline=False, size_hint_y=0.1)
+        self.cidade_contratante = FocusSwitchingTextInput(hint_text="Digite a cidade do contratante", multiline=False, size_hint_y=0.1)
         layout.add_widget(self.cidade_contratante)
         
-        self.sigla_estado_contratante = TextInput(hint_text="Digite a sigla do estado do contratante", multiline=False, size_hint_y=0.1)
+        self.sigla_estado_contratante = FocusSwitchingTextInput(hint_text="Digite a sigla do estado do contratante", multiline=False, size_hint_y=0.1)
         layout.add_widget(self.sigla_estado_contratante)
 
         # Campo para selecionar o gênero
@@ -55,7 +55,7 @@ class ProcessoScreen(Screen):
         layout.add_widget(self.nacionalidade_spinner)
 
         # Campo para editar a nacionalidade (inicialmente oculto)
-        self.nacionalidade_input = TextInput(
+        self.nacionalidade_input = FocusSwitchingTextInput(
             hint_text="Digite a nacionalidade",
             multiline=False,
             readonly=True,  # Inicialmente desabilitado
@@ -82,7 +82,7 @@ class ProcessoScreen(Screen):
         )
         layout.add_widget(self.sec_rg_input)
         
-        self.est_rg_input = TextInput(
+        self.est_rg_input = FocusSwitchingTextInput(
             hint_text="Digite o estado pertencedor da secretaria ",
             multiline=False,
             readonly=False,  # Inicialmente desabilitado
