@@ -66,6 +66,7 @@ def obter_dados(screen_instance):
             "estado_civil": screen_instance.estado_civil.text,
             "inscrita_o": screen_instance.inscrita_o_spinner.text,
             "nacionalidade": screen_instance.nacionalidade_input.text,
+            "sec_rg": screen_instance.sec_rg.text,
             
             "data_agora": data_agora
         }

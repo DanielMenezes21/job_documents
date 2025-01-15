@@ -45,6 +45,9 @@ class ProcessoScreen(Screen):
         self.contratante_rg = FocusSwitchingTextInput(hint_text="Digite o RG do contratante", multiline=False, size_hint_y=1, size_hint_x=0.4)
         cpf_rg_layout.add_widget(self.contratante_rg)
         
+        self.sec_rg = Spinner(text="SEC RG", values=("AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"), size_hint_y=1, size_hint_x=0.12, pos_hint={"center_x": 0.5, "center_y": 0.5})
+        cpf_rg_layout.add_widget(self.sec_rg)
+        
         layout.add_widget(cpf_rg_layout)
         
         self.nome_empresa = FocusSwitchingTextInput(hint_text="Digite o nome da empresa", multiline=False, size_hint=(0.6, 1))
@@ -82,6 +85,14 @@ class ProcessoScreen(Screen):
         
         layout.add_widget(cid_est_CONT_layout)
         
+        # Campo para selecionar o gênero
+        self.inscrita_o_spinner = Spinner(
+            text='Selecione o Gênero',
+            values=('Masculino', 'Feminino'),
+            size_hint_y=0.1, size_hint_x=0.3
+        )
+        layout.add_widget(self.inscrita_o_spinner)
+        
         self.nacionalidade_spinner = Spinner(
             text="Selecione a Nacionalidade",
             values=("Brasileiro", "Outro"),
@@ -92,14 +103,6 @@ class ProcessoScreen(Screen):
         )
         layout.add_widget(self.nacionalidade_spinner)
 
-        # Campo para selecionar o gênero
-        self.inscrita_o_spinner = Spinner(
-            text='Selecione o Gênero',
-            values=('Masculino', 'Feminino'),
-            size_hint_y=0.1, size_hint_x=0.3
-        )
-        layout.add_widget(self.inscrita_o_spinner)
-        
         self.nacionalidade_input = FocusSwitchingTextInput(
             hint_text="Digite a nacionalidade",
             multiline=False,

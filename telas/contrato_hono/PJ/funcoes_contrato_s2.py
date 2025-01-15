@@ -73,7 +73,7 @@ def salvar_texto(screen_instance, _):
             "#CLAUSULA3": clausula3,
             "#CLAUSULA9": clausula9,
             "#NOME_CONTRATANTE": screen_instance.dados.get("nome_contratante", ''),
-            "#NOME_EMPRESA": screen_instance.dados.get("nome_empresa", ''),
+            "#NME_EMPRESA": screen_instance.dados.get("nome_empresa", ''),
             "#CNPJ":screen_instance.dados.get("cnpj", ''),
             "#NUMERO": screen_instance.dados.get("numero", ''),
             "#END_EMPRESA": screen_instance.dados.get("end_empresa", ''),
