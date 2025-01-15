@@ -1,8 +1,8 @@
 #main.py
 from kivy.app import App
 from kivy.uix.screenmanager import Screen, ScreenManager
-from telas.contrato_hono.contrato_screen1 import ProcessoScreen
-from telas.contrato_hono.contrato_screen2 import Processo2Screen
+from telas.contrato_hono.PJ.contrato_screen1 import ProcessoScreen
+from telas.contrato_hono.PJ.contrato_screen2 import Processo2Screen
 from telas.procuracao.PF.procuracao_queixa_crime.pf_poderes_screen_qc import PFPoderesQCScreen
 from telas.homepage.home_screen import HomeScreen
 from telas.procuracao.PF.procuracao_queixa_crime.pf_procuracao_screen_qc import PFProcuracaoQCScreen
@@ -43,5 +43,3 @@ class MainApp(App):
 
 if __name__ == "__main__":
     MainApp().run()
-
-print("hello s")
