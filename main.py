@@ -49,12 +49,4 @@ class MainApp(App):
 
 if __name__ == "__main__":
     MainApp().run()
-<<<<<<< HEAD
 
-<<<<<<< HEAD
-print("hello w")
-=======
-print("hello s")
->>>>>>> developp
-=======
->>>>>>> developp
