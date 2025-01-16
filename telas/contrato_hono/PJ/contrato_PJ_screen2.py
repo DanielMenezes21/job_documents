@@ -1,7 +1,7 @@
 #processo2_screen
-from telas.contrato_hono.funcoes_contrato_s1 import voltar, atualizar_dados, on_text_selected, salvar_texto, mostrar_popup, on_text_selected2
+from telas.contrato_hono.PJ.funcoes_PJ_contrato_s2 import *
 
-from telas.contrato_hono.texto_clausula_adv import TEXTOS_CLAUSULA1, ADVOGADOS_OAB, TEXTOS_CLAUSULA3
+from telas.contrato_hono.PJ.texto_clausula import TEXTOS_CLAUSULA1, TEXTOS_CLAUSULA3, TEXTOS_CLAUSULA9
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import Screen
 from kivy.uix.textinput import TextInput
@@ -60,19 +60,6 @@ class Processo2Screen(Screen):
         layout.add_widget(btn_voltar)
         layout.add_widget(Widget())  # Espaço vazio para alinhar os elementos
 
-        # Campo para o nome do arquivo
-        layout.add_widget(Label(text="Nome do Arquivo:", size_hint=(None, None), height=30))
-        self.nome_arquivo_input = TextInput(hint_text="Digite o nome do arquivo", multiline=False)
-        layout.add_widget(self.nome_arquivo_input)
-
-        # Spinner para selecionar advogado
-        layout.add_widget(Label(text="Advogado:", size_hint=(None, None), height=30))
-        self.adv_spinner = Spinner(
-            text="Selecione um advogado",
-            values=list(ADVOGADOS_OAB.keys())
-        )
-        layout.add_widget(self.adv_spinner)
-
         # Spinner para a cláusula 1
         layout.add_widget(Label(text="Modelo Cláusula 1:", size_hint=(None, None), height=30))
         self.modelo_spinner = Spinner(
@@ -110,6 +97,24 @@ class Processo2Screen(Screen):
             height=100
         )
         layout.add_widget(self.text_input2)
+        
+        layout.add_widget(Label(text="Modelo Cláusula 9:", size_hint=(None, None), height=30))
+        self.modelo_spinner3 = Spinner(
+            text="Selecione um modelo",
+            values=list(TEXTOS_CLAUSULA9.keys())
+        )
+        self.modelo_spinner3.bind(text=self.poderes_on_text_selected3)
+        layout.add_widget(self.modelo_spinner3)
+        
+        # Campo de texto para a cláusula 3
+        layout.add_widget(Label(text="Cláusula 9:", size_hint=(None, None), height=30))
+        self.text_input3 = TextInput(
+            hint_text="O texto selecionado aparecerá aqui para edição...",
+            multiline=True,
+            size_hint_y=None,
+            height=100
+        )
+        layout.add_widget(self.text_input3)
 
         # Botão para salvar alterações
         save_button = Button(
@@ -136,6 +141,9 @@ class Processo2Screen(Screen):
         
     def poderes_on_text_selected2(self, modelo_spinner2, text):
         on_text_selected2(self, modelo_spinner2, text)
+        
+    def poderes_on_text_selected3(self, modelo_spinner3, text):
+        on_text_selected3(self, modelo_spinner3, text)
     
     def poderes_salvar_texto(screen_instance, self):
         salvar_texto(screen_instance, self)  # Salva o texto editado

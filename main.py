@@ -1,8 +1,11 @@
 #main.py
 from kivy.app import App
 from kivy.uix.screenmanager import Screen, ScreenManager
-from telas.contrato_hono.contrato_screen1 import ProcessoScreen
-from telas.contrato_hono.contrato_screen2 import Processo2Screen
+from telas.contrato_hono.PJ.contrato_PJ_screen1 import ProcessoScreen
+from telas.contrato_hono.PJ.contrato_PJ_screen2 import Processo2Screen
+from telas.contrato_hono.home_contrato_screen import HomeContratoScreen
+from telas.contrato_hono.PF.contrato_PF_screen1 import ContratoPFScreen
+from telas.contrato_hono.PF.contrato_PF_screen2 import ContratoPF2Screen
 from telas.procuracao.PF.procuracao_queixa_crime.pf_poderes_screen_qc import PFPoderesQCScreen
 from telas.homepage.home_screen import HomeScreen
 from telas.procuracao.PF.procuracao_queixa_crime.pf_procuracao_screen_qc import PFProcuracaoQCScreen
@@ -21,11 +24,14 @@ class MyApp(ScreenManager):
         super().__init__(**kwargs)
         # Adiciona as telas ao ScreenManager
         self.add_widget(HomeScreen(name="home_screen"))
+        self.add_widget(HomeContratoScreen(name="home_contrato_screen"))
         self.add_widget(HomeProcuracaoPFScreen(name="home_procuracao_screen_PF"))
         self.add_widget(HomeProcuracaoPJScreen(name="home_procuracao_screen_PJ"))
         self.add_widget(PFPoderesQCScreen(name="poderes_queixa_crime_screen_PF"))
         self.add_widget(ProcessoScreen(name="contrato_screen1"))
         self.add_widget(Processo2Screen(name="contrato_screen2"))
+        self.add_widget(ContratoPFScreen(name="contrato_PF_screen1"))
+        self.add_widget(ContratoPF2Screen(name="contrato_PF_screen2"))
         self.add_widget(PFProcuracaoQCScreen(name="procuracao_screen_queixa_crime_PF"))
         self.add_widget(PFProcuracaoCriminalScreen(name="procuracao_criminal_screen_PF"))
         self.add_widget(PFPoderesCriminalScreen(name="poderes_criminal_screen_PF"))
@@ -43,9 +49,12 @@ class MainApp(App):
 
 if __name__ == "__main__":
     MainApp().run()
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 print("hello w")
 =======
 print("hello s")
+>>>>>>> developp
+=======
 >>>>>>> developp

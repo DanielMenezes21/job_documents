@@ -30,14 +30,14 @@ class HomeScreen(Screen):
         layout.add_widget(btn_procuracao)
 
         # Campo clicável para navegar até a tela de Processo
-        btn_processo = Button(
-            text="Ir para Processo",
+        btn_contrato = Button(
+            text="Ir para Contrato",
             size_hint=(None, None),
             size=(200, 50),
             pos_hint={"center_x": 0.5, "top": 0.4},  # Ajuste na posição do botão
-            on_press=self.ir_para_processo
+            on_press=self.ir_para_contrato
         )
-        layout.add_widget(btn_processo)
+        layout.add_widget(btn_contrato)
 
         # Adiciona o layout à tela
         self.add_widget(layout)
@@ -48,8 +48,8 @@ class HomeScreen(Screen):
         """
         self.manager.current = "home_procuracao_screen"
         
-    def ir_para_processo(self, instance):
+    def ir_para_contrato(self, instance):
         """
         Função para ir até a tela de ProcessoScreen
         """
-        self.manager.current = "contrato_screen1"
+        self.manager.current = "home_contrato_screen"

@@ -1,5 +1,5 @@
-from telas.contrato_hono.funcoes_contrato_s1 import *
-from telas.contrato_hono.extracao_contrato import *
+from telas.contrato_hono.PF.funcoes_PF_contrato_s2 import *
+from telas.contrato_hono.PF.extracao_PF_contrato import *
 from datetime import datetime
 from telas.homepage.home_screen import HomeScreen
 
@@ -16,7 +16,7 @@ def on_sec_rg_change(self, spinner, text):
     
 def ir_para_homepage(self, instance):
     
-    self.manager.current =  "home_screen"
+    self.manager.current =  "home_contrato_screen"
 
 def on_nacionalidade_change(self, spinner, text):
     """
@@ -40,19 +40,32 @@ def on_nacionalidade_change(self, spinner, text):
 
 def obter_dados(screen_instance):
     try:
+        caminho_modelo = os.path.join(os.path.dirname(__file__), "10_MODELO_CONTRATACAO_PF_TESTE.docx")
+        
+        if not os.path.exists(caminho_modelo):
+            raise FileNotFoundError(f"Arquivo modelo não encontrado em: {caminho_modelo}")
+        
         data_agora = formatar_data(datetime.now())
         print(f"Data formatada obtida: {data_agora}")
         dados = {
-            "caminho_modelo": screen_instance.caminho_modelo,
+            "caminho_modelo": caminho_modelo,
+            "nome_arquivo": screen_instance.nome_arquivo.text,
+            "numero": screen_instance.num_contrato.text,
             "nome_contratante": screen_instance.nome_contratante.text,
-            "rg": screen_instance.rg.text,
-            "sec_rg": screen_instance.sec_rg_input.text,
+            "profissao": screen_instance.profissao.text,
             "cpf": screen_instance.contratante_cpf.text,
+            "rg": screen_instance.contratante_rg.text,
             "cidade_contratante": screen_instance.cidade_contratante.text,
             "sigla_estado_contratante": screen_instance.sigla_estado_contratante.text,
+            "cep_contratante": screen_instance.cep_cont.text,
+            "estado_civil": screen_instance.estado_civil.text,
             "inscrita_o": screen_instance.inscrita_o_spinner.text,
             "nacionalidade": screen_instance.nacionalidade_input.text,
-            "est_rg_input": screen_instance.est_rg_input.text,
+            "endereco_contratante": screen_instance.end_contratante.text,
+            "sec_rg": screen_instance.sec_rg.text,
+            "telefone": screen_instance.telefone.text,
+            "email": screen_instance.email.text,
+            
             "data_agora": data_agora
         }
     
@@ -60,7 +73,7 @@ def obter_dados(screen_instance):
         return dados
 
     except Exception as e:
-        print(f"Erro ao obter dados: {e}")
+        print(f"Erro ao obter dados 2: {e}")
         return None
 
 def ir_para_processo2(screen_instance, instance):
@@ -70,7 +83,7 @@ def ir_para_processo2(screen_instance, instance):
     dados = obter_dados(screen_instance)
     if dados:
         # Enviar todos os dados para a tela de poderes
-        poderes_screen = screen_instance.manager.get_screen("processo2_screen")
+        poderes_screen = screen_instance.manager.get_screen("contrato_PF_screen2")
         poderes_screen.poderes_atualizar_dados(dados)  # Passa todos os dados para a tela de poderes
         poderes_screen.caminho_modelo = dados["caminho_modelo"]  # Passa o caminho do arquivo modelo
-        screen_instance.manager.current = "processo2_screen"
+        screen_instance.manager.current = "contrato_PF_screen2"
