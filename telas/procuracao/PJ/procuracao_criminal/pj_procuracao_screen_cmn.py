@@ -95,11 +95,12 @@ class ProcuracaoCriminalPJScreen(Screen):
                                   size_hint_x=1)
         cep_end_layout.add_widget(self.endereco)
         
-        self.cep = FocusSwitchingTextInput(hint_text="Digite o cep do endereco do outorgante",
+        self.cep = MaskedFocusSwitchingTextInput(hint_text="Digite o cep do endereco do outorgante",
+                             mask="     -   ",
+                             max_length=8,
                              multiline=False, 
                              size_hint_y=1,
                              size_hint_x=0.7)
-        self.cep.bind(text=lambda instance, value: on_cep_change(self, instance, value))
         cep_end_layout.add_widget(self.cep)
         
         layout.add_widget(cep_end_layout)
