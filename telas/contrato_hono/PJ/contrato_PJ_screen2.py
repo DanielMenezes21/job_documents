@@ -1,7 +1,7 @@
 #processo2_screen
-from telas.contrato_hono.PJ.funcoes_contrato_s2 import *
+from telas.contrato_hono.PJ.funcoes_PJ_contrato_s2 import *
 
-from telas.contrato_hono.PJ.texto_clausula_adv import TEXTOS_CLAUSULA1, TEXTOS_CLAUSULA3, TEXTOS_CLAUSULA9
+from telas.contrato_hono.PJ.texto_clausula import TEXTOS_CLAUSULA1, TEXTOS_CLAUSULA3, TEXTOS_CLAUSULA9
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import Screen
 from kivy.uix.textinput import TextInput

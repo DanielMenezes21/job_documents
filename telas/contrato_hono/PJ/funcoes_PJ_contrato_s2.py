@@ -2,10 +2,10 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.popup import Popup
-from telas.contrato_hono.PJ.texto_clausula_adv import TEXTOS_CLAUSULA1, TEXTOS_CLAUSULA3, TEXTOS_CLAUSULA9
+from telas.contrato_hono.PJ.texto_clausula import TEXTOS_CLAUSULA1, TEXTOS_CLAUSULA3, TEXTOS_CLAUSULA9
 from docx import Document
 import os
-from telas.contrato_hono.PJ.extracao_contrato import formatar_data , substituir_palavras_documento
+from telas.contrato_hono.PJ.extracao_PJ_contrato import formatar_data , substituir_palavras_documento
 from telas.homepage.home_screen import HomeScreen
 
 def voltar(self, instance):
@@ -80,7 +80,7 @@ def salvar_texto(screen_instance, _):
             "#CEP_EMPRESA": screen_instance.dados.get("cep_empresa", ''),
             "#NACIONALIDADE": screen_instance.dados.get("nacionalidade", ''),
             "#ESTADO_CIVIL": screen_instance.dados.get("estado_civil", ''),
-            "#END_CONTRATANTE": screen_instance.dados.get("end_contratante", ''),
+            "#END_CONTRATANTE": screen_instance.dados.get("endereco_contratante", ''),
             "#CEP_CONTRATANTE": screen_instance.dados.get("cep_contratante", ''),
             "#CPF": screen_instance.dados.get("cpf", ''),
             "#RG": screen_instance.dados.get("rg", ''),

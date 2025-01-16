@@ -7,9 +7,9 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.filechooser import FileChooserListView
 from kivy.uix.spinner import Spinner
-from telas.contrato_hono.PJ.contrato_screen2 import Processo2Screen
+from telas.contrato_hono.PJ.contrato_PJ_screen2 import Processo2Screen
 from datetime import datetime
-from telas.contrato_hono.PJ.funcoes_contrato_s1 import *
+from telas.contrato_hono.PJ.funcoes_PJ_contrato_s1 import *
 from logic_tab import FocusSwitchingTextInput, MaskedFocusSwitchingTextInput
 
 class ProcessoScreen(Screen):
@@ -45,7 +45,7 @@ class ProcessoScreen(Screen):
         self.contratante_rg = FocusSwitchingTextInput(hint_text="Digite o RG do contratante", multiline=False, size_hint_y=1, size_hint_x=0.4)
         cpf_rg_layout.add_widget(self.contratante_rg)
         
-        self.sec_rg = Spinner(text="SEC RG", values=("AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"), size_hint_y=1, size_hint_x=0.12, pos_hint={"center_x": 0.5, "center_y": 0.5})
+        self.sec_rg = Spinner(text="SEC RG", values=("SSP", "PC", "DETRAN", "ITEP", "SESP", "SEDS", "SEJUSP", "SDS", "SEJUS", "SSPS", "SEAP", "SEDEC", "CGP", "SEF", "DPE", "PCMG", "SSPCM"), size_hint_y=1, size_hint_x=0.12, pos_hint={"center_x": 0.5, "center_y": 0.5})
         cpf_rg_layout.add_widget(self.sec_rg)
         
         layout.add_widget(cpf_rg_layout)
@@ -74,11 +74,14 @@ class ProcessoScreen(Screen):
         
         layout.add_widget(cid_est_EMP_layout)
 
-        self.cidade_contratante = FocusSwitchingTextInput(hint_text="Digite a cidade do contratante", multiline=False, size_hint=(0.55, 1))
+        self.cidade_contratante = FocusSwitchingTextInput(hint_text="Digite a cidade do contratante", multiline=False, size_hint=(0.3, 1))
         cid_est_CONT_layout.add_widget(self.cidade_contratante)
         
         self.sigla_estado_contratante = Spinner(text="Estado", values=("AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"), size_hint_y=1, size_hint_x=0.12, pos_hint={"center_x": 0.5, "center_y": 0.5})
         cid_est_CONT_layout.add_widget(self.sigla_estado_contratante)
+        
+        self.end_contratante = FocusSwitchingTextInput(hint_text="Digite o endereço do contratante", multiline=False, size_hint=(0.55, 1))
+        cid_est_CONT_layout.add_widget(self.end_contratante)
         
         self.cep_cont = MaskedFocusSwitchingTextInput(hint_text="CEP do endereço do contratante", multiline=False, mask="     -   ", max_length=8, size_hint=(0.3, 1))
         cid_est_CONT_layout.add_widget(self.cep_cont)

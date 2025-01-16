@@ -52,4 +52,4 @@ class HomeScreen(Screen):
         """
         Função para ir até a tela de ProcessoScreen
         """
-        self.manager.current = "contrato_screen1"
+        self.manager.current = "home_contrato_screen"
