@@ -16,9 +16,10 @@ class PFProcuracaoCriminalScreen(Screen):
         layout = BoxLayout(orientation="vertical", spacing=10, padding=10)
         cpf_rg_layout = BoxLayout(orientation="horizontal", size_hint_y=0.18)
         end_cep_layout = BoxLayout(orientation = "horizontal", size_hint_y=0.18)
+        cid_est_laytout = BoxLayout(orientation="horizontal", size_hint_y=0.18)
         
         titulo = Label(
-                    text="Procuração Criminal PF",
+                    text="Procuração Pessoa Física",
                     font_size=20,
                     size_hint=(None, None),
                     size=(200, 50),
@@ -46,6 +47,12 @@ class PFProcuracaoCriminalScreen(Screen):
         self.rg = FocusSwitchingTextInput(hint_text="Digite o RG do outorgante", multiline=False, size_hint_y=1, size_hint_x=0.4)
         cpf_rg_layout.add_widget(self.rg)
         
+        self.sec_rg = Spinner(text="SEC RG", values=("SSP", "PC", "DETRAN", "ITEP", "SESP", "SEDS", "SEJUSP", "SDS", "SEJUS", "SSPS", "SEAP", "SEDEC", "CGP", "SEF", "DPE", "PCMG", "SSPCM"), size_hint_y=1, size_hint_x=0.12, pos_hint={"center_x": 0.5, "center_y": 0.5})
+        cpf_rg_layout.add_widget(self.sec_rg)
+        
+        self.est_rg = Spinner(text="Estado", values=("AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"), size_hint_y=1, size_hint_x=0.12, pos_hint={"center_x": 0.5, "center_y": 0.5})
+        cpf_rg_layout.add_widget(self.est_rg)
+        
         layout.add_widget(cpf_rg_layout)
         
         self.endereco = FocusSwitchingTextInput(hint_text="Digite o endereco do outorgante", multiline=False, size_hint_y=1, size_hint_x=0.7)
@@ -64,11 +71,13 @@ class PFProcuracaoCriminalScreen(Screen):
         self.estado_civil = FocusSwitchingTextInput(hint_text="Digite o estado civil do do outorgante", multiline=False, size_hint_y=0.18)
         layout.add_widget(self.estado_civil)
 
-        self.cidade_outorgante_input = FocusSwitchingTextInput(hint_text="Digite a cidade do outorgante", multiline=False, size_hint_y=0.18)
-        layout.add_widget(self.cidade_outorgante_input)
+        self.cidade_outorgante_input = FocusSwitchingTextInput(hint_text="Digite a cidade do outorgante", multiline=False, size_hint=(0.7, 1))
+        cid_est_laytout.add_widget(self.cidade_outorgante_input)
 
-        self.sigla_estado_outorgante_input = FocusSwitchingTextInput(hint_text="Digite a sigla do estado do outorgante", multiline=False, size_hint_y=0.18)
-        layout.add_widget(self.sigla_estado_outorgante_input)
+        self.sigla_estado_outorgante_input = Spinner(text="Estado", values=("AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"), size_hint_y=1, size_hint_x=0.12, pos_hint={"center_x": 0.5, "center_y": 0.5})
+        cid_est_laytout.add_widget(self.sigla_estado_outorgante_input)
+        
+        layout.add_widget(cid_est_laytout)
 
         self.nacionalidade_spinner = Spinner(
             text="Selecione a Nacionalidade",

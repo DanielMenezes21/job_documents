@@ -1,44 +1,25 @@
-# funcoes_procuracao.py
-from telas.procuracao.PF.procuracao_criminal.pf_funcoes_poderes_cmn import *
-from telas.procuracao.PF.procuracao_criminal.pf_poderes_screen_cmn import PFPoderesCriminalScreen
+from telas.declaracao_hipo.PF.extracao_dec import *
+import os
 from datetime import datetime
-from logic_tab import FocusSwitchingTextInput
 
-def on_nacionalidade_change(screen_instance, spinner, text):
-    if text == "Outro":
-        screen_instance.nacionalidade_input.text = ""
-        screen_instance.nacionalidade_input.readonly = False
-    else:
-        inscrita_o = screen_instance.inscrita_o_spinner.text
-        if inscrita_o == "Feminino":
-            screen_instance.nacionalidade_input.text = "brasileira"
-            screen_instance.inscrita_o_spinner.text = "inscrita"
-        else:
-            screen_instance.nacionalidade_input.text = "brasileiro"
-            screen_instance.inscrita_o_spinner.text = "inscrito"
-        screen_instance.nacionalidade_input.readonly = True
-        
-def ir_para_procuracao(self, instance):
+def ir_para_home_dec(self, instance):
     
     self.manager.current =  "home_procuracao_screen"
-
 def obter_dados(screen_instance):
     try:
-        caminho_modelo = os.path.join(os.path.dirname(__file__), "11_PROCURACAO_TESTE.docx")
+
         caminho_declaracao = os.path.join(os.path.dirname(__file__), "13_DECLARACAO_HIPOSSUFICIENCIA_PF_TESTE.docx")
         
-        if not os.path.exists(caminho_modelo):
-            raise FileNotFoundError(f"Arquivo modelo não encontrado em: {caminho_modelo}")
         if not os.path.exists(caminho_declaracao):
             raise FileNotFoundError(f"Arquivo modelo não encontrado em: {caminho_declaracao}")
         # Gerar a data formatada
         data_agora = formatar_data(datetime.now())
         print(f"Data formatada obtida: {data_agora}")  # Debug para confirmar a data
         
-        print(caminho_modelo)
+        print(caminho_declaracao)
 
         dados = {
-            "caminho_modelo": caminho_modelo,
+            "caminho_modelo": caminho_declaracao,
             "caminho_declaracao": caminho_declaracao,
             "nome_outorgante": screen_instance.nome_outorgante.text,
             "profissao":screen_instance.profissao.text,
@@ -73,4 +54,3 @@ def ir_para_poderes(screen_instance, instance):
         poderes_screen = screen_instance.manager.get_screen("poderes_criminal_screen_PF")
         poderes_screen.poderes_atualizar_dados(dados)  # Certifique-se de que o nome corresponde
         screen_instance.manager.current = "poderes_criminal_screen_PF"
-

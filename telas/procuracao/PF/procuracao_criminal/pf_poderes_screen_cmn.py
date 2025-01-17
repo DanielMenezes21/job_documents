@@ -100,6 +100,7 @@ class PFPoderesCriminalScreen(Screen):
 
         # Caminho do arquivo modelo, que será atualizado pela HomeScreen
         self.caminho_modelo = None
+        self.caminho_declaracao = "13_DECLARACAO_HIPOSSUFICIENCIA_PF_TESTE.docx"
 
     def poderes_voltar(self, instance):
         voltar(self, instance)  # Chama a função voltar
