@@ -12,6 +12,9 @@ from telas.procuracao.PF.procuracao_criminal.pf_poderes_screen_cmn import PFPode
 from telas.procuracao.home_procuracao_screen import HomeProcuracaoScreen
 from telas.procuracao.PJ.procuracao_criminal.pj_procuracao_screen_cmn import ProcuracaoCriminalPJScreen
 from telas.procuracao.PJ.procuracao_criminal.pj_poderes_screen_cmn import PoderesCriminalPJScreen
+from telas.declaracao_hipo.PF.dados_pessoais_screen_dec import DadosPessoaisPFScreen
+from telas.declaracao_hipo.PJ.dados_pessoais_PJ_screen_dec import DadosPessoaisPJScreen
+from telas.declaracao_hipo.dec_home import Dec_homepage
 
 class MyApp(ScreenManager): 
     def __init__(self, **kwargs):
@@ -28,6 +31,9 @@ class MyApp(ScreenManager):
         self.add_widget(HomeProcuracaoScreen(name="home_procuracao_screen"))
         self.add_widget(ProcuracaoCriminalPJScreen(name="procuracao_criminal_pj_screen"))
         self.add_widget(PoderesCriminalPJScreen(name="poderes_criminal_pj_screen"))
+        self.add_widget(Dec_homepage(name="homepage_declaracao"))
+        self.add_widget(DadosPessoaisPFScreen(name="declaracao_PF"))
+        self.add_widget(DadosPessoaisPJScreen(name="declaracao_PJ"))
         
 class MainApp(App):
     def build(self):

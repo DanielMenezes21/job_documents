@@ -57,7 +57,8 @@ def salvar_texto(screen_instance, _):
         return
     
     if not os.path.exists(screen_instance.caminho_declaracao):
-        mostrar_popup(screen_instance, "Erro", f"o arquivo{screen_instance.caminho_declaracao} não foi encontrado!")
+        mostrar_popup(screen_instance, "Erro", f"o arquivo {screen_instance.dados.get('caminho_declaracao')} não foi encontrado!", {}, None)
+
         return
 
     # Abrir o arquivo modelo
@@ -126,7 +127,12 @@ def salvar_texto(screen_instance, _):
     )
     os.startfile(caminho_salvamento)
 
-def mostrar_popup(screen_instance, titulo, mensagem, placeholders, caminho_declaracao):
+def mostrar_popup(screen_instance, titulo, mensagem, placeholders=None, caminho_declaracao=None):
+    if placeholders is None:
+        placeholders = {}  # Defina um dicionário vazio se não for passado um valor
+    if caminho_declaracao is None:
+        caminho_declaracao = ""  # Defina uma string vazia se não for passado um valor
+
     conteudo = BoxLayout(orientation='vertical', padding=10, spacing=10)
     conteudo.add_widget(Label(text=mensagem, halign='center'))
 

@@ -1,7 +1,7 @@
 #processo2_screen
 from telas.contrato_hono.PF.funcoes_PF_contrato_s2 import *
 
-from telas.contrato_hono.PF.texto_clausula import TEXTOS_CLAUSULA1, TEXTOS_CLAUSULA3, TEXTOS_CLAUSULA9
+from telas.contrato_hono.PF.texto_clausula import TEXTOS_CLAUSULAS
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import Screen
 from kivy.uix.textinput import TextInput
@@ -40,14 +40,13 @@ class CircularButton(Button):
 class ContratoPF2Screen(Screen):
     def __init__(self, **kwargs):
         super(ContratoPF2Screen, self).__init__(**kwargs)
-        self.dados = None  # Armazenar todos os dados recebidos da ProcessoScreen
+        self.dados = None  # Armazenar os dados da tela anterior
+        self.placeholders = {}
 
-        # ScrollView para permitir rolagem caso o layout seja maior que a tela
+        # Layout e ScrollView para a interface
         scroll_view = ScrollView(size_hint=(1, 1))
-        
-        # Layout principal em grade
-        layout = GridLayout(cols=2, spacing=10, padding=10, size_hint_y=None)
-        layout.bind(minimum_height=layout.setter('height'))  # Ajusta a altura automaticamente
+        layout = BoxLayout(orientation="vertical", padding = 10, spacing = 10)
+        layout.bind(minimum_height=layout.setter('height'))
         scroll_view.add_widget(layout)
 
         # Botão de voltar
@@ -58,95 +57,46 @@ class ContratoPF2Screen(Screen):
         )
         btn_voltar.bind(on_press=self.poderes_voltar)
         layout.add_widget(btn_voltar)
-        layout.add_widget(Widget())  # Espaço vazio para alinhar os elementos
 
-        # Spinner para a cláusula 1
-        layout.add_widget(Label(text="Modelo Cláusula 1:", size_hint=(None, None), height=30))
-        self.modelo_spinner = Spinner(
-            text="Selecione um modelo",
-            values=list(TEXTOS_CLAUSULA1.keys())
-        )
-        self.modelo_spinner.bind(text=self.poderes_on_text_selected)
-        layout.add_widget(self.modelo_spinner)
+        layout.add_widget(Widget())  # Espaço vazio
 
-        # Campo de texto para a cláusula 1
-        layout.add_widget(Label(text="Cláusula 1:", size_hint=(None, None), height=30))
-        self.text_input = TextInput(
-            hint_text="O texto selecionado aparecerá aqui para edição...",
-            multiline=True,
-            size_hint_y=None,
-            height=100
+        # Spinner para seleção de cláusulas
+        self.spinner = Spinner(
+            text="Selecione a cláusula",
+            values=list(TEXTOS_CLAUSULAS.keys()),
+            size_hint=(1, 0.2),
         )
+        self.spinner.bind(text=self.poderes_on_selected)
+        layout.add_widget(self.spinner)
+
+        # TextInput para editar a cláusula
+        self.text_input = TextInput(hint_text="Texto da cláusula", multiline=True, size_hint=(1, 0.6))
         layout.add_widget(self.text_input)
 
-        # Spinner para a cláusula 3
-        layout.add_widget(Label(text="Modelo Cláusula 3:", size_hint=(None, None), height=30))
-        self.modelo_spinner2 = Spinner(
-            text="Selecione um modelo",
-            values=list(TEXTOS_CLAUSULA3.keys())
-        )
-        self.modelo_spinner2.bind(text=self.poderes_on_text_selected2)
-        layout.add_widget(self.modelo_spinner2)
-
-        # Campo de texto para a cláusula 3
-        layout.add_widget(Label(text="Cláusula 3:", size_hint=(None, None), height=30))
-        self.text_input2 = TextInput(
-            hint_text="O texto selecionado aparecerá aqui para edição...",
-            multiline=True,
-            size_hint_y=None,
-            height=100
-        )
-        layout.add_widget(self.text_input2)
-        
-        layout.add_widget(Label(text="Modelo Cláusula 9:", size_hint=(None, None), height=30))
-        self.modelo_spinner3 = Spinner(
-            text="Selecione um modelo",
-            values=list(TEXTOS_CLAUSULA9.keys())
-        )
-        self.modelo_spinner3.bind(text=self.poderes_on_text_selected3)
-        layout.add_widget(self.modelo_spinner3)
-        
-        # Campo de texto para a cláusula 3
-        layout.add_widget(Label(text="Cláusula 9:", size_hint=(None, None), height=30))
-        self.text_input3 = TextInput(
-            hint_text="O texto selecionado aparecerá aqui para edição...",
-            multiline=True,
-            size_hint_y=None,
-            height=100
-        )
-        layout.add_widget(self.text_input3)
-
-        # Botão para salvar alterações
+        # Botão para salvar
         save_button = Button(
             text="Salvar Texto",
             size_hint=(None, None),
             size=(150, 50)
         )
-        save_button.bind(on_press=self.poderes_salvar_texto)
+        save_button.bind(on_press=lambda instance: self.poderes_salvar_texto(self))  # Passa 'self' corretamente
         layout.add_widget(save_button)
-        layout.add_widget(Widget())  # Espaço vazio para alinhar
+        layout.add_widget(Widget())  # Espaço vazio
 
         # Adicionar o layout ao ScrollView
         self.add_widget(scroll_view)
-      
+
+    def poderes_on_selected(self, spinner, text):
+        on_spinner_select(self, spinner, text)
 
     def poderes_voltar(self, instance):
-        voltar(self, instance)  # Chama a função voltar
-    
+        voltar(self, instance)
+
     def poderes_atualizar_dados(screen_instance, dados):
         atualizar_dados(screen_instance, dados)
 
-    def poderes_on_text_selected(self, modelo_spinner, text):
-        on_text_selected(self, modelo_spinner, text)  # Atualiza o texto selecionado
-        
-    def poderes_on_text_selected2(self, modelo_spinner2, text):
-        on_text_selected2(self, modelo_spinner2, text)
-        
-    def poderes_on_text_selected3(self, modelo_spinner3, text):
-        on_text_selected3(self, modelo_spinner3, text)
-    
-    def poderes_salvar_texto(screen_instance, self):
-        salvar_texto(screen_instance, self)  # Salva o texto editado
+    def poderes_salvar_texto(self, screen_instance):
+        salvar_texto(self, screen_instance)  # Salva o texto editado
 
     def poderes_mostrar_popup(self, titulo, mensagem):
-        mostrar_popup(self, titulo, mensagem)  # Exibe o popup
+        mostrar_popup(self, titulo, mensagem)

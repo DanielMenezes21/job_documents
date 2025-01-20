@@ -8,7 +8,7 @@ from kivy.uix.label import Label
 from telas.declaracao_hipo.PF.funcoes_declaracao_PF import *
 from logic_tab import FocusSwitchingTextInput, MaskedFocusSwitchingTextInput
 
-class DadosPessoaisPFScreen(Screen):
+class DadosPessoaisPJScreen(Screen):
     def __init__(self, **kw):
         super().__init__(**kw)
         
@@ -16,6 +16,8 @@ class DadosPessoaisPFScreen(Screen):
         cpf_rg_layout = BoxLayout(orientation="horizontal", size_hint_y=0.18)
         end_cep_laytout = BoxLayout(orientation="horizontal", size_hint_y = 0.18)
         cid_est_layout = BoxLayout(orientation="horizontal", size_hint_y=0.18)
+        empresa_cnpj_layout = BoxLayout(orientation="horizontal", size_hint_y=0.18)
+        cep_end_empresa_layout = BoxLayout(orientation="horizontal", size_hint_y=0.18)
                 
         titulo = Label(text="Declaração Hipossuficiencia de Pessoa Física", 
                        font_size=15,
@@ -24,6 +26,26 @@ class DadosPessoaisPFScreen(Screen):
                        pos_hint={"center_x": 0.5, "center_y": 0.3})
         
         layout.add_widget(titulo)
+        
+        self.nome_empresa = FocusSwitchingTextInput(hint_text="Digite o nome da empresa", multiline=False, size_hint=(0.6, 1))
+        empresa_cnpj_layout.add_widget(self.nome_empresa)
+        
+        self.cnpj = MaskedFocusSwitchingTextInput(hint_text="Digite o CNPJ da empresa", mask="  .   .   /    -  ", max_length=13, multiline=False, size_hint=(0.4, 1))
+        empresa_cnpj_layout.add_widget(self.cnpj)
+        
+        layout.add_widget(empresa_cnpj_layout)
+        
+        self.endereco_empresa = FocusSwitchingTextInput(hint_text="Digite o endereço da empresa", multiline=False, size_hint=(0.4, 1))
+        cep_end_empresa_layout.add_widget(self.endereco_empresa)
+        
+        self.cep_emp = MaskedFocusSwitchingTextInput(hint_text="Digite o CEP do endereço da empresa",mask="     -   ", max_length=8, multiline=False, size_hint=(0.18, 1))
+        cep_end_empresa_layout.add_widget(self.cep_emp)
+        
+        self.cidade_empresa = FocusSwitchingTextInput(hint_text="Digite a cidade da empresa", multiline=False, size_hint=(0.3, 1))
+        cep_end_empresa_layout.add_widget(self.cidade_empresa)
+        
+        self.estado_empresa = Spinner(text="Estado", values=("AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"), size_hint_y=1, size_hint_x=0.12, pos_hint={"center_x": 0.5, "center_y": 0.5})
+        cep_end_empresa_layout.add_widget(self.estado_empresa)
         
         self.nome_outorgante = FocusSwitchingTextInput(hint_text="Digite o nome do outorgante", multiline=False, size_hint_y=0.18)
         layout.add_widget(self.nome_outorgante)

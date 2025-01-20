@@ -48,7 +48,7 @@ class PFPoderesCriminalScreen(Screen):
 
         # Título
         titulo = Label(
-            text="Editar Poderes Criminal PF",
+            text="Editar Poderes Pessoa Física",
             font_size=20,
             size_hint=(None, None),
             size=(200, 50),

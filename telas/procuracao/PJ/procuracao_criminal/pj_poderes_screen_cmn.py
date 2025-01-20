@@ -48,7 +48,7 @@ class PoderesCriminalPJScreen(Screen):
 
         # Título
         titulo = Label(
-            text="Editar Poderes Criminal PJ",
+            text="Editar Poderes Pessoa Jurídica",
             font_size=20,
             size_hint=(None, None),
             size=(200, 50),
