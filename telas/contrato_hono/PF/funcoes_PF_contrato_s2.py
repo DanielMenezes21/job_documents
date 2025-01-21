@@ -23,17 +23,31 @@ def atualizar_dados(screen_instance, dados):
     print(f"Dados recebidos: {screen_instance.dados}")
 
 def on_spinner_select(self, spinner, text):
-    clause_key = f"Cláusula {list(TEXTOS_CLAUSULAS.keys()).index(text) + 1}"
-    self.placeholders[f"#CLAUSULA{list(TEXTOS_CLAUSULAS.keys()).index(text) + 1}"] = self.text_input.text
+    """
+    Atualiza o TextInput com o texto da cláusula selecionada e salva o texto atual no dicionário de placeholders.
+    """
+    # Salva o texto atual da cláusula previamente selecionada
+    if spinner.text in TEXTOS_CLAUSULAS:
+        selected_clause_index = list(TEXTOS_CLAUSULAS.keys()).index(spinner.text) + 1
+        self.placeholders[f"#CLAUSULA{selected_clause_index}"] = self.text_input.text
+
+    # Atualiza o TextInput com o texto da nova cláusula selecionada
     self.text_input.text = TEXTOS_CLAUSULAS.get(text, "")
+    
+def on_text_change(self, instance, value):
+    """
+    Atualiza o dicionário de placeholders sempre que o texto no TextInput for alterado.
+    """
+    if self.spinner.text in TEXTOS_CLAUSULAS:
+        selected_clause_index = list(TEXTOS_CLAUSULAS.keys()).index(self.spinner.text) + 1
+        self.placeholders[f"#CLAUSULA{selected_clause_index}"] = value
 
 # Função para salvar texto e atualizar o documento
 def salvar_texto(self, screen_instance):
     try:
-        # Atualiza os placeholders com os textos das cláusulas
-        for idx, key in enumerate(self.placeholders.keys(), start=1):
-            clausula_key = f"Cláusula {idx}"
-            self.placeholders[key] = TEXTOS_CLAUSULAS.get(clausula_key, "")
+        # Atualiza o texto da cláusula atualmente selecionada
+        selected_clause_index = list(TEXTOS_CLAUSULAS.keys()).index(self.spinner.text) + 1
+        self.placeholders[f"#CLAUSULA{selected_clause_index}"] = self.text_input.text
 
         if not screen_instance.dados:
             mostrar_popup(screen_instance, "Erro", "Nenhum dado foi recebido da tela inicial!")
@@ -47,18 +61,22 @@ def salvar_texto(self, screen_instance):
         if not os.path.exists(screen_instance.caminho_modelo):
             mostrar_popup(screen_instance, "Erro", f"O arquivo {screen_instance.caminho_modelo} não foi encontrado!")
             return
+        
+        for idx, key in enumerate(TEXTOS_CLAUSULAS.keys(), start=1):
+            if f"#CLAUSULA{idx}" not in self.placeholders:
+                self.placeholders[f"#CLAUSULA{idx}"] = TEXTOS_CLAUSULAS[key]
 
         document = Document(screen_instance.caminho_modelo)
-        data_atual = formatar_data()  # Obter a data atual
+        data_atual = formatar_data()
 
-        # Dicionário de placeholders
-        placeholders = {
-            "#CLAUSULA1": self.text_input.text,  # Aqui vai o texto da cláusula editada
+        # Adiciona os placeholders restantes
+        placeholders = self.placeholders.copy()
+        placeholders.update({
             "#NOME_CONTRATANTE": screen_instance.dados.get("nome_contratante", ''),
             "#NUMERO": screen_instance.dados.get("numero", ''),
             "#NACIONALIDADE": screen_instance.dados.get("nacionalidade", ''),
             "#ESTADO_CIVIL": screen_instance.dados.get("estado_civil", ''),
-            "#PROFISSAO": screen_instance.dados.get('profissao', ''),
+            "#PROFISSAO": screen_instance.dados.get("profissao", ''),
             "#END_CONTRATANTE": screen_instance.dados.get("endereco_contratante", ''),
             "#CEP_CONTRATANTE": screen_instance.dados.get("cep_contratante", ''),
             "#CPF": screen_instance.dados.get("cpf", ''),
@@ -70,18 +88,16 @@ def salvar_texto(self, screen_instance):
             "#NUM_TEL": screen_instance.dados.get("telefone", ''),
             "#EMAIL": screen_instance.dados.get("email", ''),
             "#DATA_AGORA": data_atual,
-        }
+        })
 
-        print(f"placeholders {placeholders}")
+        print(f"placeholders: {placeholders}")
 
         # Função para substituir os placeholders mantendo a formatação
         def substituir_com_formatacao(paragrafo, placeholders):
             for run in paragrafo.runs:
                 for placeholder, valor in placeholders.items():
-                    if valor is None:
-                        valor = ''
                     if placeholder in run.text:
-                        run.text = run.text.replace(placeholder, valor)
+                        run.text = run.text.replace(placeholder, valor if valor else '')
 
         # Substituir os placeholders no documento
         for paragraph in document.paragraphs:
@@ -100,7 +116,7 @@ def salvar_texto(self, screen_instance):
         document.save(caminho_salvamento)
         mostrar_popup(screen_instance, "Sucesso", f"Documento salvo em {caminho_salvamento}")
         os.startfile(caminho_salvamento)
-
+        
     except Exception as e:
         print(f"Erro ao obter dados: {e}")
         return None

@@ -2,7 +2,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.popup import Popup
-from telas.contrato_hono.PJ.texto_clausula import TEXTOS_CLAUSULA1, TEXTOS_CLAUSULA3, TEXTOS_CLAUSULA9
+from telas.contrato_hono.PJ.texto_clausula import TEXTOS_CLAUSULAS
 from docx import Document
 import os
 from telas.contrato_hono.PJ.extracao_PJ_contrato import formatar_data , substituir_palavras_documento
@@ -22,38 +22,38 @@ def atualizar_dados(screen_instance, dados):
     screen_instance.caminho_modelo = dados.get("caminho_modelo", None)  # Armazena o caminho do arquivo modelo
     print(f"Dados recebidos: {screen_instance.dados}")
 
-def on_text_selected(self, modelo_spinner, text):
+def on_spinner_select(self, spinner, text):
     """
-    Carrega o texto selecionado no TextInput.
+    Atualiza o TextInput com o texto da cláusula selecionada e salva o texto atual no dicionário de placeholders.
     """
-    if text in TEXTOS_CLAUSULA1:
-        self.text_input.text = TEXTOS_CLAUSULA1[text]  # Preenche o TextInput com o texto selecionado
-        
-def on_text_selected2(self, modelo_spinner2, text):
-    """
-    Carrega o texto selecionado no TextInput.
-    """
-    if text in TEXTOS_CLAUSULA3:
-        self.text_input2.text = TEXTOS_CLAUSULA3[text]  # Preenche o TextInput com o texto selecionado
+    # Salva o texto atual da cláusula previamente selecionada
+    if spinner.text in TEXTOS_CLAUSULAS:
+        selected_clause_index = list(TEXTOS_CLAUSULAS.keys()).index(spinner.text) + 1
+        self.placeholders[f"#CLAUSULA{selected_clause_index}"] = self.text_input.text
 
-def on_text_selected3(self, modelo_spinner3, text):
-    if text in TEXTOS_CLAUSULA9:
-        self.text_input3.text = TEXTOS_CLAUSULA9[text]
+    # Atualiza o TextInput com o texto da nova cláusula selecionada
+    self.text_input.text = TEXTOS_CLAUSULAS.get(text, "")
+    
+def on_text_change(self, instance, value):
+    """
+    Atualiza o dicionário de placeholders sempre que o texto no TextInput for alterado.
+    """
+    if self.spinner.text in TEXTOS_CLAUSULAS:
+        selected_clause_index = list(TEXTOS_CLAUSULAS.keys()).index(self.spinner.text) + 1
+        self.placeholders[f"#CLAUSULA{selected_clause_index}"] = value
         
-def salvar_texto(screen_instance, _):
+def salvar_texto(self, screen_instance):
     """
     Salva o texto editado e atualiza o documento.
     """
     try:
         
+        selected_clause_index = list(TEXTOS_CLAUSULAS.keys()).index(self.spinner.text) + 1
+        self.placeholders[f"#CLAUSULA{selected_clause_index}"] = self.text_input.text
+        
         if not screen_instance.dados:
             mostrar_popup(screen_instance, "Erro", "Nenhum dado foi recebido da tela inicial!")
             return
-
-        # Obtém o texto editado
-        clausula1 = screen_instance.text_input.text.strip()
-        clausula3 = screen_instance.text_input2.text.strip()
-        clausula9 = screen_instance.text_input3.text.strip()
 
         if not screen_instance.caminho_modelo:
             mostrar_popup(screen_instance, "Erro", "O arquivo modelo não foi selecionado na tela inicial.")
@@ -63,15 +63,16 @@ def salvar_texto(screen_instance, _):
         if not os.path.exists(screen_instance.caminho_modelo):
             mostrar_popup(screen_instance, "Erro", f"O arquivo {screen_instance.caminho_modelo} não foi encontrado!")
             return
-        
+        for idx, key in enumerate(TEXTOS_CLAUSULAS.keys(), start=1):
+            if f"#CLAUSULA{idx}" not in self.placeholders:
+                self.placeholders[f"#CLAUSULA{idx}"] = TEXTOS_CLAUSULAS[key]
+
         document = Document(screen_instance.caminho_modelo)
-        # Obter o nome do advogado OAB baseado no nome selecionado no spinner
         data_atual = formatar_data()
-        # Dicionário de placeholders
-        placeholders = {
-            "#CLAUSULA1": clausula1,
-            "#CLAUSULA3": clausula3,
-            "#CLAUSULA9": clausula9,
+
+        # Adiciona os placeholders restantes
+        placeholders = self.placeholders.copy()
+        placeholders.update({
             "#NOME_CONTRATANTE": screen_instance.dados.get("nome_contratante", ''),
             "#NME_EMPRESA": screen_instance.dados.get("nome_empresa", ''),
             "#CNPJ":screen_instance.dados.get("cnpj", ''),
@@ -91,7 +92,7 @@ def salvar_texto(screen_instance, _):
             "#SIGLA_ESTADO_CONTRATANTE": screen_instance.dados.get("sigla_estado_contratante", ''),
             "#INSCRITA(O)": screen_instance.dados.get("inscrita_o", ''),
             "#DATA_AGORA": data_atual,
-        }
+        })
         
         print(f"mostrar {placeholders}")
 

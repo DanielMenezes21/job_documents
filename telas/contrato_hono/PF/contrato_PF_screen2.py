@@ -43,11 +43,8 @@ class ContratoPF2Screen(Screen):
         self.dados = None  # Armazenar os dados da tela anterior
         self.placeholders = {}
 
-        # Layout e ScrollView para a interface
-        scroll_view = ScrollView(size_hint=(1, 1))
-        layout = BoxLayout(orientation="vertical", padding = 10, spacing = 10)
-        layout.bind(minimum_height=layout.setter('height'))
-        scroll_view.add_widget(layout)
+        # Layout principal
+        layout = BoxLayout(orientation="vertical", padding=10, spacing=10)
 
         # Botão de voltar
         btn_voltar = Button(
@@ -69,8 +66,14 @@ class ContratoPF2Screen(Screen):
         self.spinner.bind(text=self.poderes_on_selected)
         layout.add_widget(self.spinner)
 
-        # TextInput para editar a cláusula
-        self.text_input = TextInput(hint_text="Texto da cláusula", multiline=True, size_hint=(1, 0.6))
+        # Campo de texto com rolagem interna
+        self.text_input = TextInput(
+            hint_text="Texto da cláusula",
+            multiline=True,      # Ativa a rolagem interna
+            size_hint=(1, 0.6),  # Define o tamanho do campo de texto
+            cursor_blink=True    # Cursor pisca para visibilidade
+        )
+        self.text_input.bind(text=self.text_change)
         layout.add_widget(self.text_input)
 
         # Botão para salvar
@@ -83,9 +86,11 @@ class ContratoPF2Screen(Screen):
         layout.add_widget(save_button)
         layout.add_widget(Widget())  # Espaço vazio
 
-        # Adicionar o layout ao ScrollView
-        self.add_widget(scroll_view)
+        # Adicionar o layout à tela
+        self.add_widget(layout)
 
+    def text_change(self, instance, value):
+        on_text_change(self, instance, value)
     def poderes_on_selected(self, spinner, text):
         on_spinner_select(self, spinner, text)
 

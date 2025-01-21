@@ -17,7 +17,16 @@ TEXTOS_CLAUSULAS = {
         "da seguinte forma: R$ {valor em reais} de entrada no ato da assinatura "
         "deste instrumento contratual, {metodo de pagamento}, o restante em 23 "
         "parcelas iguais no valor de {valor da parcela} para todo dia {dia definido} de cada "
-        "mês iniciando-se em {data de inicio}, por meio de {metodo de pagamento}."
+        "mês iniciando-se em {data de inicio}, por meio de {metodo de pagamento}. \n"
+        
+        "PARÁGRAFO ÚNICO: Desde já a CONTRATANTE autoriza a emissão de boletos bancários para cobranças "
+        "dos honorários ora pactuados, bem como a inclusão de seus dados no sistema interno, e ainda, "
+        "declara estar ciente de que caso eventualmente haja valores em atraso, sobre estes incidirão "
+        "correção monetária calculada com base no índice IPCA-E, a partir da date de vencimento até efetivo "
+        "pagamento, bem como a aplicação de multa moratória de 2% (dois por cento) sobre o valor devido, "
+        "além de juros de mora de 1% (um por cento) ao mês, como previsto em lei Autoriza também, "
+        "desde já a inclusão do nome nos cadastros de proteção ao crédito em caso de haver mais de 30 (trinta) "
+        "dias de atraso da (s) parcela (s)."
     ),
     "Modelo - Clausula 4 Padrão": (
         "Os serviços especificados na cláusula 1ª são considerados iniciados a partir da assinatura deste contrato, dado que já houve análise prévia do caso, documentos e/ou orientações. "
@@ -45,7 +54,11 @@ TEXTOS_CLAUSULAS = {
     ),
     "Modelo - Exemplo: Referente a Duração do Contrato": (
         "Este contrato terá vigência limitada à atuação na primeira instância, "
-        "sendo necessária a celebração de termo aditivo para continuidade em instâncias superiores."
+        "sendo necessária a celebração de termo aditivo para continuidade em instâncias superiores. \n"
+        
+        "Parágrafo único: Este contrato vincula os sucessores do CONTRATANTE, que assumirão "
+        "as obrigações previstas no caso de falecimento ou incapacidade deste. Assumindo ainda "
+        "o representante que assina este instrumento, em caso de pessoa jurídica."
     ),
     "Modelo - Clausula 10 Padrão": (
         "Em caso de desistência, rescisão ou revogação do mandato: a) Será aplicada multa contratual de 30% "
