@@ -38,6 +38,15 @@ class HomeScreen(Screen):
             on_press=self.ir_para_contrato
         )
         layout.add_widget(btn_contrato)
+        
+        btn_declaracao = Button(
+            text="Ir para Declaração",
+            size_hint=(None, None),
+            size=(200, 50),
+            pos_hint={"center_x": 0.5, "top": 0.2},
+            on_press=self.ir_para_declaracao
+        )
+        layout.add_widget(btn_declaracao)
 
         # Adiciona o layout à tela
         self.add_widget(layout)
@@ -53,3 +62,11 @@ class HomeScreen(Screen):
         Função para ir até a tela de ProcessoScreen
         """
         self.manager.current = "home_contrato_screen"
+        
+    def ir_para_declaracao(self, instance):
+        """
+        Função para ir até a tela de DadosPessoaisPF
+        """
+        self.manager.current = "homepage_declaracao"
+        
+    

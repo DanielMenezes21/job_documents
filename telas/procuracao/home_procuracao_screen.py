@@ -60,10 +60,10 @@ class HomeProcuracaoScreen(Screen):
         """
         Função para ir até a tela de ProcuracaoScreen
         """
-        self.manager.current = "home_procuracao_screen_PF"
+        self.manager.current = "procuracao_criminal_screen_PF"
         
     def ir_para_procuracao_pj(self, instance):
         """
         Função para ir até a tela de ProcessoScreen
         """
-        self.manager.current = "home_procuracao_screen_PJ"
+        self.manager.current = "procuracao_criminal_pj_screen"

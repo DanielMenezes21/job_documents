@@ -22,7 +22,7 @@ class ProcuracaoCriminalPJScreen(Screen):
         cidade_estado_layout = BoxLayout(orientation="horizontal", size_hint_y=0.18)
         
         titulo = Label(
-            text="Procuração Criminal PJ",
+            text="Procuração Pessoa Jurídica",
             font_size=20,
             size_hint=(None, None),
             size=(200, 50),
@@ -85,6 +85,12 @@ class ProcuracaoCriminalPJScreen(Screen):
                             size_hint_y=1,
                             size_hint_x=0.6,)
         cpf_rg_layout.add_widget(self.rg)
+        
+        self.sec_rg = Spinner(text="SEC RG", values=("SSP", "PC", "DETRAN", "ITEP", "SESP", "SEDS", "SEJUSP", "SDS", "SEJUS", "SSPS", "SEAP", "SEDEC", "CGP", "SEF", "DPE", "PCMG", "SSPCM"), size_hint_y=1, size_hint_x=0.12, pos_hint={"center_x": 0.5, "center_y": 0.5})
+        cpf_rg_layout.add_widget(self.sec_rg)
+        
+        self.est_rg = Spinner(text="Estado", values=("AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"), size_hint_y=1, size_hint_x=0.12, pos_hint={"center_x": 0.5, "center_y": 0.5})
+        cpf_rg_layout.add_widget(self.est_rg)
         
         # Adiciona o cpf_rg_layout
         layout.add_widget(cpf_rg_layout)

@@ -48,7 +48,7 @@ class PoderesCriminalPJScreen(Screen):
 
         # Título
         titulo = Label(
-            text="Editar Poderes Criminal PJ",
+            text="Editar Poderes Pessoa Jurídica",
             font_size=20,
             size_hint=(None, None),
             size=(200, 50),
@@ -100,6 +100,7 @@ class PoderesCriminalPJScreen(Screen):
 
         # Caminho do arquivo modelo, que será atualizado pela HomeScreen
         self.caminho_modelo = None
+        self.caminho_declaracao = "13_DECLARACAO_HIPOSSUFICIENCIA_PF_TESTE.docx"
 
     def poderes_voltar(self, instance):
         voltar(self, instance)  # Chama a função voltar

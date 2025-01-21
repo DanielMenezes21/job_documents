@@ -10,7 +10,7 @@ from kivy.uix.widget import Widget
 from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Ellipse, Color
 from telas.procuracao.PF.procuracao_criminal.pf_texto_poderes_cmn import TEXTOS_PODERES_A, ADVOGADO_OAB
-from telas.procuracao.PF.procuracao_criminal.pf_extracao_procuracao_cmn import processar_documento, formatar_data
+from telas.procuracao.PF.procuracao_criminal.pf_extracao_procuracao_cmn import processar_documento, formatar_data, substituir_com_formatacao
 from telas.homepage.home_screen import *
 from docx import Document
 import os
@@ -55,6 +55,11 @@ def salvar_texto(screen_instance, _):
     if not os.path.exists(screen_instance.caminho_modelo):
         mostrar_popup(screen_instance, "Erro", f"O arquivo {screen_instance.caminho_modelo} não foi encontrado!")
         return
+    
+    if not os.path.exists(screen_instance.caminho_declaracao):
+        mostrar_popup(screen_instance, "Erro", f"o arquivo {screen_instance.dados.get('caminho_declaracao')} não foi encontrado!", {}, None)
+
+        return
 
     # Abrir o arquivo modelo
     document = Document(screen_instance.caminho_modelo)
@@ -68,6 +73,8 @@ def salvar_texto(screen_instance, _):
         "#PODERES": texto_editado,
         "#NOME_OUTORGANTE": screen_instance.dados.get("nome_outorgante"),
         "#PROFISSAO": screen_instance.dados.get("profissao"),
+        "#SEC_RG": screen_instance.dados.get("sec_rg"),
+        "#EST_RG": screen_instance.dados.get("est_rg"),
         "#OUTORGANTE_CPF": screen_instance.dados.get("cpf"),
         "#CIDADE_OUTORGANTE": screen_instance.dados.get("cidade_outorgante"),
         "#SIGLA_ESTADO_OUTORGANTE": screen_instance.dados.get("sigla_estado_outorgante"),
@@ -111,17 +118,64 @@ def salvar_texto(screen_instance, _):
     nome_arquivo = screen_instance.dados.get("nome_arquivo", "documento_final")  # Usar nome_arquivo, se disponível
     caminho_salvamento = f"{nome_arquivo}.docx"
     document.save(caminho_salvamento)
-    mostrar_popup(screen_instance, "Sucesso", f"Documento salvo em {caminho_salvamento}")
+    mostrar_popup(
+        screen_instance,
+        "Sucesso",
+        f"Documento salvo como {nome_arquivo}. Deseja gerar uma declaração?",
+        placeholders,
+        screen_instance.dados.get("caminho_declaracao")  # Aqui você passa o caminho do modelo da declaração
+    )
     os.startfile(caminho_salvamento)
 
-def mostrar_popup(screen_instance, titulo, mensagem):
-    """
-    Exibe um popup com uma mensagem.
-    """
+def mostrar_popup(screen_instance, titulo, mensagem, placeholders=None, caminho_declaracao=None):
+    if placeholders is None:
+        placeholders = {}  # Defina um dicionário vazio se não for passado um valor
+    if caminho_declaracao is None:
+        caminho_declaracao = ""  # Defina uma string vazia se não for passado um valor
+
     conteudo = BoxLayout(orientation='vertical', padding=10, spacing=10)
     conteudo.add_widget(Label(text=mensagem, halign='center'))
+
+    # Campo de entrada para o nome do arquivo
+    text_input = TextInput(hint_text="Digite o nome do arquivo", multiline=False)
+    conteudo.add_widget(text_input)
+
     btn_fechar = Button(text='Fechar', size_hint=(1, 0.3))
-    popup = Popup(title=titulo, content=conteudo, size_hint=(0.7, 0.4))
-    btn_fechar.bind(on_press=popup.dismiss)
+    btn_fechar.bind(on_press=lambda instance: popup.dismiss())
+
+    btn_gerar_declaracao = Button(text='Gerar Declaração', size_hint=(1, 0.3))
+
+    def gerar_declaracao(instance):
+        if not os.path.exists(caminho_declaracao):
+            print("Modelo de declaração não encontrado.")
+            popup.dismiss()
+            return
+
+        try:
+            document = Document(caminho_declaracao)
+            for paragraph in document.paragraphs:
+                substituir_com_formatacao(paragraph, placeholders)
+            for tabela in document.tables:
+                for linha in tabela.rows:
+                    for celula in linha.cells:
+                        for paragrafo in celula.paragraphs:
+                            substituir_com_formatacao(paragrafo, placeholders)
+
+            # Pega o nome do arquivo do TextInput
+            nome_arquivo = text_input.text.strip() or "declaracao_gerada"
+            cd_arquivo = f"{nome_arquivo}.docx"
+            document.save(cd_arquivo)
+            print(f"Declaração gerada e salva como {cd_arquivo}.")
+            os.startfile(cd_arquivo)
+        except Exception as e:
+            print(f"Erro ao gerar declaração: {e}")
+        popup.dismiss()
+
+    btn_gerar_declaracao.bind(on_press=gerar_declaracao)
+
     conteudo.add_widget(btn_fechar)
+    conteudo.add_widget(btn_gerar_declaracao)
+
+    popup = Popup(title=titulo, content=conteudo, size_hint=(0.7, 0.5))
     popup.open()
+
