@@ -67,13 +67,26 @@ def obter_dados(screen_instance):
         print(f"Erro ao obter dados: {e}")
         return None
 
+def popup(screen_instance, titulo, mensagem):
+    conteudo = BoxLayout(orientation='vertical', padding=10, spacing=10)
+    conteudo.add_widget(Label(text=mensagem, halign='center'))
+    btn_fechar = Button(text='Fechar', size_hint=(1, 0.3))
+    btn_fechar.bind(on_press=lambda instance: popup.dismiss())
+    
+    conteudo.add_widget(btn_fechar)
+    popup = Popup(title=titulo, content=conteudo, size_hint=(0.7, 0.5))
+    popup.open()
+
 def ir_para_poderes(screen_instance, instance):
     """
     Navega para a tela PoderesScreen e envia os dados coletados.
     """
     dados = obter_dados(screen_instance)
     if dados:
-        poderes_screen = screen_instance.manager.get_screen("poderes_criminal_pj_screen")
-        poderes_screen.poderes_atualizar_dados(dados)  # Certifique-se de que o nome corresponde
-        screen_instance.manager.current = "poderes_criminal_pj_screen"
+        if len(screen_instance.nome_arquivo_input.text) == 0:
+            popup(screen_instance, "Erro", "o campo nome do arquivo é obrigatório")
+        else:
+            poderes_screen = screen_instance.manager.get_screen("poderes_criminal_pj_screen")
+            poderes_screen.poderes_atualizar_dados(dados)  # Certifique-se de que o nome corresponde
+            screen_instance.manager.current = "poderes_criminal_pj_screen"
 
