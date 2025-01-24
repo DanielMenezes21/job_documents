@@ -40,7 +40,7 @@ def on_nacionalidade_change(self, spinner, text):
 
 def obter_dados(screen_instance):
     try:
-        caminho_modelo = os.path.join(os.path.dirname(__file__), "10_MODELO_CONTRATACAO_PF_TESTE.docx")
+        caminho_modelo = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", "assets", "10_MODELO_CONTRATACAO_PF_TESTE.docx"))
         
         if not os.path.exists(caminho_modelo):
             raise FileNotFoundError(f"Arquivo modelo não encontrado em: {caminho_modelo}")

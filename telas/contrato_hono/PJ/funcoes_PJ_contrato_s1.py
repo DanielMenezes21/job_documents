@@ -40,7 +40,7 @@ def on_nacionalidade_change(self, spinner, text):
 
 def obter_dados(screen_instance):
     try:
-        caminho_modelo = os.path.join(os.path.dirname(__file__), "10_MODELO_CONTRATACAO_PJ_TESTE - Copia.docx")
+        caminho_modelo = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", "assets", "10_MODELO_CONTRATACAO_PJ_TESTE - Copia.docx"))
         
         if not os.path.exists(caminho_modelo):
             raise FileNotFoundError(f"Arquivo modelo não encontrado em: {caminho_modelo}")
@@ -94,7 +94,7 @@ def ir_para_processo2(screen_instance, instance):
     """
     dados = obter_dados(screen_instance)
     if dados:
-        if len(screen_instance.nome_arquivo_input.text) == 0:
+        if len(screen_instance.nome_arquivo.text) == 0:
             popup(screen_instance, "Erro", "o campo nome do arquivo é obrigatório")
         else:
             poderes_screen = screen_instance.manager.get_screen("contrato_screen2")

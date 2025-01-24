@@ -24,8 +24,9 @@ def ir_para_procuracao(self, instance):
 
 def obter_dados(screen_instance):
     try:
-        caminho_modelo = os.path.join(os.path.dirname(__file__), "11_PROCURACAO_TESTE.docx")
-        caminho_declaracao = os.path.join(os.path.dirname(__file__), "13_DECLARACAO_HIPOSSUFICIENCIA_PF_TESTE.docx")
+        caminho_modelo = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..","..", "assets", "11_PROCURACAO_TESTE.docx"))
+        caminho_declaracao = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..","..", "assets", "13_DECLARACAO_HIPOSSUFICIENCIA_PF_TESTE.docx"))
+
         
         if not os.path.exists(caminho_modelo):
             raise FileNotFoundError(f"Arquivo modelo não encontrado em: {caminho_modelo}")
