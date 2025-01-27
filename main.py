@@ -1,6 +1,3 @@
-import sys
-import traceback
-
 from kivy.app import App
 from kivy.uix.screenmanager import Screen, ScreenManager
 from telas.contrato_hono.PJ.contrato_PJ_screen1 import ProcessoScreen
@@ -17,11 +14,6 @@ from telas.procuracao.PJ.procuracao_criminal.pj_poderes_screen_cmn import Podere
 from telas.declaracao_hipo.PF.dados_pessoais_screen_dec import DadosPessoaisPFScreen
 from telas.declaracao_hipo.PJ.dados_pessoais_PJ_screen_dec import DadosPessoaisPJScreen
 from telas.declaracao_hipo.dec_home import Dec_homepage
-
-def mostrar_erro(exc_type, exc_value, exc_tb):
-    traceback.print_exception(exc_type, exc_value, exc_tb)
-    
-sys.excepthook = mostrar_erro
 
 class MyApp(ScreenManager): 
     def __init__(self, **kwargs):

@@ -98,10 +98,6 @@ class PoderesCriminalPJScreen(Screen):
 
         self.add_widget(layout)
 
-        # Caminho do arquivo modelo, que será atualizado pela HomeScreen
-        self.caminho_modelo = None
-        self.caminho_declaracao = "13_DECLARACAO_HIPOSSUFICIENCIA_PF_TESTE.docx"
-
     def poderes_voltar(self, instance):
         voltar(self, instance)  # Chama a função voltar
     
@@ -109,9 +105,7 @@ class PoderesCriminalPJScreen(Screen):
         """
         Atualiza os dados recebidos na tela PoderesScreen.
         """
-        self.dados = dados
-        self.caminho_modelo = dados.get("caminho_modelo", None)
-        print(f"Dados recebidos: {self.dados}")
+        atualizar_dados(self, dados)
 
     def poderes_on_text_selected(self, modelo_spinner, text):
         return on_text_selected(self, modelo_spinner, text)  # Atualiza o texto selecionado

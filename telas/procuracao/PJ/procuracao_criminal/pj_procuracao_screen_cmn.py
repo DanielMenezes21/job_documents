@@ -1,5 +1,3 @@
-# procuracao_screen.py
-
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import Screen
 from kivy.uix.floatlayout import FloatLayout
@@ -20,6 +18,7 @@ class ProcuracaoCriminalPJScreen(Screen):
         cep_end_layout = BoxLayout(orientation="horizontal", size_hint_y=0.18)
         empresa_layout = BoxLayout(orientation="horizontal", size_hint_y=0.18)
         cidade_estado_layout = BoxLayout(orientation="horizontal", size_hint_y=0.18)
+        empresa_cid_est_layout = BoxLayout(orientation="horizontal", size_hint_y=0.18)
         
         titulo = Label(
             text="Procuração Pessoa Jurídica",
@@ -67,9 +66,21 @@ class ProcuracaoCriminalPJScreen(Screen):
                                                          size_hint_x=1,
                                                          mask="     -   ")
         empresa_layout.add_widget(self.cep_empresa)
-        
         layout.add_widget(empresa_layout)
-
+        
+        self.cidade_empresa = FocusSwitchingTextInput(hint_text="Informe a cidade da empresa",
+                                                      multiline=False,
+                                                      size_hint_y=1,
+                                                      size_hint_x=1)
+        empresa_cid_est_layout.add_widget(self.cidade_empresa)
+        
+        self.estado_empresa = FocusSwitchingTextInput(hint_text="Informe o estado da empresa",
+                                                      multiline=False,
+                                                      size_hint_y=1,
+                                                      size_hint_x=1)
+        empresa_cid_est_layout.add_widget(self.estado_empresa)
+        layout.add_widget(empresa_cid_est_layout)
+       
         self.cpf = MaskedFocusSwitchingTextInput(
             mask="   .   .   -  ",
             max_length=11,

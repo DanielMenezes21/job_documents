@@ -24,8 +24,8 @@ def ir_para_procuracao(self, instance):
 
 def obter_dados(screen_instance):
     try:
-        caminho_modelo = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..","..", "assets", "11_PROCURACAO_PJ_CRIMINAL_TESTE.docx"))
-        caminho_declaracao = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..","..", "assets", "13_DECLARACAO_HIPOSSUFICIENCIA_PF_TESTE.docx"))
+        caminho_modelo = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..","..", "assets", "11_PROCURACAO_PJ_TESTE.docx"))
+        caminho_declaracao = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..","..", "assets", "13_DECLARACAO_HIPOSSUFICIENCIA_PJ_TESTE.docx"))
         
         if not os.path.exists(caminho_modelo):
             raise FileNotFoundError(f"Arquivo modelo não encontrado em: {caminho_modelo}")
@@ -43,6 +43,8 @@ def obter_dados(screen_instance):
             "nome_outorgante": screen_instance.nome_outorgante.text,
             "nome_empresa": screen_instance.nome_empresa.text,
             "cnpj": screen_instance.cnpj.text,
+            "cidade_empresa": screen_instance.cidade_empresa.text,
+            "estado_empresa": screen_instance.estado_empresa.text,
             "end_empresa": screen_instance.end_empresa.text,
             "cep_empresa": screen_instance.cep_empresa.text,
             "sec_rg": screen_instance.sec_rg.text,
