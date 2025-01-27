@@ -27,6 +27,7 @@ def atualizar_dados(screen_instance, dados):
     """
     screen_instance.dados = dados
     screen_instance.caminho_modelo = dados.get("caminho_modelo", None)  # Armazena o caminho do arquivo modelo
+    screen_instance.caminho_declaracao = dados.get("caminho_declaracao", None)  # Armazena o caminho do arquivo modelo da declaração
     print(f"Dados recebidos: {screen_instance.dados}")
 
 def on_text_selected(self, modelo_spinner, text):

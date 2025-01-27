@@ -1,4 +1,3 @@
-#main.py
 from kivy.app import App
 from kivy.uix.screenmanager import Screen, ScreenManager
 from telas.contrato_hono.PJ.contrato_PJ_screen1 import ProcessoScreen
@@ -39,6 +38,7 @@ class MainApp(App):
     def build(self):
         # Retorna o ScreenManager configurado
         return MyApp()
+ 
 
 
 if __name__ == "__main__":

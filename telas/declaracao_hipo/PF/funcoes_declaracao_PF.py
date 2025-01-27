@@ -19,7 +19,7 @@ def ir_para_home_dec(self, instance):
 def obter_dados(screen_instance, _):
     try:
 
-        caminho_declaracao = os.path.join(os.path.dirname(__file__), "13_DECLARACAO_HIPOSSUFICIENCIA_PF_TESTE.docx")
+        caminho_declaracao = os.path.abspath(os.path.join(os.path.dirname(__file__),  "..", "..","..", "assets", "13_DECLARACAO_HIPOSSUFICIENCIA_PF_TESTE.docx"))
         document = Document(caminho_declaracao)
         
         if not os.path.exists(caminho_declaracao):

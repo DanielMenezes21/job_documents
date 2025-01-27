@@ -22,6 +22,7 @@ def atualizar_dados(screen_instance, dados):
     """
     screen_instance.dados = dados
     screen_instance.caminho_modelo = dados.get("caminho_modelo", None)  # Armazena o caminho do arquivo modelo
+    screen_instance.caminho_declaracao = dados.get("caminho_declaracao", None)  # Armazena o caminho do arquivo modelo de declaração
     print(f"Dados recebidos: {screen_instance.dados}")
 
 def on_text_selected(self, modelo_spinner, text):
@@ -52,7 +53,7 @@ def salvar_texto(screen_instance, _):
         return
     
     if not os.path.exists(screen_instance.caminho_declaracao):
-        mostrar_popup(screen_instance, "Erro", f"o arquivo{screen_instance.caminho_declaracao} não foi encontrado!")
+        mostrar_popup(screen_instance, "Erro", f"o arquivo{screen_instance.caminho_declaracao} não foi encontrado!", placeholders={}, caminho_declaracao="None")
         return
 
     # Abrir o arquivo modelo
@@ -69,6 +70,8 @@ def salvar_texto(screen_instance, _):
         "#CNPJ":screen_instance.dados.get("cnpj"),
         "#END_EMPRESA": screen_instance.dados.get("end_empresa"),
         "#CP_EMPRESA": screen_instance.dados.get("cep_empresa"),
+        "#CIDADE_EMPRESA": screen_instance.dados.get("cidade_empresa"),
+        "#ESTADO_EMPRESA": screen_instance.dados.get("estado_empresa"),
         "#NOME_OUTORGANTE": screen_instance.dados.get("nome_outorgante"),
         "#OUTORGANTE_CPF": screen_instance.dados.get("cpf"),
         "#CIDADE_OUTORGANTE": screen_instance.dados.get("cidade_outorgante"),
@@ -142,7 +145,6 @@ def mostrar_popup(screen_instance, titulo, mensagem, placeholders, caminho_decla
             print("Modelo de declaração não encontrado.")
             popup.dismiss()
             return
-
         try:
             document = Document(caminho_declaracao)
             for paragraph in document.paragraphs:
