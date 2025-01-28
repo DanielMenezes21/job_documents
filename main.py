@@ -15,6 +15,7 @@ from telas.declaracao_hipo.PF.dados_pessoais_screen_dec import DadosPessoaisPFSc
 from telas.declaracao_hipo.PJ.dados_pessoais_PJ_screen_dec import DadosPessoaisPJScreen
 from telas.declaracao_hipo.dec_home import Dec_homepage
 
+from updater import check_for_updates
 class MyApp(ScreenManager): 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

@@ -16,6 +16,15 @@ class Dec_homepage(Screen):
                        pos_hint={"center_x": 0.5, "center_y": 0.3})
         layout.add_widget(titulo)
         
+        btn_voltar = Button(
+            text="<",
+            size_hint=(None, None),
+            size= (50,50),
+            pos_hint={"x": 0.1, "y": 0.1},
+            on_press=self.voltar
+        )
+        layout.add_widget(btn_voltar)
+        
         btn_decPF = Button(text="ir para Declaração PF",
                            size_hint=(None, None),
                            size=(200, 50),
@@ -31,6 +40,14 @@ class Dec_homepage(Screen):
         layout.add_widget(btn_decPJ)
         self.add_widget(layout)
         
+    def voltar(self, instance):
+        """voltar
+
+        Args:
+            instance (botton): função para voltar para a tela de home_screen
+        """
+        
+        self.manager.current = "home_screen"
         
     def declaracao_pf(self, instance):
             """Função de caminho declaração PF
