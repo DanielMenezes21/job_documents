@@ -16,7 +16,7 @@ def on_sec_rg_change(self, spinner, text):
     
 def ir_para_homepage(self, instance):
     
-    self.manager.current =  "home_screen"
+    self.manager.current =  "home_contrato_screen"
 
 def on_nacionalidade_change(self, spinner, text):
     """

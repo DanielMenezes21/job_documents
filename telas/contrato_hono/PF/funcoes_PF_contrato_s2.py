@@ -96,12 +96,17 @@ def salvar_texto(self, screen_instance):
         def substituir_com_formatacao(paragrafo, placeholders):
             for run in paragrafo.runs:
                 for placeholder, valor in placeholders.items():
+                    if valor is None:
+                        valor = ''
+                        print(f"o placeholder {placeholder} está vazio")
                     if placeholder in run.text:
-                        run.text = run.text.replace(placeholder, valor if valor else '')
+                        run.text = run.text.replace(placeholder, valor)
+                        #print(f"substituindo {placeholder} por {valor}")
 
         # Substituir os placeholders no documento
         for paragraph in document.paragraphs:
             substituir_com_formatacao(paragraph, placeholders)
+            print(f"substituindo {placeholders} no documento")
 
         # Substituir nas tabelas
         for tabela in document.tables:

@@ -14,7 +14,7 @@ def ir_para_home_dec(self, instance):
     Função de voltar para a homescreen 
     """
     
-    self.manager.current =  "home_screen"
+    self.manager.current =  "homepage_declaracao"
     
 def obter_dados(screen_instance, _):
     try:
@@ -36,7 +36,7 @@ def obter_dados(screen_instance, _):
             "#PROFISSAO":screen_instance.profissao.text,
             "#SEC_RG":screen_instance.sec_rg.text,
             "#EST_RG": screen_instance.est_rg.text,
-            "#OUTORGANTE_CPF": screen_instance.cpf.text,
+            "#CPF": screen_instance.cpf.text,
             "#RG_OUTORGANTE": screen_instance.rg.text,
             "#CIDADE_OUTORGANTE": screen_instance.cidade.text,
             "#SIGLA_ESTADO_OUTORGANTE": screen_instance.estado.text,

@@ -76,7 +76,7 @@ def salvar_texto(screen_instance, _):
         "#PROFISSAO": screen_instance.dados.get("profissao"),
         "#SEC_RG": screen_instance.dados.get("sec_rg"),
         "#EST_RG": screen_instance.dados.get("est_rg"),
-        "#OUTORGANTE_CPF": screen_instance.dados.get("cpf"),
+        "#CPF": screen_instance.dados.get("cpf"),
         "#CIDADE_OUTORGANTE": screen_instance.dados.get("cidade_outorgante"),
         "#SIGLA_ESTADO_OUTORGANTE": screen_instance.dados.get("sigla_estado_outorgante"),
         "#INSCRITA(O)": screen_instance.dados.get("inscrita_o"),

@@ -44,7 +44,7 @@ class ContratoPF2Screen(Screen):
         self.placeholders = {}
 
         # Layout principal
-        layout = BoxLayout(orientation="vertical", padding=10, spacing=10)
+        layout = BoxLayout(orientation="vertical", padding=50, spacing=10)
 
         # Botão de voltar
         btn_voltar = Button(
@@ -83,14 +83,15 @@ class ContratoPF2Screen(Screen):
             size=(150, 50)
         )
         save_button.bind(on_press=lambda instance: self.poderes_salvar_texto(self))  # Passa 'self' corretamente
+        
         layout.add_widget(save_button)
-        layout.add_widget(Widget())  # Espaço vazio
 
         # Adicionar o layout à tela
         self.add_widget(layout)
 
     def text_change(self, instance, value):
         on_text_change(self, instance, value)
+        
     def poderes_on_selected(self, spinner, text):
         on_spinner_select(self, spinner, text)
 
