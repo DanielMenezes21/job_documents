@@ -1,98 +1,87 @@
-import os
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
-from kivy.uix.spinner import Spinner
 from kivy.uix.button import Button
-from docx import Document
+from kivy.uix.checkbox import CheckBox
+from kivy.uix.scrollview import ScrollView
+from modules.logic_tab import FocusSwitchingTextInput
 
-# Textos das cláusulas
-TEXTOS_CLAUSULAS = {
-    "Cláusula 1": (
-        "(Descrever objetivo específico mais detalhado possível com número de processo, contrato, etc.)"
-    ),
-    "Cláusula 2": (
-        "A presente contratação não resguarda qualquer relação com vinculação empregatícia."
-    ),
-    "Cláusula 3": (
-        "Pelos serviços prestados e especificados na cláusula 1ª, "
-        "o CONTRATADO receberá, a título de honorários advocatícios, "
-        "o correspondente a {R$ valor ({valor em extenso} reais)}, "
-        "da seguinte forma: R$ {valor em reais} de entrada no ato da assinatura "
-        "deste instrumento contratual, {metodo de pagamento}, o restante em 23 "
-        "parcelas iguais no valor de {valor da parcela} para todo dia {dia definido} de cada "
-        "mês iniciando-se em {data de inicio}, por meio de {metodo de pagamento}."
-    ),
-}
-
-class ClausulasApp(App):
+class CidadeApp(App):
     def build(self):
-        self.placeholders = {
-            "#CLAUSULA_1": "",
-            "#CLAUSULA_2": "",
-            "#CLAUSULA_3": "",
-        }
+        root = BoxLayout(orientation='vertical', padding=10, spacing=10)
 
-        # Layout principal
-        layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
+        # Inicialização dos widgets
+        self.label_quant = Label(text="Quantas cidades deseja digitar?")
+        self.input_quant = FocusSwitchingTextInput(hint_text="Digite um número", multiline=False, size_hint_y=0.5 ,input_filter="int")
+        self.btn_confirmar = Button(text="Confirmar", on_press=self.gerar_campos)
 
-        # Spinner para seleção de cláusulas
-        self.spinner = Spinner(
-            text="Selecione a cláusula",
-            values=list(TEXTOS_CLAUSULAS.keys()),
-            size_hint=(1, 0.2),
-        )
-        self.spinner.bind(text=self.on_spinner_select)
-        layout.add_widget(self.spinner)
+        # Layout para os campos de entrada das cidades (GridLayout dentro de ScrollView)
+        self.layout_cidades = GridLayout(cols=1, spacing=5, size_hint_y=None)
+        self.layout_cidades.bind(minimum_height=self.layout_cidades.setter('height'))
 
-        # TextInput para exibir e editar a cláusula selecionada
-        self.text_input = TextInput(hint_text="Texto da cláusula", multiline=True, size_hint=(1, 0.6))
-        layout.add_widget(self.text_input)
+        # Adicionando a ScrollView para permitir rolagem quando muitos campos forem gerados
+        scroll = ScrollView(size_hint=(1, 0.9), height=400)
+        scroll.add_widget(self.layout_cidades)
 
-        # Botão para salvar documento
-        save_button = Button(text="Salvar Documento", size_hint=(1, 0.2))
-        save_button.bind(on_press=self.save_document)
-        layout.add_widget(save_button)
+        # Checkbox para marcar se as cidades serão iguais
+        self.checkbox_igual = CheckBox(pos_hint={'center_x': 0.5, 'center_y': 0.7})
+        self.checkbox_igual.bind(active=self.on_checkbox_active)
 
-        return layout
+        # Botão para exibir as cidades digitadas
+        self.btn_exibir = Button(text="Exibir Cidades", on_press=self.mostrar_cidades)
+        self.btn_exibir.disabled = True  # Inicia desativado
 
-    def on_spinner_select(self, spinner, text):
-        """
-        Atualiza o TextInput com o texto da cláusula selecionada.
-        """
-        clause_key = f"Cláusula {list(TEXTOS_CLAUSULAS.keys()).index(text) + 1}"
-        self.placeholders[f"#CLAUSULA{list(TEXTOS_CLAUSULAS.keys()).index(text) + 1}"] = self.text_input.text
-        self.text_input.text = TEXTOS_CLAUSULAS.get(text, "")
+        # Label para mostrar as cidades digitadas
+        self.label_resultado = Label(text="")
 
-    def save_document(self, instance):
-        """
-        Substitui os placeholders no documento modelo e salva o documento final.
-        """
-        # Atualiza os placeholders com os textos editados
-        for idx, key in enumerate(self.placeholders.keys(), start=1):
-            clausula_key = f"Cláusula {idx}"
-            self.placeholders[key] = TEXTOS_CLAUSULAS.get(clausula_key, "")
+        # Adicionando widgets na tela
+        root.add_widget(self.label_quant)
+        root.add_widget(self.input_quant)
+        root.add_widget(self.btn_confirmar)
+        root.add_widget(Label(text="Marque para preencher todas as cidades com a mesma"))
+        root.add_widget(self.checkbox_igual)
+        root.add_widget(scroll)  # Adiciona a ScrollView com os campos de cidade
+        root.add_widget(self.btn_exibir)
+        root.add_widget(self.label_resultado)
 
-        # Verifica se o arquivo modelo existe
-        modelo_path = "teste_apagar.docx"
-        if not os.path.exists(modelo_path):
-            print(f"Arquivo {modelo_path} não encontrado!")
-            return
+        # Inicializa a lista de campos de cidades
+        self.campos_cidades = []
 
-        # Abre o documento modelo
-        document = Document(modelo_path)
+        return root
 
-        # Substitui os placeholders no documento
-        for paragraph in document.paragraphs:
-            for placeholder, value in self.placeholders.items():
-                if placeholder in paragraph.text:
-                    paragraph.text = paragraph.text.replace(placeholder, value)
+    def gerar_campos(self, instance):
+        """Gera dinamicamente os campos de entrada para as cidades"""
+        self.layout_cidades.clear_widgets()  # Limpa campos anteriores
+        try:
+            self.quantidade = int(self.input_quant.text)
+            if self.quantidade > 0:
+                self.campos_cidades = []  # Recria a lista de campos de cidade
+                for i in range(self.quantidade):
+                    campo = FocusSwitchingTextInput(hint_text=f"Digite o nome da cidade {i+1}", size_hint_y=None, height=30)
+                    self.layout_cidades.add_widget(campo)
+                    self.campos_cidades.append(campo)
+                self.btn_exibir.disabled = False  # Ativa o botão de exibição
+            else:
+                self.label_resultado.text = "Por favor, digite um número maior que 0."
+        except ValueError:
+            self.label_resultado.text = "Insira um número válido!"
 
-        # Salva o documento final
-        final_path = "documento_final.docx"
-        document.save(final_path)
-        print(f"Documento salvo como {final_path}")
-        os.startfile(final_path)
+    def on_checkbox_active(self, instance, value):
+        """Preenche todos os campos com a mesma cidade quando a checkbox é marcada"""
+        if value:  # Se a checkbox foi marcada
+            cidade_comum = self.campos_cidades[0].text if self.campos_cidades else ""
+            for campo in self.campos_cidades:
+                campo.text = cidade_comum
+
+    def mostrar_cidades(self, instance):
+        """Exibe as cidades digitadas pelo usuário"""
+        cidades = [campo.text.strip() for campo in self.campos_cidades if campo.text.strip()]
+        if cidades:
+            self.label_resultado.text = f"Cidades digitadas:\n" + "\n".join(cidades)
+        else:
+            self.label_resultado.text = "Nenhuma cidade foi digitada."
 
 if __name__ == "__main__":
-    ClausulasApp().run()
+    CidadeApp().run()

@@ -10,7 +10,7 @@ from kivy.uix.spinner import Spinner
 from telas.contrato_hono.PJ.contrato_PJ_screen2 import Processo2Screen
 from datetime import datetime
 from telas.contrato_hono.PJ.funcoes_PJ_contrato_s1 import *
-from logic_tab import FocusSwitchingTextInput, MaskedFocusSwitchingTextInput
+from modules.logic_tab import FocusSwitchingTextInput, MaskedFocusSwitchingTextInput
 
 class ProcessoScreen(Screen):
     def __init__(self, **kwargs):

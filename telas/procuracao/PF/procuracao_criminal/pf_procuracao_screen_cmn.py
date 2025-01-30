@@ -8,7 +8,7 @@ from kivy.uix.button import Button
 from kivy.uix.spinner import Spinner
 from kivy.uix.label import Label
 from telas.procuracao.PF.procuracao_criminal.pf_funcoes_procuracao_cmn import *
-from logic_tab import FocusSwitchingTextInput, MaskedFocusSwitchingTextInput
+from modules.logic_tab import FocusSwitchingTextInput, MaskedFocusSwitchingTextInput
 class PFProcuracaoCriminalScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

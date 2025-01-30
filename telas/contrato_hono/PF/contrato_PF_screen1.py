@@ -9,7 +9,7 @@ from kivy.uix.filechooser import FileChooserListView
 from kivy.uix.spinner import Spinner
 from datetime import datetime
 from telas.contrato_hono.PF.funcoes_PF_contrato_s1 import *
-from logic_tab import FocusSwitchingTextInput, MaskedFocusSwitchingTextInput
+from modules.logic_tab import FocusSwitchingTextInput, MaskedFocusSwitchingTextInput
 
 class ContratoPFScreen(Screen):
     def __init__(self, **kwargs):

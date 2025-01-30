@@ -2,7 +2,7 @@
 from telas.procuracao.PF.procuracao_criminal.pf_funcoes_poderes_cmn import *
 from telas.procuracao.PF.procuracao_criminal.pf_poderes_screen_cmn import PFPoderesCriminalScreen
 from datetime import datetime
-from logic_tab import FocusSwitchingTextInput
+from modules.logic_tab import FocusSwitchingTextInput
 
 def on_nacionalidade_change(screen_instance, spinner, text):
     if text == "Outro":

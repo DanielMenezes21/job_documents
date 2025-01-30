@@ -6,7 +6,7 @@ from kivy.uix.button import Button
 from kivy.uix.spinner import Spinner
 from kivy.uix.label import Label
 from telas.declaracao_hipo.PF.funcoes_declaracao_PF import *
-from logic_tab import FocusSwitchingTextInput, MaskedFocusSwitchingTextInput
+from modules.logic_tab import FocusSwitchingTextInput, MaskedFocusSwitchingTextInput
 
 class DadosPessoaisPFScreen(Screen):
     def __init__(self, **kw):

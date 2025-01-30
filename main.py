@@ -1,5 +1,7 @@
 from kivy.app import App
 from kivy.uix.screenmanager import Screen, ScreenManager
+from telas.login_cadastro.login_page import LoginPage
+from telas.login_cadastro.register_page import RegisterPage
 from telas.contrato_hono.PJ.contrato_PJ_screen1 import ProcessoScreen
 from telas.contrato_hono.PJ.contrato_PJ_screen2 import Processo2Screen
 from telas.contrato_hono.home_contrato_screen import HomeContratoScreen
@@ -20,6 +22,8 @@ class MyApp(ScreenManager):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         # Adiciona as telas ao ScreenManager
+        self.add_widget(LoginPage(name="login_page"))
+        self.add_widget(RegisterPage(name="register_page"))
         self.add_widget(HomeScreen(name="home_screen"))
         self.add_widget(HomeContratoScreen(name="home_contrato_screen"))
         self.add_widget(ProcessoScreen(name="contrato_screen1"))
