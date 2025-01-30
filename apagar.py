@@ -83,5 +83,6 @@ class CidadeApp(App):
         else:
             self.label_resultado.text = "Nenhuma cidade foi digitada."
 
+print(1)
 if __name__ == "__main__":
     CidadeApp().run()
