@@ -1,4 +1,6 @@
 import sqlite3
+import os
+import sys
 
 # Conectar ao banco de dados (ou criar se não existir)
 conn = sqlite3.connect("advogados.db")
@@ -20,4 +22,10 @@ conn.commit()
 
 conn.close()
 
+def get_db_path():
+    if getattr(sys, 'frozen', False):  # Executável gerado pelo PyInstaller
+        base_path = sys._MEIPASS
+    else:
+        base_path = os.path.dirname(os.path.abspath(__file__))
 
+    return os.path.join(base_path, "advogados.db")

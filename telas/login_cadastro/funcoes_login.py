@@ -32,6 +32,22 @@ def show_popup(self, title, message):
 
         popup = Popup(title=title, content=popup_layout, size_hint=(None, None), size=(300, 200))
         popup.open()
+import sqlite3
+
+def buscar_pessoas_por_nome(filtro):
+    """Busca clientes pelo nome ou CPF que começam com o texto digitado."""
+    conn = sqlite3.connect("advogados.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT username FROM advogados
+        WHERE username LIKE ? OR password LIKE ? 
+        LIMIT 10
+    """, (filtro + "%", filtro + "%"))
+    
+    resultados = cursor.fetchall()
+    conn.close()
+    return resultados
 
 def go_to_register(self, instance):
         self.manager.current = "register_page"
