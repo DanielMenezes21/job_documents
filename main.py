@@ -1,21 +1,21 @@
 from kivy.app import App
 from kivy.uix.screenmanager import Screen, ScreenManager
-from telas.login_cadastro.login_page import LoginPage
-from telas.login_cadastro.register_page import RegisterPage
-from telas.contrato_hono.PJ.contrato_PJ_screen1 import ProcessoScreen
-from telas.contrato_hono.PJ.contrato_PJ_screen2 import Processo2Screen
-from telas.contrato_hono.home_contrato_screen import HomeContratoScreen
-from telas.contrato_hono.PF.contrato_PF_screen1 import ContratoPFScreen
-from telas.contrato_hono.PF.contrato_PF_screen2 import ContratoPF2Screen
-from telas.homepage.home_screen import HomeScreen
-from telas.procuracao.PF.procuracao_criminal.pf_procuracao_screen_cmn import PFProcuracaoCriminalScreen
-from telas.procuracao.PF.procuracao_criminal.pf_poderes_screen_cmn import PFPoderesCriminalScreen
-from telas.procuracao.home_procuracao_screen import HomeProcuracaoScreen
-from telas.procuracao.PJ.procuracao_criminal.pj_procuracao_screen_cmn import ProcuracaoCriminalPJScreen
-from telas.procuracao.PJ.procuracao_criminal.pj_poderes_screen_cmn import PoderesCriminalPJScreen
-from telas.declaracao_hipo.PF.dados_pessoais_screen_dec import DadosPessoaisPFScreen
-from telas.declaracao_hipo.PJ.dados_pessoais_PJ_screen_dec import DadosPessoaisPJScreen
-from telas.declaracao_hipo.dec_home import Dec_homepage
+from app.login_cadastro.login_page import LoginPage
+from app.login_cadastro.register_page import RegisterPage
+from app.contrato_hono.PJ.contrato_PJ_screen1 import ProcessoScreen
+from app.contrato_hono.PJ.contrato_PJ_screen2 import Processo2Screen
+from app.contrato_hono.home_contrato_screen import HomeContratoScreen
+from app.contrato_hono.PF.contrato_PF_screen1 import ContratoPFScreen
+from app.contrato_hono.PF.contrato_PF_screen2 import ContratoPF2Screen
+from app.homepage.home_screen import HomeScreen
+from app.procuracao.PF.procuracao_criminal.pf_procuracao_screen_cmn import PFProcuracaoCriminalScreen
+from app.procuracao.PF.procuracao_criminal.pf_poderes_screen_cmn import PFPoderesCriminalScreen
+from app.procuracao.home_procuracao_screen import HomeProcuracaoScreen
+from app.procuracao.PJ.procuracao_criminal.pj_procuracao_screen_cmn import ProcuracaoCriminalPJScreen
+from app.procuracao.PJ.procuracao_criminal.pj_poderes_screen_cmn import PoderesCriminalPJScreen
+from app.declaracao_hipo.PF.dados_pessoais_screen_dec import DadosPessoaisPFScreen
+from app.declaracao_hipo.PJ.dados_pessoais_PJ_screen_dec import DadosPessoaisPJScreen
+from app.declaracao_hipo.dec_home import Dec_homepage
 
 from updater import check_for_updates
 class MyApp(ScreenManager): 
