@@ -21,7 +21,6 @@ class MyApp(ScreenManager):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.advogado_id = None
-        # Adiciona as telas ao ScreenManager
         self.add_widget(LoginPage(name="login_page"))
         self.add_widget(RegisterPage(name="register_page"))
         self.add_widget(HomeScreen(name="home_screen"))
@@ -41,10 +40,7 @@ class MyApp(ScreenManager):
         
 class MainApp(App):
     def build(self):
-        # Retorna o ScreenManager configurado
         return MyApp()
- 
-
 
 if __name__ == "__main__":
     MainApp().run()

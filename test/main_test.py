@@ -77,7 +77,6 @@ class PesquisaApp(BoxLayout):
                 self.est_civil_input.text = estado_civil_bd
                 self.popup.dismiss()
                 break
-
 class MyApp(MDApp):
     def build(self):
         self.theme_cls.theme_style = "Dark"

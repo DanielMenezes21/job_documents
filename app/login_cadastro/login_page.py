@@ -7,22 +7,21 @@ from kivy.uix.dropdown import DropDown
 from modules.logic_tab import FocusSwitchingTextInput
 from kivy.clock import Clock
 from app.login_cadastro.funcoes_login import buscar_pessoas_por_nome, validate_login, go_to_register
-
 class LoginPage(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         layout = BoxLayout(orientation='vertical', padding=20, spacing=10)
 
-        self.username = FocusSwitchingTextInput(hint_text="Usuário", multiline=False)
+        self.username = FocusSwitchingTextInput(hint_text="Usuário", multiline=False, size_hint_y=0.06)
         self.username.bind(text=self.atualizar_sugestoes)  # Chama a função ao digitar
 
-        self.password = FocusSwitchingTextInput(hint_text="Senha", password=True, multiline=False)
-        self.login_button = Button(text="Entrar", on_press=self.login_validate)
-        self.register_button = Button(text="Cadastrar", on_press=self.login_to_go_register)
+        self.password = FocusSwitchingTextInput(hint_text="Senha", password=True, multiline=False, size_hint_y=0.06)
+        self.login_button = Button(text="Entrar", size_hint=(0.18, 0.04), pos_hint={'x': 0.41}, on_press=self.login_validate)
+        self.register_button = Button(text="Cadastrar", size_hint=(0.18, 0.04), pos_hint={'x': 0.41}, on_press=self.login_to_go_register)
 
         self.dropdown = DropDown()  # Criando um menu suspenso para sugestões
 
-        layout.add_widget(Label(text="Login"))
+        layout.add_widget(Label(text="Login", font_name="Roboto", font_size=30, size_hint_y=0.20))
         layout.add_widget(self.username)
         layout.add_widget(self.password)
         layout.add_widget(self.login_button)
