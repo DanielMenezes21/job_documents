@@ -1,4 +1,3 @@
-#funcoes_poderes.py
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
@@ -8,6 +7,7 @@ from app.procuracao.PJ.procuracao_criminal.pj_texto_poderes_cmn import TEXTOS_PO
 from app.procuracao.PJ.procuracao_criminal.pj_extracao_procuracao_cmn import *
 from app.homepage.home_screen import *
 from docx import Document
+import sqlite3
 import os
     
 def voltar(self, instance):
@@ -21,8 +21,9 @@ def atualizar_dados(screen_instance, dados):
     Atualiza os dados recebidos na tela PoderesScreen.
     """
     screen_instance.dados = dados
-    screen_instance.caminho_modelo = dados.get("caminho_modelo", None)  # Armazena o caminho do arquivo modelo
-    screen_instance.caminho_declaracao = dados.get("caminho_declaracao", None)  # Armazena o caminho do arquivo modelo de declaração
+    screen_instance.caminho_modelo = dados.get("caminho_modelo", None)  
+    screen_instance.caminho_declaracao = dados.get("caminho_declaracao", None)  
+    screen_instance.dados["advogado_id"] = screen_instance.manager.advogado_id
     print(f"Dados recebidos: {screen_instance.dados}")
 
 def on_text_selected(self, modelo_spinner, text):
@@ -30,7 +31,22 @@ def on_text_selected(self, modelo_spinner, text):
     Carrega o texto selecionado no TextInput.
     """
     if text in TEXTOS_PODERES_A:
-        self.text_input.text = TEXTOS_PODERES_A[text]  # Preenche o TextInput com o texto selecionado
+        self.text_input.text = TEXTOS_PODERES_A[text]
+
+def obter_dados_advogado(advogado_id):
+    """
+    Obtém os dados do advogado a partir do banco de dados.
+    """
+    conn = sqlite3.connect('advogados.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT username, identidade_oab FROM advogados WHERE id = ?", (advogado_id,))
+    resultado = cursor.fetchone()
+    conn.close()
+    if resultado:
+        print(f"nome {resultado[0]} oab {resultado[1]}")
+        return {"nome": resultado[0], "oab": resultado[1]}
+    else:
+        return {"nome": "Advogado não encontrado", "oab": "OAB não encontrado"}
 
 def salvar_texto(screen_instance, _):
     """
@@ -40,14 +56,12 @@ def salvar_texto(screen_instance, _):
         mostrar_popup(screen_instance, "Erro", "Nenhum dado foi recebido da tela inicial!")
         return
 
-    # Obtém o texto editado
     texto_editado = screen_instance.text_input.text
 
     if not screen_instance.caminho_modelo:
         mostrar_popup(screen_instance, "Erro", "O arquivo modelo não foi selecionado na tela inicial.")
         return
 
-    # Verifica se o arquivo existe
     if not os.path.exists(screen_instance.caminho_modelo):
         mostrar_popup(screen_instance, "Erro", f"O arquivo {screen_instance.caminho_modelo} não foi encontrado!")
         return
@@ -56,14 +70,11 @@ def salvar_texto(screen_instance, _):
         mostrar_popup(screen_instance, "Erro", f"o arquivo{screen_instance.caminho_declaracao} não foi encontrado!", placeholders={}, caminho_declaracao="None")
         return
 
-    # Abrir o arquivo modelo
     document = Document(screen_instance.caminho_modelo)
 
-    # Adiciona o advogado OAB baseado no nome selecionado no spinner
-    advogado_nome = screen_instance.adv_spinner.text
-    advogado_oab = ADVOGADO_OAB.get(advogado_nome, "OAB não encontrado")  # Default: "OAB não encontrado"
+    advogado_id = screen_instance.dados.get("advogado_id")
+    dados_advogado = obter_dados_advogado(advogado_id)
 
-    # Dicionário de placeholders com o texto editado
     placeholders = {
         "#PODERES": texto_editado,
         "#NOME_EMPRESA": screen_instance.dados.get("nome_empresa"),
@@ -87,12 +98,12 @@ def salvar_texto(screen_instance, _):
         "#ENDERECO": screen_instance.dados.get("endereco"),
         "#CEP": screen_instance.dados.get("cep"),
         "#ESTADO_CIVIL": screen_instance.dados.get("estado_civil"),
-        "#ADVOGADO_OAB": advogado_oab,
+        "#ADVOGADO_OAB": dados_advogado["oab"],
+        "#ADVOGADO_NOME": dados_advogado["nome"]
     }
     
     print(f"mostrar {placeholders}")
 
-    # Função para substituir os placeholders mantendo a formatação
     def substituir_com_formatacao(paragrafo, placeholders):
         for run in paragrafo.runs:
             for placeholder, valor in placeholders.items():
@@ -101,22 +112,19 @@ def salvar_texto(screen_instance, _):
                     print(f"o placeholder {placeholder} está vazio")
                 if placeholder in run.text:
                     run.text = run.text.replace(placeholder, valor)
-                    #print(f"substituindo {placeholder} por {valor}")
 
-    # Substituir os placeholders no documento
     for paragraph in document.paragraphs:
         substituir_com_formatacao(paragraph, placeholders)
         print(f"substituindo {placeholders} no documento")
 
-    # Substituir nas tabelas
     for tabela in document.tables:
         for linha in tabela.rows:
             for celula in linha.cells:
                 for paragrafo in celula.paragraphs:
                     substituir_com_formatacao(paragrafo, placeholders)
 
-    # Salvar o documento final com o nome especificado
-    nome_arquivo = screen_instance.dados.get("nome_arquivo", "documento_final")  # Usar nome_arquivo, se disponível
+
+    nome_arquivo = screen_instance.dados.get("nome_arquivo", "documento_final") 
     caminho_salvamento = f"{nome_arquivo}.docx"
     document.save(caminho_salvamento)
     mostrar_popup(
@@ -124,7 +132,7 @@ def salvar_texto(screen_instance, _):
         "Sucesso",
         f"Documento salvo como {nome_arquivo}. Deseja gerar uma declaração?",
         placeholders,
-        screen_instance.dados.get("caminho_declaracao")  # Aqui você passa o caminho do modelo da declaração
+        screen_instance.dados.get("caminho_declaracao")  
     )
     os.startfile(caminho_salvamento)
 
@@ -132,7 +140,6 @@ def mostrar_popup(screen_instance, titulo, mensagem, placeholders, caminho_decla
     conteudo = BoxLayout(orientation='vertical', padding=10, spacing=10)
     conteudo.add_widget(Label(text=mensagem, halign='center'))
 
-    # Campo de entrada para o nome do arquivo
     text_input = TextInput(hint_text="Digite o nome do arquivo", multiline=False)
     conteudo.add_widget(text_input)
 
@@ -156,7 +163,6 @@ def mostrar_popup(screen_instance, titulo, mensagem, placeholders, caminho_decla
                         for paragrafo in celula.paragraphs:
                             substituir_com_formatacao(paragrafo, placeholders)
 
-            # Pega o nome do arquivo do TextInput
             nome_arquivo = text_input.text.strip() or "declaracao_gerada"
             cd_arquivo = f"{nome_arquivo}.docx"
             document.save(cd_arquivo)

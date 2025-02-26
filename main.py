@@ -17,10 +17,10 @@ from app.declaracao_hipo.PF.dados_pessoais_screen_dec import DadosPessoaisPFScre
 from app.declaracao_hipo.PJ.dados_pessoais_PJ_screen_dec import DadosPessoaisPJScreen
 from app.declaracao_hipo.dec_home import Dec_homepage
 
-from updater import check_for_updates
 class MyApp(ScreenManager): 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.advogado_id = None
         # Adiciona as telas ao ScreenManager
         self.add_widget(LoginPage(name="login_page"))
         self.add_widget(RegisterPage(name="register_page"))

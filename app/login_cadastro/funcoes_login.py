@@ -12,16 +12,20 @@ def check_credentials(username, password):
     cursor.execute("SELECT * FROM advogados WHERE username = ? AND password = ?", (username, password))
     user = cursor.fetchone()
     conn.close()
-    return user is not None
+    if user:
+        return user[0]
+    return None
 
 def validate_login(self, instance):
         user = self.username.text
         pwd = self.password.text
 
-        if check_credentials(user, pwd):
+        advogado_id = check_credentials(user, pwd)
+        if advogado_id:
             show_popup(self, "Sucesso", "Login bem-sucedido!")
             sleep(1)
             self.manager.current = "home_screen"
+            self.manager.advogado_id = advogado_id  # Armazena o advogado_id no ScreenManager
         else:
             show_popup(self, "Erro", "Usuário ou senha incorretos!")
 
@@ -32,8 +36,7 @@ def show_popup(self, title, message):
 
         popup = Popup(title=title, content=popup_layout, size_hint=(None, None), size=(300, 200))
         popup.open()
-import sqlite3
-
+        
 def buscar_pessoas_por_nome(filtro):
     """Busca clientes pelo nome ou CPF que começam com o texto digitado."""
     conn = sqlite3.connect("advogados.db")

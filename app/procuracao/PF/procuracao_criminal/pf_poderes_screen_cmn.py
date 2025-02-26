@@ -8,7 +8,7 @@ from kivy.uix.popup import Popup
 from kivy.uix.widget import Widget
 from kivy.uix.floatlayout import FloatLayout
 from kivy.graphics import Ellipse, Color
-from app.procuracao.PF.procuracao_criminal.pf_texto_poderes_cmn import TEXTOS_PODERES_A, ADVOGADO_OAB
+from app.procuracao.PF.procuracao_criminal.pf_texto_poderes_cmn import TEXTOS_PODERES_A
 from app.procuracao.PF.procuracao_criminal.pf_funcoes_poderes_cmn import *
 from docx import Document
 import os
@@ -66,16 +66,6 @@ class PFPoderesCriminalScreen(Screen):
         )
         self.modelo_spinner.bind(text=self.poderes_on_text_selected)  # Bind no modelo_spinner
         layout.add_widget(self.modelo_spinner)
-
-        # Spinner para selecionar advogado
-        self.adv_spinner = Spinner(
-            text="Selecione um advogado",
-            values=list(ADVOGADO_OAB.keys()),  # Carrega os nomes dos advogados do dicionário
-            size_hint=(0.8, None),
-            height=44,
-            pos_hint={"center_x": 0.5, "top": 0.7},
-        )
-        layout.add_widget(self.adv_spinner)
 
         # Área de texto editável
         self.text_input = TextInput(

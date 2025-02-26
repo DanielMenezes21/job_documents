@@ -2,7 +2,7 @@
 # Dicionário contendo os textos predefinidos
 TEXTOS_PODERES_A = {
     "Modelo 1 - Procuração Criminal": (
-        "Pelo presente instrumento, o(a) Outorgante constitui e nomeia seu bastante procurador o(a) Outorgado(a),"
+        "Pelo presente instrumento, o(a) Outorgante constitui e nomeia seu bastante procurador o(a) Outorgado(a), "
         "conferindo-lhe amplos, gerais e ilimitados poderes para representá-lo(a) em processos judiciais "
         "e administrativos, em qualquer instância ou tribunal, especialmente em feitos de natureza criminal, "
         "podendo para tanto praticar todos os atos necessários à defesa de seus direitos e interesses, "
@@ -29,9 +29,4 @@ TEXTOS_PODERES_A = {
         "necessários e convenientes ao bom e fiel desempenho deste mandato."
     )
     
-}
-
-ADVOGADO_OAB = {
-    "MAYKLENE MICHELITT PEREIRA NUNES" :("MAYKLENE MICHELITT PEREIRA NUNES, OAB/TO 12.117-A e OAB/PA 27.056"),
-    "DANIEL MENEZES DE ALMEIDA" :("DANIEL MENEZES DE ALMEIDA, OAB/TO 12.345-A e OAB/GO 54.321")
 }

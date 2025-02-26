@@ -88,6 +88,7 @@ def ir_para_poderes(screen_instance, instance):
         if len(screen_instance.nome_arquivo_input.text) == 0:
             popup(screen_instance, "Erro", "o campo nome do arquivo é obrigatório")
         else:
+            dados["advogado_id"] = screen_instance.manager.advogado_id
             poderes_screen = screen_instance.manager.get_screen("poderes_criminal_pj_screen")
             poderes_screen.poderes_atualizar_dados(dados)  # Certifique-se de que o nome corresponde
             screen_instance.manager.current = "poderes_criminal_pj_screen"
