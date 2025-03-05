@@ -10,6 +10,7 @@ from kivy.graphics import Rectangle, Color
 from kivymd.uix.button import MDIconButton
 from kivymd.uix.card import MDCard
 from logic_tab import FocusSwitchingTextInput, MaskedFocusSwitchingTextInput
+import requests
 
 class PesquisaApp(BoxLayout):
     def __init__(self, **kwargs):
@@ -61,14 +62,18 @@ class PesquisaApp(BoxLayout):
 
     def atualizar_lista(self, instance, value):
         self.lista.clear_widgets()
-        for nome, cpf, rg, endereco, estado_civil in buscar_pessoas_por_nome(self.pesquisa_input.text.strip()):
+        response = requests.get('http://127.0.0.1:5000/buscar', params={'filtro': self.pesquisa_input.text.strip()})
+        resultados = response.json()
+        for nome, cpf, rg, endereco, estado_civil, sigla_estado_cliente, cidade_cliente, cep_cliente, telefone_cliente, email_cliente, nacionalidade_cliente, profissao_cliente, secretaria_emissora_rg, estado_emissor_rg in resultados:
             item = OneLineListItem(text=f"{nome} - {cpf}")
             item.bind(on_release=lambda x: self.preencher_campos(x.text))
             self.lista.add_widget(item)
     
     def preencher_campos(self, texto):
         nome, cpf = texto.split(" - ")
-        for nome_bd, cpf_bd, rg_bd, endereco_bd, estado_civil_bd in buscar_pessoas_por_nome(cpf):
+        response = requests.get('http://127.0.0.1:5000/buscar', params={'filtro': cpf})
+        resultados = response.json()
+        for nome_bd, cpf_bd, rg_bd, endereco_bd, estado_civil_bd, sigla_estado_cliente_db, cidade_cliente_db, cep_cliente_db, telefone_cliente_db, email_cliente_db, nacionalidade_cliente_db, profissao_cliente_db, secretaria_emissora_rg_db, estado_emissor_rg_db in resultados:
             if cpf_bd == cpf:
                 self.nome_input.text = nome_bd
                 self.cpf_input.text = cpf_bd

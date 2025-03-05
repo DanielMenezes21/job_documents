@@ -1,5 +1,6 @@
 from kivy.app import App
-from kivy.uix.screenmanager import Screen, ScreenManager
+from kivymd.app import MDApp
+from kivy.uix.screenmanager import Screen, ScreenManager, SlideTransition
 from app.login_cadastro.login_page import LoginPage
 from app.login_cadastro.register_page import RegisterPage
 from app.contrato_hono.PJ.contrato_PJ_screen1 import ProcessoScreen
@@ -16,6 +17,8 @@ from app.procuracao.PJ.procuracao_criminal.pj_poderes_screen_cmn import PoderesC
 from app.declaracao_hipo.PF.dados_pessoais_screen_dec import DadosPessoaisPFScreen
 from app.declaracao_hipo.PJ.dados_pessoais_PJ_screen_dec import DadosPessoaisPJScreen
 from app.declaracao_hipo.dec_home import Dec_homepage
+import threading
+from modules.api_adv import app as flask_app
 
 class MyApp(ScreenManager): 
     def __init__(self, **kwargs):
@@ -38,9 +41,16 @@ class MyApp(ScreenManager):
         self.add_widget(DadosPessoaisPFScreen(name="declaracao_PF"))
         self.add_widget(DadosPessoaisPJScreen(name="declaracao_PJ"))
         
-class MainApp(App):
+class MainApp(MDApp):
     def build(self):
+        self.theme_cls.theme_style = "Dark"
         return MyApp()
 
+def start_flask_app():
+    flask_app.run(debug=True, use_reloader=False)
+
 if __name__ == "__main__":
+    flask_thread = threading.Thread(target=start_flask_app)
+    flask_thread.daemon = True
+    flask_thread.start()
     MainApp().run()

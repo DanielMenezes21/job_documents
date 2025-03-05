@@ -3,6 +3,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.popup import Popup
+from kivy.uix.screenmanager import SlideTransition
 
 def add_user(username, password, identidade_OAB):
     """Adiciona um novo usuário ao banco de dados."""
@@ -40,4 +41,5 @@ def show_popup(self, title, message):
         popup.open()
 
 def go_to_login(self, instance):
+        self.manager.transition = SlideTransition(direction='right')
         self.manager.current = "login_page"

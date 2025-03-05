@@ -1,31 +1,28 @@
 import sqlite3
-import os
-import sys
 
-# Conectar ao banco de dados (ou criar se não existir)
-conn = sqlite3.connect("advogados.db")
-cursor = conn.cursor()
+def criar_banco():
+    conn = sqlite3.connect("advogados.db")
+    cursor = conn.cursor()
+    
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS advogados (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT NOT NULL,
+            password TEXT NOT NULL,
+            identidade_oab TEXT NOT NULL
+        )
+    """)
 
-# Criar a tabela de usuários (caso ainda não exista)
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS advogados (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT NOT NULL UNIQUE,
-    password TEXT NOT NULL,
-    identidade_OAB TEXT NOT NULL UNIQUE
-)
-""")
+    cursor.execute("SELECT COUNT(*) FROM advogados WHERE username = ?", ("Admin",))
+    if cursor.fetchone()[0] == 0:
+        cursor.executemany("""
+            INSERT INTO advogados (username, password, identidade_oab)
+            VALUES (?, ?, ?)
+        """, [
+            ("Admin", "123", "None")
+        ])
 
-# Inserir um usuário de teste (somente na primeira vez)
-cursor.execute("INSERT OR IGNORE INTO advogados (username, password, identidade_OAB) VALUES (?, ?, ?)", ("admin", "123", "None"))
-conn.commit()
+    conn.commit()
+    return conn
 
-conn.close()
-
-def get_db_path():
-    if getattr(sys, 'frozen', False):  # Executável gerado pelo PyInstaller
-        base_path = sys._MEIPASS
-    else:
-        base_path = os.path.dirname(os.path.abspath(__file__))
-
-    return os.path.join(base_path, "advogados.db")
+criar_banco()
