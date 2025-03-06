@@ -4,6 +4,7 @@ from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.image import Image
 from kivy.uix.screenmanager import SlideTransition
+from modules.resource_path import BackgroundImage
 
 class HomeScreen(Screen):
     def __init__(self, **kwargs):
@@ -12,7 +13,7 @@ class HomeScreen(Screen):
         layout = BoxLayout(orientation='vertical', padding=20, spacing=10)
         
         with self.canvas.before:
-            self.background = Image(source="image/download.jpeg", allow_stretch=True, keep_ratio=False)
+            self.background = BackgroundImage()
             self.bind(size=self._update_background, pos=self._update_background)
 
         titulo = Label(

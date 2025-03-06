@@ -88,7 +88,7 @@ def salvar_texto(self, screen_instance):
             "#SEC_RG": screen_instance.dados.get("sec_rg", ''),
             "#CIDADE_EMP": screen_instance.dados.get("cidade_emp", ''),
             "#ESTADO_EMP": screen_instance.dados.get("estado_emp", ''),
-            "#CIDADE_cliente": screen_instance.dados.get("cidade_cliente", ''),
+            "#CIDADE_CLIENTE": screen_instance.dados.get("cidade_cliente", ''),
             "#SIGLA_ESTADO_CLIENTE": screen_instance.dados.get("sigla_estado_cliente", ''),
             "#INSCRITA(O)": screen_instance.dados.get("inscrita_o", ''),
             "#DATA_AGORA": data_atual,

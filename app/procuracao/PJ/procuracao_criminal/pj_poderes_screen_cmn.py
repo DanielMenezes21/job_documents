@@ -18,9 +18,9 @@ class CircularButton(Button):
         super(CircularButton, self).__init__(**kwargs)
         self.size_hint = (None, None)
         self.size = (50, 50)
-        self.background_normal = ''  # Remove fundo padrão
-        self.background_color = (0.2, 0.6, 0.8, 1)  # Cor azul clara
-        self.color = (1, 1, 1, 1)  # Texto branco
+        self.background_normal = ''  
+        self.background_color = (0.2, 0.6, 0.8, 1) 
+        self.color = (1, 1, 1, 1) 
         with self.canvas.before:
             Color(0.2, 0.6, 0.8, 1)
             self.ellipse = Ellipse(size=self.size, pos=self.pos)
@@ -35,18 +35,15 @@ class CircularButton(Button):
 class PoderesCriminalPJScreen(Screen):
     def __init__(self, **kwargs):
         super(PoderesCriminalPJScreen, self).__init__(**kwargs)
-        self.dados = None  # Armazenar todos os dados recebidos da HomeScreen
+        self.dados = None 
 
-        # Layout principal
         layout = FloatLayout()
 
-        # Botão de voltar (circular, pequeno e no canto superior esquerdo)
         btn_voltar = CircularButton(text="<")
         btn_voltar.pos_hint = {"x": 0.02, "top": 0.98}
         btn_voltar.bind(on_press=self.poderes_voltar)
         layout.add_widget(btn_voltar)
 
-        # Título
         titulo = Label(
             text="Editar Poderes Pessoa Jurídica",
             font_size=20,
@@ -56,28 +53,15 @@ class PoderesCriminalPJScreen(Screen):
         )
         layout.add_widget(titulo)
 
-        # Spinner para selecionar texto predefinido
         self.modelo_spinner = Spinner(
             text="Selecione um modelo",
-            values=list(TEXTOS_PODERES_A.keys()),  # Carrega os nomes dos textos do dicionário
-            size_hint=(0.8, None),
+            values=list(TEXTOS_PODERES_A.keys()), 
             height=44,
             pos_hint={"center_x": 0.5, "top": 0.8},
         )
-        self.modelo_spinner.bind(text=self.poderes_on_text_selected)  # Bind no modelo_spinner
+        self.modelo_spinner.bind(text=self.poderes_on_text_selected)  
         layout.add_widget(self.modelo_spinner)
 
-        # Spinner para selecionar advogado
-        self.adv_spinner = Spinner(
-            text="Selecione um advogado",
-            values=list(ADVOGADO_OAB.keys()),  # Carrega os nomes dos advogados do dicionário
-            size_hint=(0.8, None),
-            height=44,
-            pos_hint={"center_x": 0.5, "top": 0.7},
-        )
-        layout.add_widget(self.adv_spinner)
-
-        # Área de texto editável
         self.text_input = TextInput(
             hint_text="O texto selecionado aparecerá aqui para edição...",
             multiline=True,
@@ -86,7 +70,6 @@ class PoderesCriminalPJScreen(Screen):
         )
         layout.add_widget(self.text_input)
 
-        # Botão para salvar alterações
         save_button = Button(
             text="Salvar Texto",
             size_hint=(0.5, None),
@@ -99,7 +82,7 @@ class PoderesCriminalPJScreen(Screen):
         self.add_widget(layout)
 
     def poderes_voltar(self, instance):
-        voltar(self, instance)  # Chama a função voltar
+        voltar(self, instance)  
     
     def poderes_atualizar_dados(self, dados):
         """
@@ -108,10 +91,10 @@ class PoderesCriminalPJScreen(Screen):
         atualizar_dados(self, dados)
 
     def poderes_on_text_selected(self, modelo_spinner, text):
-        return on_text_selected(self, modelo_spinner, text)  # Atualiza o texto selecionado
+        return on_text_selected(self, modelo_spinner, text)  
 
     def poderes_salvar_texto(self, instance):
-        salvar_texto(self, self)  # Salva o texto editado
+        salvar_texto(self, self)  
 
     def poderes_mostrar_popup(self, titulo, mensagem):
-        mostrar_popup(self, titulo, mensagem)  # Exibe o popup
+        mostrar_popup(self, titulo, mensagem)  

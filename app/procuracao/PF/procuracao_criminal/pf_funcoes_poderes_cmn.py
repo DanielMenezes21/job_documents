@@ -14,6 +14,7 @@ from app.homepage.home_screen import *
 import sqlite3
 from docx import Document
 import os
+import requests
     
 def voltar(self, instance):
     """
@@ -40,19 +41,16 @@ def on_text_selected(self, modelo_spinner, text):
 
 def obter_dados_advogado(advogado_id):
     """
-    Obtém os dados do advogado a partir do banco de dados.
+    Obtém os dados do advogado a partir da API.
     """
-    conn = sqlite3.connect('advogados.db')
-    cursor = conn.cursor()
-    cursor.execute("SELECT username, identidade_oab FROM advogados WHERE id = ?", (advogado_id,))
-    resultado = cursor.fetchone()
-    conn.close()
-    if resultado:
-        print(f"nome {resultado[0]} oab {resultado[1]}")
-        return {"nome": resultado[0], "oab": resultado[1]}
-    else:
-        return {"nome": "Advogado não encontrado", "oab": "OAB não encontrado"}
-    
+    response = requests.get('http://127.0.0.1:5000/buscar_adv', params={'filtro': advogado_id})
+    if response.status_code == 200:
+        resultado = response.json()
+        if resultado:
+            print(f"nome {resultado[0][0]} oab {resultado[0][2]}")
+            return {"nome": resultado[0][0], "oab": resultado[0][2]}
+    return {"nome": "Advogado não encontrado", "oab": "OAB não encontrado"}
+
 def salvar_texto(screen_instance, _):
     """
     Salva o texto editado e atualiza o documento.

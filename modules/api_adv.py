@@ -1,11 +1,8 @@
 from flask import Flask, request, jsonify
 import sqlite3
-from modules.database_adv import criar_banco
+from modules.database_adv import get_db_connection
 
 app = Flask(__name__)
-def get_db_connection():
-    conn = criar_banco()
-    return conn
 
 @app.route('/buscar_adv', methods=['GET'])
 def buscar():

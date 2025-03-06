@@ -8,13 +8,15 @@ from kivy.uix.dropdown import DropDown
 from modules.logic_tab import FocusSwitchingTextInput
 from kivy.clock import Clock
 from app.login_cadastro.funcoes_login import buscar_pessoas_por_nome, validate_login, go_to_register
+from modules.resource_path import BackgroundImage
+
 class LoginPage(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         layout = BoxLayout(orientation='vertical', padding=20, spacing=10)
 
         with self.canvas.before:
-            self.background = Image(source="image/download.jpeg", allow_stretch=True, keep_ratio=False)
+            self.background = BackgroundImage()
             self.bind(size=self._update_background, pos=self._update_background)
         
         self.username = FocusSwitchingTextInput(hint_text="Usuário", multiline=False, size_hint_y=0.06)

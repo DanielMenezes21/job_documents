@@ -1,4 +1,3 @@
-import sqlite3
 import requests
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button 
@@ -46,5 +45,5 @@ def buscar_pessoas_por_nome(filtro):
     return []
 
 def go_to_register(self, instance):
-        self.manager.transition = SlideTransition(direction='left')
-        self.manager.current = "register_page"
+    self.manager.transition = SlideTransition(direction='left')
+    self.manager.current = "register_page"
