@@ -62,12 +62,11 @@ def start_flask_app():
     flask_app.run(debug=True, use_reloader=False)
 
 if __name__ == "__main__":
-<<<<<<< HEAD
+
     MainApp().run()
 
-=======
     flask_thread = threading.Thread(target=start_flask_app)
     flask_thread.daemon = True
     flask_thread.start()
     MainApp().run()
->>>>>>> developp
+
