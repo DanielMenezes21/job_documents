@@ -16,11 +16,20 @@ class HomeScreen(Screen):
             self.background = BackgroundImage()
             self.bind(size=self._update_background, pos=self._update_background)
 
+        btn_volta = Button(
+            text="Voltar",
+            size_hint=(None, None),
+            size=(100, 50),
+            pos_hint={"center_x": 0.1, "top": 0.95},
+            on_press=self.voltar
+        )
+        layout.add_widget(btn_volta)
+
         titulo = Label(
             text="Tela Inicial",
             font_size=30,
             font_name="BELL.TTF",
-            color="yellow",
+            color="teste",
             size_hint_y=0.20,
         )
         layout.add_widget(titulo)
@@ -78,5 +87,12 @@ class HomeScreen(Screen):
         """
         self.manager.transition = SlideTransition(direction='left')
         self.manager.current = "homepage_declaracao"
+
+    def voltar(self, instance):
+        """
+        Função para voltar até a tela de login
+        """
+        self.manager.transition = SlideTransition(direction='right')
+        self.manager.current = "login_page"
         
     
