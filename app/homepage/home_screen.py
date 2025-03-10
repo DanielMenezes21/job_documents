@@ -28,7 +28,6 @@ class HomeScreen(Screen):
         titulo = Label(
             text="Tela Inicial",
             font_size=30,
-            font_name="BELL.TTF",
             color="teste",
             size_hint_y=0.20,
         )

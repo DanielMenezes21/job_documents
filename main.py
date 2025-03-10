@@ -1,3 +1,5 @@
+import modules.config as config
+
 import threading
 import os
 import sys
@@ -53,7 +55,7 @@ class MyApp(ScreenManager):
 
 class MainApp(MDApp):
     def build(self):
-        self.theme_cls.theme_style = "Dark"
+        self.theme_cls.theme_style = "Dark" 
         return MyApp()
 
 def start_flask_app():
