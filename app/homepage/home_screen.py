@@ -28,7 +28,7 @@ class HomeScreen(Screen):
         titulo = Label(
             text="Tela Inicial",
             font_size=30,
-            color="teste",
+            color="yellow",
             size_hint_y=0.20,
         )
         layout.add_widget(titulo)
