@@ -12,9 +12,9 @@ class ProcuracaoCriminalPJScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        self.scrollview = ScrollView(size_hint=(1, 1))
+        self.scroll = ScrollView(size_hint=(1, 1))
 
-        layout = BoxLayout(orientation="vertical", spacing=10, padding=10)
+        layout = BoxLayout(orientation="vertical", spacing=10, padding=10, size_hint_y=None)
         layout.bind(minimum_height=layout.setter('height'))
         
         titulo = Label(
@@ -22,20 +22,21 @@ class ProcuracaoCriminalPJScreen(Screen):
             font_size=20,
             size_hint=(None, None),
             size=(200, 50),
-            pos_hint={"center_x": 0.5, "center_y": 0.3}  # Centraliza o título
+            pos_hint={"center_x": 0.5, "center_y": 0.3}
         )
         layout.add_widget(titulo)
 
-        # Criação dos campos de entrada com a função auxiliar
         self.nome_cliente = FocusSwitchingTextInput(hint_text="Digite o nome do cliente", 
                                          multiline=False,
-                                         size_hint_y=0.18)
+                                         size_hint_y=None,
+                                         size=(200, 50))
         layout.add_widget(self.nome_cliente)
         
         self.nome_empresa = FocusSwitchingTextInput(hint_text="Digite o nome da empresa",
                                       multiline=False,
-                                      size_hint_y=1,
-                                      size_hint_x=1)
+                                      size_hint_y=None,
+                                      size_hint_x=1,
+                                      size=(200, 50))
         layout.add_widget(self.nome_empresa)
         
         self.cnpj = MaskedFocusSwitchingTextInput(
@@ -43,34 +44,39 @@ class ProcuracaoCriminalPJScreen(Screen):
             max_length=14,
             hint_text="Digite o CNPJ da empresa",
             multiline=False,
-            size_hint_y=1,
+            size_hint_y=None,
             size_hint_x=1,
+            size=(200, 50)
         )
         layout.add_widget(self.cnpj)
         
         self.end_empresa = FocusSwitchingTextInput(hint_text = "Informe o endereço da empresa",
                                      multiline=False,
-                                     size_hint_y=1,
+                                     size_hint_y=None,
+                                     size=(200, 50),
                                      size_hint_x=1)
         layout.add_widget(self.end_empresa)
         
         self.cep_empresa = MaskedFocusSwitchingTextInput(hint_text="Informe o CEP da empresa",
                                                          max_length=8,
                                                          multiline=False,
-                                                         size_hint_y=1,
+                                                         size_hint_y=None,
                                                          size_hint_x=1,
+                                                         size=(200, 50),
                                                          mask="     -   ")
         layout.add_widget(self.cep_empresa)
         
         self.cidade_empresa = FocusSwitchingTextInput(hint_text="Informe a cidade da empresa",
                                                       multiline=False,
-                                                      size_hint_y=1,
+                                                      size_hint_y=None,
+                                                      size=(200, 50),
                                                       size_hint_x=1)
         layout.add_widget(self.cidade_empresa)
         
         self.estado_empresa = FocusSwitchingTextInput(hint_text="Informe o estado da empresa",
                                                       multiline=False,
-                                                      size_hint_y=1,
+                                                      size_hint_y=None,
+                                                      size=(200, 50),
                                                       size_hint_x=1)
         layout.add_widget(self.estado_empresa)
        
@@ -79,14 +85,16 @@ class ProcuracaoCriminalPJScreen(Screen):
             max_length=11,
             hint_text="Digite o CPF do cliente",
             multiline=False,
-            size_hint_y=1,
+            size_hint_y=None,
+            size=(200, 50),
             size_hint_x=1,
         )
         layout.add_widget(self.cpf)
         
         self.rg = FocusSwitchingTextInput(hint_text="Digite o RG do cliente",
                             multiline=False,
-                            size_hint_y=1,
+                            size_hint_y=None,
+                            size=(200, 50),
                             size_hint_x=0.6,)
         layout.add_widget(self.rg)
         
@@ -98,7 +106,7 @@ class ProcuracaoCriminalPJScreen(Screen):
         
         self.endereco = FocusSwitchingTextInput(hint_text="Digite o endereco do cliente",
                                   multiline=False, 
-                                  size_hint_y=1,
+                                  size_hint_y=None,
                                   size_hint_x=1)
         layout.add_widget(self.endereco)
         
@@ -106,31 +114,31 @@ class ProcuracaoCriminalPJScreen(Screen):
                              mask="     -   ",
                              max_length=8,
                              multiline=False, 
-                             size_hint_y=1,
+                             size_hint_y=None,
                              size_hint_x=0.7)
         layout.add_widget(self.cep)
         
         self.cidade_cliente_input = FocusSwitchingTextInput(hint_text="Digite a cidade do cliente",
                              multiline=False, 
-                             size_hint_y=1,
+                             size_hint_y=None,
                              size_hint_x=1)
         layout.add_widget(self.cidade_cliente_input)
         
         self.sigla_estado_cliente_input= FocusSwitchingTextInput(hint_text="Digite a sigla do estado do cliente",
                              multiline=False, 
-                             size_hint_y=1,
+                             size_hint_y=None,
                              size_hint_x=1)
         layout.add_widget(self.sigla_estado_cliente_input)
         
         self.estado_civil= FocusSwitchingTextInput(hint_text="Digite o estado civil",
                              multiline=False, 
-                             size_hint_y=0.18)
+                             size_hint_y=None)
         layout.add_widget(self.estado_civil)
         
         self.nacionalidade_spinner = Spinner(
             text="Selecione a Nacionalidade",
             values=("Brasileiro", "Outro"),
-            size_hint_y=0.1, size_hint_x=0.3
+            size_hint_y=None, size_hint_x=0.3
         )
         self.nacionalidade_spinner.bind(
             text=lambda spinner, text: on_nacionalidade_change(self, spinner, text)
@@ -140,7 +148,7 @@ class ProcuracaoCriminalPJScreen(Screen):
         self.inscrita_o_spinner = Spinner(
             text='Selecione o Gênero',
             values=('Masculino', 'Feminino'),
-            size_hint_y=0.1, size_hint_x=0.3
+            size_hint_y=None, size_hint_x=0.3
         )
         layout.add_widget(self.inscrita_o_spinner)
 
@@ -148,14 +156,14 @@ class ProcuracaoCriminalPJScreen(Screen):
             hint_text="Digite a nacionalidade",
             multiline=False,
             readonly=True,
-            size_hint_y=0.18
+            size_hint_y=None
         )
         layout.add_widget(self.nacionalidade_input)
         
-        self.nome_arquivo_input = FocusSwitchingTextInput(hint_text="Digite o nome do arquivo", multiline=False, size_hint_y=0.18)
+        self.nome_arquivo_input = FocusSwitchingTextInput(hint_text="Digite o nome do arquivo", multiline=False, size_hint_y=None)
         layout.add_widget(self.nome_arquivo_input)
         
-        button_layout = FloatLayout(size_hint_y=0.2)
+        button_layout = FloatLayout(size_hint_y=None)
 
         btn_poderes = Button(
             text="Editar Poderes",
@@ -176,5 +184,7 @@ class ProcuracaoCriminalPJScreen(Screen):
         button_layout.add_widget(btn_homepage)
 
         layout.add_widget(button_layout)
+        self.scroll.add_widget(layout)
 
-        self.add_widget(layout)
+        self.add_widget(self.scroll)
+

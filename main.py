@@ -35,6 +35,7 @@ def resource_path(relative_path):
 class MyApp(ScreenManager): 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.transition = SlideTransition(duration=0.5, direction="left")
         self.advogado_id = None
         self.add_widget(LoginPage(name="login_page"))
         self.add_widget(RegisterPage(name="register_page"))
